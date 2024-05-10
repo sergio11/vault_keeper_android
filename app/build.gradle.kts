@@ -1,3 +1,5 @@
+import com.android.build.api.variant.BuildConfigField
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -17,6 +19,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(type = "String", name = "OPEN_WEATHER_API_KEY", value = "\"1771d307a9dbec42f4b9a4e230cc6ebd\"")
+        buildConfigField(type = "String", name = "OPEN_WEATHER_BASE_URL", value = "\"http://api.openweathermap.org/data/2.5/\"")
+
     }
 
     buildTypes {
@@ -27,6 +33,10 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     compileOptions {
