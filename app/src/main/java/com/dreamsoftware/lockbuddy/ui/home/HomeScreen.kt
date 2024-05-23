@@ -67,6 +67,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dreamsoftware.lockbuddy.R
+import com.dreamsoftware.lockbuddy.data.database.entity.AccountEntity
+import com.dreamsoftware.lockbuddy.data.database.entity.CardEntity
 import com.dreamsoftware.lockbuddy.ui.components.AlertDialogContent
 import com.dreamsoftware.lockbuddy.ui.components.BottomSheet
 import com.dreamsoftware.lockbuddy.ui.components.SheetSurface
@@ -384,7 +386,7 @@ fun HomeScreen(
 @Composable
 fun AccountRow(
     navigator: DestinationsNavigator,
-    account: com.dreamsoftware.lockbuddy.database.AccountEntity,
+    account: AccountEntity,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     Card(
@@ -560,7 +562,7 @@ fun AccountRow(
 @Composable
 fun CardRow(
     navigator: DestinationsNavigator,
-    card: com.dreamsoftware.lockbuddy.database.CardEntity,
+    card: CardEntity,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     Card(

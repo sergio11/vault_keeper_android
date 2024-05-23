@@ -1,4 +1,4 @@
-package com.dreamsoftware.lockbuddy.encryption
+package com.dreamsoftware.lockbuddy.service.encryption
 
 import android.content.Context
 import android.util.Base64

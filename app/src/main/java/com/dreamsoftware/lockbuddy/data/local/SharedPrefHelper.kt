@@ -1,4 +1,4 @@
-package com.dreamsoftware.lockbuddy.local
+package com.dreamsoftware.lockbuddy.data.local
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -7,9 +7,10 @@ import javax.inject.Inject
 class SharedPrefHelper @Inject constructor(
     private val pref: SharedPreferences
 ) {
-
-    private val KEY_AUTH = "auth_key"
-    private val KEY_SWITCH_STATE = "switchState"
+    companion object {
+        private const val KEY_AUTH = "auth_key"
+        private const val KEY_SWITCH_STATE = "switchState"
+    }
 
     var masterKey: String
         get() = getString(KEY_AUTH)
@@ -41,5 +42,4 @@ class SharedPrefHelper @Inject constructor(
     fun setSwitchState(state: Boolean) {
         pref.edit { putBoolean(KEY_SWITCH_STATE, state) }
     }
-
 }

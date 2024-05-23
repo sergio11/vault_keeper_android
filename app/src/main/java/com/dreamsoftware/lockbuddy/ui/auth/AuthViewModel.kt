@@ -8,10 +8,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dreamsoftware.lockbuddy.data.local.SharedPrefHelper
+import com.dreamsoftware.lockbuddy.util.oneShotFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import com.dreamsoftware.lockbuddy.local.SharedPrefHelper
-import com.dreamsoftware.lockbuddy.util.oneShotFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject

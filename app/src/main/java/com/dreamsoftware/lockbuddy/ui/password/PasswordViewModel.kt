@@ -9,9 +9,9 @@ import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.dreamsoftware.lockbuddy.database.AccountDao
-import com.dreamsoftware.lockbuddy.database.AccountEntity
-import com.dreamsoftware.lockbuddy.encryption.EncryptionManager
+import com.dreamsoftware.lockbuddy.data.database.dao.AccountDao
+import com.dreamsoftware.lockbuddy.data.database.entity.AccountEntity
+import com.dreamsoftware.lockbuddy.service.encryption.EncryptionManager
 import com.dreamsoftware.lockbuddy.util.accountSuggestions
 import com.dreamsoftware.lockbuddy.util.generatePassword
 import com.dreamsoftware.lockbuddy.util.getRandomNumber

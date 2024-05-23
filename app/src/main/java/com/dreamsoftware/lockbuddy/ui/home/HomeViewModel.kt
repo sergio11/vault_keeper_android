@@ -7,11 +7,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.dreamsoftware.lockbuddy.database.AccountDao
-import com.dreamsoftware.lockbuddy.database.AccountEntity
-import com.dreamsoftware.lockbuddy.database.CardDao
-import com.dreamsoftware.lockbuddy.database.CardEntity
-import com.dreamsoftware.lockbuddy.encryption.EncryptionManager
+import com.dreamsoftware.lockbuddy.data.database.dao.AccountDao
+import com.dreamsoftware.lockbuddy.data.database.entity.AccountEntity
+import com.dreamsoftware.lockbuddy.data.database.dao.CardDao
+import com.dreamsoftware.lockbuddy.data.database.entity.CardEntity
+import com.dreamsoftware.lockbuddy.service.encryption.EncryptionManager
 import com.dreamsoftware.lockbuddy.util.AccountOrCard
 import com.dreamsoftware.lockbuddy.util.oneShotFlow
 import kotlinx.coroutines.flow.Flow

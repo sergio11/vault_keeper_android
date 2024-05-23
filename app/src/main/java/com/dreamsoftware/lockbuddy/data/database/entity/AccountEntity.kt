@@ -1,4 +1,4 @@
-package com.dreamsoftware.lockbuddy.database
+package com.dreamsoftware.lockbuddy.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dreamsoftware.lockbuddy.database.AccountDao
-import com.dreamsoftware.lockbuddy.database.CardDao
-import com.dreamsoftware.lockbuddy.local.SharedPrefHelper
+import com.dreamsoftware.lockbuddy.data.database.dao.AccountDao
+import com.dreamsoftware.lockbuddy.data.database.dao.CardDao
+import com.dreamsoftware.lockbuddy.data.local.SharedPrefHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -8,9 +8,9 @@ import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.dreamsoftware.lockbuddy.database.CardDao
-import com.dreamsoftware.lockbuddy.database.CardEntity
-import com.dreamsoftware.lockbuddy.encryption.EncryptionManager
+import com.dreamsoftware.lockbuddy.data.database.dao.CardDao
+import com.dreamsoftware.lockbuddy.data.database.entity.CardEntity
+import com.dreamsoftware.lockbuddy.service.encryption.EncryptionManager
 import com.dreamsoftware.lockbuddy.util.cardSuggestions
 import com.dreamsoftware.lockbuddy.util.oneShotFlow
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CardViewModel @Inject constructor(
-    private val db: com.dreamsoftware.lockbuddy.database.CardDao,
+    private val db: CardDao,
     private val encryptionManager: EncryptionManager
 ) : ViewModel() {
 
@@ -64,7 +64,7 @@ class CardViewModel @Inject constructor(
 
             val currentTimeInMillis = System.currentTimeMillis()
 
-            val card = com.dreamsoftware.lockbuddy.database.CardEntity(
+            val card = CardEntity(
                 id = id,
                 cardHolderName = encryptionManager.encrypt(cardHolderName.trim()),
                 cardNumber = encryptionManager.encrypt(cardNumber),
@@ -131,7 +131,7 @@ class CardViewModel @Inject constructor(
 
             val currentTimeInMillis = System.currentTimeMillis()
 
-            val card = com.dreamsoftware.lockbuddy.database.CardEntity(
+            val card = CardEntity(
                 id = 0,
                 cardHolderName = encryptionManager.encrypt(cardHolderName.trim()),
                 cardNumber = encryptionManager.encrypt(cardNumber),
