@@ -88,19 +88,18 @@ dependencies {
     ksp("io.github.raamcosta.compose-destinations:ksp:1.9.52")
 
     // Room
-    implementation("androidx.room:room-runtime:2.5.2")
-    annotationProcessor("androidx.room:room-compiler:2.5.2")
-    ksp("androidx.room:room-compiler:2.5.2")
-
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.room.compiler)
     // Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.5.2")
+    implementation(libs.room.ktx)
 
     // Biometric
     implementation(libs.androidx.biometric)
 
     // Firebase Crashlytics
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
+    implementation(platform(libs.firebase.bom))
 
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
@@ -115,7 +114,7 @@ dependencies {
     implementation(libs.play.services.auth)
 
     // SplashScreen
-    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation(libs.core.splashscreen)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

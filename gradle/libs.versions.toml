@@ -17,6 +17,9 @@ play-services-auth = "20.7.0"
 security-crypto = "1.0.0"
 security-crypto-ktx = "1.0.0"
 firebase-auth = "22.2.0"
+room-version = "2.6.1"
+core-splashscreen = "1.0.1"
+firebase-bom = "33.0.0"
 
 [libraries]
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
@@ -43,6 +46,11 @@ ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-security-crypto-ktx = { group = "androidx.security", name = "security-crypto-ktx", version.ref = "security-crypto-ktx" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebase-auth" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room-version" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room-version" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room-version" }
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
