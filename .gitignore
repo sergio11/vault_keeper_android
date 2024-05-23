@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+<<<<<<< HEAD
+=======
+/app/google-services.json
+>>>>>>> b28f4fb... Initial commit
