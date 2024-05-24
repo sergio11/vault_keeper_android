@@ -12,11 +12,6 @@ plugins {
 
 android {
     namespace = "com.dreamsoftware.lockbuddy"
-
-    hilt {
-        enableAggregatingTask = true
-    }
-
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -53,6 +48,10 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
+    hilt {
+        enableAggregatingTask = true
+    }
+
     buildFeatures {
         compose = true
     }
@@ -82,6 +81,8 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.material.icons.extended)
+    implementation(libs.brownie.ui)
 
     // Dagger - Hilt
     implementation(libs.hilt.android)

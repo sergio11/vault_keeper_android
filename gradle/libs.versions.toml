@@ -27,6 +27,7 @@ core-splashscreen = "1.0.1"
 firebase-bom = "33.0.0"
 desugar-jdk-libs = "2.0.4"
 brownie-ui = "0.0.10"
+material-icons-extended = "1.6.7"
 
 [libraries]
 core-library-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
@@ -35,7 +36,7 @@ androidx-security-crypto = { module = "androidx.security:security-crypto", versi
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebase-auth-ktx" }
-
+material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons-extended" }
 #hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-android" }
