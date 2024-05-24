@@ -1,4 +1,4 @@
-package com.dreamsoftware.lockbuddy.ui.features.intro
+package com.dreamsoftware.lockbuddy.ui.features.onboarding
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK

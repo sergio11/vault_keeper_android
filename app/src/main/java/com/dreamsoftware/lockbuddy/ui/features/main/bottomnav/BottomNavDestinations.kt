@@ -1,4 +1,4 @@
-package com.dreamsoftware.lockbuddy.ui.bottomnav
+package com.dreamsoftware.lockbuddy.ui.features.main.bottomnav
 
 import androidx.annotation.StringRes
 

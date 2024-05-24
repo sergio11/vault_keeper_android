@@ -1,4 +1,4 @@
-package com.dreamsoftware.lockbuddy.ui.features.intro
+package com.dreamsoftware.lockbuddy.ui.features.onboarding
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
