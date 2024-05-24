@@ -9,12 +9,6 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import com.dreamsoftware.lockbuddy.ui.destinations.CardScreenDestination
-import com.dreamsoftware.lockbuddy.ui.destinations.Destination
-import com.dreamsoftware.lockbuddy.ui.destinations.IntroScreenDestination
-import com.dreamsoftware.lockbuddy.ui.destinations.MasterKeyScreenDestination
-import com.dreamsoftware.lockbuddy.ui.destinations.PasswordScreenDestination
-import com.dreamsoftware.lockbuddy.ui.destinations.UnlockScreenDestination
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -23,16 +17,6 @@ fun <T> oneShotFlow() = MutableSharedFlow<T>(
     onBufferOverflow = BufferOverflow.DROP_OLDEST
 )
 
-fun Destination.shouldShowBottomBar(): Boolean {
-
-    return (this !in listOf(
-        IntroScreenDestination,
-        UnlockScreenDestination,
-        MasterKeyScreenDestination,
-        PasswordScreenDestination,
-        CardScreenDestination
-    ))
-}
 
 fun Modifier.clickWithRipple(bounded: Boolean = true, onClick: () -> Unit) = composed {
     this.clickable(

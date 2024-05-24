@@ -43,22 +43,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dreamsoftware.lockbuddy.R
 import com.dreamsoftware.lockbuddy.signin.GoogleAuthUiClient
-import com.dreamsoftware.lockbuddy.ui.auth.NavigationSource
-import com.dreamsoftware.lockbuddy.ui.destinations.MasterKeyScreenDestination
 import com.dreamsoftware.lockbuddy.ui.theme.Blue
 import com.dreamsoftware.lockbuddy.ui.theme.poppinsFamily
 import com.dreamsoftware.lockbuddy.util.LocalSnackbar
 import com.google.android.gms.auth.api.identity.Identity
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Destination
 @Composable
 fun IntroScreen(
-    viewModel: IntroViewModel = hiltViewModel(),
-    navigator: DestinationsNavigator
+    viewModel: IntroViewModel = hiltViewModel()
 ) {
 
     val snackbar = LocalSnackbar.current
@@ -81,9 +75,9 @@ fun IntroScreen(
     val state by viewModel.state.collectAsState()
     LaunchedEffect(key1 = Unit) {
         if (googleAuthUiClient.getSignedInUser() != null) {
-            navigator.navigate(
+            /*navigator.navigate(
                 MasterKeyScreenDestination(NavigationSource.INTRO)
-            )
+            )*/
         }
     }
     val scope = rememberCoroutineScope()
@@ -105,15 +99,14 @@ fun IntroScreen(
         if (state.isSignInSuccessful) {
             viewModel.showSnackBar("Sign in successful")
 
-            navigator.navigate(
+            /*navigator.navigate(
                 MasterKeyScreenDestination(NavigationSource.INTRO)
-            )
+            )*/
             viewModel.resetState()
         }
     }
 
     IntroScreenContent(
-        navigator = navigator,
         googleAuthUiClient = googleAuthUiClient,
         launcher = launcher
     )
@@ -126,7 +119,6 @@ fun IntroScreen(
 @Composable
 fun IntroScreenContent(
     viewModel: IntroViewModel = hiltViewModel(),
-    navigator: DestinationsNavigator,
     googleAuthUiClient: GoogleAuthUiClient,
     launcher: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>
 ) {

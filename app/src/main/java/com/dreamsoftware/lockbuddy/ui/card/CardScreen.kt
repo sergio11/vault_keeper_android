@@ -45,8 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.dreamsoftware.lockbuddy.R
 import com.dreamsoftware.lockbuddy.ui.components.SheetSurface
 import com.dreamsoftware.lockbuddy.ui.password.TextFieldSeparator
@@ -61,11 +59,8 @@ import com.dreamsoftware.lockbuddy.util.clickWithRipple
 import com.dreamsoftware.lockbuddy.util.visualTransformation
 import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalComposeUiApi::class)
-@Destination
 @Composable
 fun CardScreen(
-    navigator: DestinationsNavigator,
     viewModel: CardViewModel = hiltViewModel(),
     cardId: Int
 ) {
@@ -106,7 +101,7 @@ fun CardScreen(
                 tint = Color.White,
                 contentDescription = "Go back",
                 modifier = Modifier.clickWithRipple {
-                    navigator.popBackStack()
+                    //navigator.popBackStack()
                 }
             )
 
@@ -456,7 +451,7 @@ fun CardScreen(
                 }
                 if (viewModel.success.value) {
                     LaunchedEffect(Unit) {
-                        navigator.popBackStack()
+                        //navigator.popBackStack()
                     }
                 }
             }

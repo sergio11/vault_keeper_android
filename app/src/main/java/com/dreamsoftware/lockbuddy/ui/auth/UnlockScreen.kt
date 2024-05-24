@@ -46,14 +46,8 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 import com.dreamsoftware.lockbuddy.R
 import com.dreamsoftware.lockbuddy.ui.components.SheetSurface
-import com.dreamsoftware.lockbuddy.ui.destinations.HomeScreenDestination
-import com.dreamsoftware.lockbuddy.ui.destinations.IntroScreenDestination
 import com.dreamsoftware.lockbuddy.ui.theme.BgBlack
 import com.dreamsoftware.lockbuddy.ui.theme.Blue
 import com.dreamsoftware.lockbuddy.ui.theme.Gray
@@ -62,10 +56,7 @@ import com.dreamsoftware.lockbuddy.util.LocalSnackbar
 import com.dreamsoftware.lockbuddy.util.isBiometricSupported
 
 @Composable
-@RootNavGraph(start = true)
-@Destination
 fun UnlockScreen(
-    navigator: DestinationsNavigator,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
 
@@ -94,7 +85,7 @@ fun UnlockScreen(
             // FIXME add if else for backwards compatibility
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                navigator.navigate(HomeScreenDestination)
+                //navigator.navigate(HomeScreenDestination)
                 viewModel.showSnackBarMsg("Authentication was successful")
             }
 
@@ -113,16 +104,16 @@ fun UnlockScreen(
 
     LaunchedEffect(Unit) {
         viewModel.navigateToHome.collect {
-            navigator.navigate(HomeScreenDestination) {
+            /*navigator.navigate(HomeScreenDestination) {
                 popUpTo(HomeScreenDestination) {
                     inclusive = true
                 }
-            }
+            }*/
         }
     }
 
     if (!viewModel.isUserLoggedIn) {
-        navigator.navigate(IntroScreenDestination)
+        //navigator.navigate(IntroScreenDestination)
     } else {
         UnlockScreenContent()
     }

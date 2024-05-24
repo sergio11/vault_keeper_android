@@ -20,13 +20,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 import com.dreamsoftware.lockbuddy.R
 import com.dreamsoftware.lockbuddy.ui.components.CreateMasterKeySheetContent
 import com.dreamsoftware.lockbuddy.ui.components.UpdateMasterKeySheetContent
-import com.dreamsoftware.lockbuddy.ui.destinations.HomeScreenDestination
 import com.dreamsoftware.lockbuddy.ui.theme.BgBlack
 import com.dreamsoftware.lockbuddy.ui.theme.poppinsFamily
 import com.dreamsoftware.lockbuddy.util.LocalSnackbar
@@ -36,10 +32,8 @@ enum class NavigationSource {
     SETTINGS
 }
 
-@Destination
 @Composable
 fun MasterKeyScreen(
-    navigator: DestinationsNavigator,
     navigationSource: NavigationSource,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
@@ -56,11 +50,11 @@ fun MasterKeyScreen(
 
     LaunchedEffect(Unit) {
         viewModel.navigateToHome.collect {
-            navigator.navigate(HomeScreenDestination) {
+            /*navigator.navigate(HomeScreenDestination) {
                 popUpTo(HomeScreenDestination) {
                     inclusive = true
                 }
-            }
+            }*/
         }
     }
 
@@ -95,7 +89,7 @@ fun MasterKeyScreen(
             if (navigationSource == NavigationSource.INTRO) {
                 (context as ComponentActivity).finish()
             } else {
-                navigator.popBackStack()
+                //navigator.popBackStack()
             }
         }
     }

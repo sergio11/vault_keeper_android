@@ -47,18 +47,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.google.android.gms.auth.api.identity.Identity
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 import com.dreamsoftware.lockbuddy.R
 import com.dreamsoftware.lockbuddy.signin.GoogleAuthUiClient
 import com.dreamsoftware.lockbuddy.signin.UserData
-import com.dreamsoftware.lockbuddy.ui.auth.NavigationSource
 import com.dreamsoftware.lockbuddy.ui.components.AlertDialogContent
 import com.dreamsoftware.lockbuddy.ui.components.BottomSheet
 import com.dreamsoftware.lockbuddy.ui.components.SheetSurface
-import com.dreamsoftware.lockbuddy.ui.destinations.IntroScreenDestination
-import com.dreamsoftware.lockbuddy.ui.destinations.MasterKeyScreenDestination
 import com.dreamsoftware.lockbuddy.ui.theme.BgBlack
 import com.dreamsoftware.lockbuddy.ui.theme.Blue
 import com.dreamsoftware.lockbuddy.ui.theme.LightBlue
@@ -75,10 +69,8 @@ data class SettingsItem(
     val onClick: () -> Unit
 )
 
-@Destination
 @Composable
 fun SettingsScreen(
-    navigator: DestinationsNavigator,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
 
@@ -100,7 +92,7 @@ fun SettingsScreen(
     }
     val user = googleAuthUiClient.getSignedInUser()
 
-    if (viewModel.showAllDataDeleteDialog) ConfirmDataDeletionDialog(navigator)
+    if (viewModel.showAllDataDeleteDialog) ConfirmDataDeletionDialog()
 
     Column(
         modifier = Modifier
@@ -123,7 +115,9 @@ fun SettingsScreen(
                 SettingsItem(
                     text = "Reset Master Key",
                     icon = R.drawable.icon_lock_open,
-                    onClick = { navigator.navigate(MasterKeyScreenDestination(NavigationSource.SETTINGS)) }
+                    onClick = {
+                       // navigator.navigate(MasterKeyScreenDestination(NavigationSource.SETTINGS))
+                    }
                 ),
                 if (isBiometricSupported(context)) SettingsItem(
                     text = "Fingerprint Unlock",
@@ -349,7 +343,6 @@ fun SettingsItemRow(
 
 @Composable
 private fun ConfirmDataDeletionDialog(
-    navigator: DestinationsNavigator,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
 
@@ -373,11 +366,11 @@ private fun ConfirmDataDeletionDialog(
             }
             viewModel.deleteAll()
             viewModel.showAllDataDeleteDialog = false
-            navigator.navigate(IntroScreenDestination) {
+            /*navigator.navigate(IntroScreenDestination) {
                 popUpTo(IntroScreenDestination) {
                     inclusive = true
                 }
-            }
+            }*/
         },
         dialogTitle = "Logout from lockbuddy?",
         dialogText = "Logging out will delete all your saved data including cards and passwords." +

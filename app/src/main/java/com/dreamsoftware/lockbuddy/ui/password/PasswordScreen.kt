@@ -51,8 +51,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.dreamsoftware.lockbuddy.R
 import com.dreamsoftware.lockbuddy.ui.components.SheetSurface
 import com.dreamsoftware.lockbuddy.ui.theme.BgBlack
@@ -62,10 +60,8 @@ import com.dreamsoftware.lockbuddy.ui.theme.poppinsFamily
 import com.dreamsoftware.lockbuddy.util.LocalSnackbar
 import com.dreamsoftware.lockbuddy.util.clickWithRipple
 
-@Destination
 @Composable
 fun PasswordScreen(
-    navigator: DestinationsNavigator,
     viewModel: PasswordViewModel = hiltViewModel(),
     accountId: Int
 ) {
@@ -105,7 +101,7 @@ fun PasswordScreen(
                 tint = Color.White,
                 contentDescription = "Go back",
                 modifier = Modifier.clickWithRipple {
-                    navigator.popBackStack()
+                    //navigator.popBackStack()
                 }
             )
 
@@ -534,7 +530,7 @@ fun PasswordScreen(
                 }
                 if (viewModel.success.value) {
                     LaunchedEffect(Unit) {
-                        navigator.popBackStack()
+                        //navigator.popBackStack()
                     }
                 }
             }

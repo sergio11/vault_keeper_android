@@ -74,8 +74,6 @@ import com.dreamsoftware.lockbuddy.ui.components.BottomSheet
 import com.dreamsoftware.lockbuddy.ui.components.SheetSurface
 import com.dreamsoftware.lockbuddy.ui.components.fab.FabButtonItem
 import com.dreamsoftware.lockbuddy.ui.components.fab.FabButtonMain
-import com.dreamsoftware.lockbuddy.ui.destinations.CardScreenDestination
-import com.dreamsoftware.lockbuddy.ui.destinations.PasswordScreenDestination
 import com.dreamsoftware.lockbuddy.ui.theme.BgBlack
 import com.dreamsoftware.lockbuddy.ui.theme.Blue
 import com.dreamsoftware.lockbuddy.ui.theme.Gray
@@ -84,14 +82,10 @@ import com.dreamsoftware.lockbuddy.util.AccountOrCard
 import com.dreamsoftware.lockbuddy.util.LocalSnackbar
 import com.dreamsoftware.lockbuddy.util.cardSuggestions
 import com.dreamsoftware.lockbuddy.util.suggestionsWithImages
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.delay
 
-@Destination
 @Composable
 fun HomeScreen(
-    navigator: DestinationsNavigator,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
@@ -167,8 +161,8 @@ fun HomeScreen(
                     fabIcon = fabIcon,
                     onFabItemClicked = {
                         when (it.label) {
-                            "Add Card" -> navigator.navigate(CardScreenDestination(-1))
-                            "Add Password" -> navigator.navigate(PasswordScreenDestination(-1))
+                            //"Add Card" -> navigator.navigate(CardScreenDestination(-1))
+                            //"Add Password" -> navigator.navigate(PasswordScreenDestination(-1))
                             else -> {
                                 // To handle other cases if needed
                             }
@@ -360,13 +354,13 @@ fun HomeScreen(
                                 when (item) {
                                     is AccountOrCard.AccountItem -> {
                                         if (viewModel.selectedOption == "All" || viewModel.selectedOption == "Passwords") {
-                                            AccountRow(navigator, item.account)
+                                            //AccountRow(navigator, item.account)
                                         }
                                     }
 
                                     is AccountOrCard.CardItem -> {
                                         if (viewModel.selectedOption == "All" || viewModel.selectedOption == "Cards") {
-                                            CardRow(navigator, item.card)
+                                            //CardRow(navigator, item.card)
                                         }
                                     }
                                 }
@@ -385,7 +379,6 @@ fun HomeScreen(
 
 @Composable
 fun AccountRow(
-    navigator: DestinationsNavigator,
     account: AccountEntity,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -518,7 +511,7 @@ fun AccountRow(
                                 )
                             },
                             onClick = {
-                                navigator.navigate(PasswordScreenDestination(account.id))
+                                //navigator.navigate(PasswordScreenDestination(account.id))
                                 expanded = false
                             },
                             trailingIcon = {
@@ -561,7 +554,6 @@ fun AccountRow(
 
 @Composable
 fun CardRow(
-    navigator: DestinationsNavigator,
     card: CardEntity,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -700,7 +692,7 @@ fun CardRow(
                             },
                             onClick = {
                                 //add edit screen navigation
-                                navigator.navigate(CardScreenDestination(card.id))
+                                //navigator.navigate(CardScreenDestination(card.id))
                                 expanded = false
                             },
                             trailingIcon = {
