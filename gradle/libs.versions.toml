@@ -26,7 +26,7 @@ room-version = "2.6.1"
 core-splashscreen = "1.0.1"
 firebase-bom = "33.0.0"
 desugar-jdk-libs = "2.0.4"
-brownie-ui = "0.0.10"
+brownie-ui = "0.0.11"
 material-icons-extended = "1.6.7"
 
 [libraries]

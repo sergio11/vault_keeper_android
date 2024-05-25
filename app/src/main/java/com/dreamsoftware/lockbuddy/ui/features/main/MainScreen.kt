@@ -35,6 +35,7 @@ fun MainScreen(
         ) { uiState ->
             MainScreenContent(
                 uiState = uiState,
+                currentDestination = navBackStackEntry?.destination,
                 navHostController = navController
             )
         }
