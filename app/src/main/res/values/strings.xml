@@ -22,8 +22,8 @@
     <string name="share_message">Check out</string>
 
     <!-- Onboarding screen -->
-    <string name="onboarding_main_title_text">Welcome to VaultKeeper!</string>
-    <string name="onboarding_subtitle_text">You can now manage your Passwords, Cards from Anywhere, Anytime.</string>
+    <string name="onboarding_main_title_text">You can now manage your Passwords, Cards from Anywhere, Anytime.</string>
+    <string name="onboarding_subtitle_text">Welcome to VaultKeeper!</string>
     <string name="onboarding_description_text">Manage your passwords and credentials with ease and security.</string>
     <string name="onboarding_login_button_text">Get Started!</string>
     <string name="onboarding_signup_button_text">Join Us!</string>

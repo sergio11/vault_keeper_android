@@ -22,7 +22,8 @@ fun OnboardingScreenContent(
     AccountScreen(
         mainTitleRes = R.string.onboarding_main_title_text,
         videoResourceId = R.raw.onboarding_video,
-        isLoading = uiState.isLoading
+        isLoading = uiState.isLoading,
+        enableVerticalScroll = false
     ) {
         BrownieText(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),

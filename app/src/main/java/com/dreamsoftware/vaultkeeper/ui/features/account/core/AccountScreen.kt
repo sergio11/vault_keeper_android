@@ -3,15 +3,18 @@ package com.dreamsoftware.vaultkeeper.ui.features.account.core
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieCardColumn
 import com.dreamsoftware.brownie.component.BrownieLoadingDialog
@@ -50,14 +53,14 @@ fun AccountScreen(
             if(!enableVerticalScroll) {
                 Spacer(modifier = Modifier.weight(1f))
             }
-            /*SvgImage(
+            Image(
+                painter = painterResource(id = R.drawable.main_logo),
+                contentDescription = "",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
-                    .padding(horizontal = 32.dp, vertical = 10.dp),
-                svgResource = R.drawable.app_main_logo,
-                contentDescription = ""
-            )*/
+                    .padding(horizontal = 32.dp, vertical = 10.dp)
+            )
             BrownieText(
                 modifier = Modifier
                     .fillMaxWidth()
