@@ -34,5 +34,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Lockbuddy"
+rootProject.name = "VaultKeeper"
 include(":app")

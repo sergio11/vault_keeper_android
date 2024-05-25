@@ -11,11 +11,11 @@ plugins {
 }
 
 android {
-    namespace = "com.dreamsoftware.lockbuddy"
+    namespace = "com.dreamsoftware.vaultkeeper"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.dreamsoftware.lockbuddy"
+        applicationId = "com.dreamsoftware.vaultkeeper"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
