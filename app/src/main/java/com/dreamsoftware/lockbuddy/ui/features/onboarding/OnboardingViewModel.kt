@@ -1,46 +1,26 @@
 package com.dreamsoftware.lockbuddy.ui.features.onboarding
 
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import androidx.lifecycle.ViewModel
-import com.dreamsoftware.lockbuddy.signin.SignInResult
-import com.dreamsoftware.lockbuddy.signin.SignInState
-import com.dreamsoftware.lockbuddy.util.oneShotFlow
+import com.dreamsoftware.brownie.core.BrownieViewModel
+import com.dreamsoftware.brownie.core.SideEffect
+import com.dreamsoftware.brownie.core.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class OnboardingViewModel @Inject constructor() : ViewModel() {
+class OnboardingViewModel @Inject constructor() : BrownieViewModel<OnboardingUiState, OnboardingSideEffects>() {
+    override fun onGetDefaultState(): OnboardingUiState = OnboardingUiState()
 
-    private val _state = MutableStateFlow(SignInState())
-    val state = _state.asStateFlow()
+}
 
-    val messages = oneShotFlow<String>()
+data class OnboardingUiState(
+    override val isLoading: Boolean = false,
+    override val error: String? = null,
+    val isAuth: Boolean = false
+): UiState<OnboardingUiState>(isLoading, error) {
+    override fun copyState(isLoading: Boolean, error: String?): OnboardingUiState =
+        copy(isLoading = isLoading, error = error)
+}
 
-    fun onSignInResult(result: SignInResult) {
-        _state.update {
-            it.copy(
-                isSignInSuccessful = result.data != null,
-                signInError = result.errorMessage
-            )
-        }
-    }
-
-    fun resetState() {
-        _state.update { SignInState() }
-    }
-
-    fun showSnackBar(text: String) {
-        messages.tryEmit(text)
-    }
-
-    fun isNetworkConnected(connectivityManager: ConnectivityManager): Boolean {
-        val network = connectivityManager.activeNetwork
-        val capabilities = connectivityManager.getNetworkCapabilities(network)
-        return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
-    }
-
+sealed interface OnboardingSideEffects: SideEffect {
+    data object OnSignInSuccessfully: OnboardingSideEffects
 }

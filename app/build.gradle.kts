@@ -105,21 +105,14 @@ dependencies {
     // Biometric
     implementation(libs.androidx.biometric)
 
-    // Firebase Crashlytics
-    // Import the BoM for the Firebase platform
+     // Firebase
     implementation(platform(libs.firebase.bom))
-
-    // Add the dependencies for the Crashlytics and Analytics libraries
-    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation(libs.firebase.auth.ktx)
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
 
     // Coil
     implementation(libs.coil.compose)
-
-    // Auth and google play services
-    implementation(libs.firebase.auth.ktx)
-    implementation(libs.play.services.auth)
 
     // SplashScreen
     implementation(libs.core.splashscreen)

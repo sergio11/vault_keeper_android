@@ -46,10 +46,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.google.android.gms.auth.api.identity.Identity
 import com.dreamsoftware.lockbuddy.R
-import com.dreamsoftware.lockbuddy.signin.GoogleAuthUiClient
-import com.dreamsoftware.lockbuddy.signin.UserData
+import com.dreamsoftware.lockbuddy.domain.model.AuthUserBO
 import com.dreamsoftware.lockbuddy.ui.core.components.AlertDialogContent
 import com.dreamsoftware.lockbuddy.ui.core.components.BottomSheet
 import com.dreamsoftware.lockbuddy.ui.core.components.SheetSurface
@@ -84,13 +82,6 @@ fun SettingsScreen(
 
     var showSheet by remember { mutableStateOf(false) }
 
-    val googleAuthUiClient by lazy {
-        GoogleAuthUiClient(
-            context = context,
-            oneTapClient = Identity.getSignInClient(context)
-        )
-    }
-    val user = googleAuthUiClient.getSignedInUser()
 
     if (viewModel.showAllDataDeleteDialog) ConfirmDataDeletionDialog()
 
@@ -163,7 +154,7 @@ fun SettingsScreen(
                     .verticalScroll(rememberScrollState())
             ) {
 
-                UserProfileRow(userData = user)
+                UserProfileRow(userData = null)
 
                 Divider(
                     color = Color.LightGray,
@@ -217,7 +208,7 @@ fun SettingsScreen(
 }
 
 @Composable
-fun UserProfileRow(userData: UserData?) {
+fun UserProfileRow(userData: AuthUserBO?) {
 
     Card(
         modifier = Modifier
@@ -237,7 +228,7 @@ fun UserProfileRow(userData: UserData?) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            userData?.profilePictureUrl?.replace(
+            userData?.photoUrl?.replace(
                 oldValue = "s96-c", newValue = "s192-c", ignoreCase = true
             )?.let { url ->
                 AsyncImage(
@@ -255,7 +246,7 @@ fun UserProfileRow(userData: UserData?) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
-                userData?.username?.let { username ->
+                userData?.displayName?.let { username ->
                     Text(
                         text = username,
                         fontSize = 18.sp,
@@ -350,19 +341,13 @@ private fun ConfirmDataDeletionDialog(
 
     val context = LocalContext.current
 
-    val googleAuthUiClient by lazy {
-        GoogleAuthUiClient(
-            context = context,
-            oneTapClient = Identity.getSignInClient(context)
-        )
-    }
     AlertDialogContent(
         onDismissRequest = {
             viewModel.showAllDataDeleteDialog = false
         },
         onConfirmation = {
             scope.launch(Dispatchers.IO) {
-                googleAuthUiClient.signOut()
+                //googleAuthUiClient.signOut()
             }
             viewModel.deleteAll()
             viewModel.showAllDataDeleteDialog = false

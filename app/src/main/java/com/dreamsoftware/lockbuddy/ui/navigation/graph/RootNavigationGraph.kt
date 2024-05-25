@@ -33,7 +33,9 @@ fun RootNavigationGraph(
             route = Screens.Onboarding.route
         ) {
             with(navController) {
-                OnboardingScreen()
+                OnboardingScreen(
+                    onGoToHome = {}
+                )
             }
         }
         composable(
