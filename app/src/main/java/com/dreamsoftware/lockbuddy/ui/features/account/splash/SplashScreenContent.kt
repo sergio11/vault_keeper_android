@@ -1,4 +1,4 @@
-package com.dreamsoftware.lockbuddy.ui.features.splash
+package com.dreamsoftware.lockbuddy.ui.features.account.splash
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

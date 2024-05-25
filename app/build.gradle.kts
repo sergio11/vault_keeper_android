@@ -95,6 +95,9 @@ dependencies {
     // Crypto security
     implementation(libs.androidx.security.crypto)
 
+    //Exoplayer
+    implementation(libs.exoplayer)
+
     // Room
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)

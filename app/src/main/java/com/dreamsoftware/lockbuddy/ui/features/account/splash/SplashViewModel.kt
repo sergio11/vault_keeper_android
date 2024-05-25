@@ -1,4 +1,4 @@
-package com.dreamsoftware.lockbuddy.ui.features.splash
+package com.dreamsoftware.lockbuddy.ui.features.account.splash
 
 import androidx.lifecycle.viewModelScope
 import com.dreamsoftware.brownie.core.BrownieViewModel

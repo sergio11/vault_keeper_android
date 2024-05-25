@@ -12,7 +12,6 @@ hilt-navigation-compose = "1.2.0"
 kotlin = "1.9.10"
 core-ktx = "1.13.1"
 junit = "4.13.2"
-exoplayer = "2.18.7"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.8.0"
@@ -27,6 +26,7 @@ firebase-bom = "33.0.0"
 desugar-jdk-libs = "2.0.4"
 brownie-ui = "0.0.11"
 material-icons-extended = "1.6.7"
+exoplayer = "2.18.7"
 
 [libraries]
 core-library-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
@@ -62,6 +62,8 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room-ver
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 brownie-ui = { module = "com.dreamsoftware.libraries:brownie-ui", version.ref = "brownie-ui" }
+#Exoplayer
+exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle" }

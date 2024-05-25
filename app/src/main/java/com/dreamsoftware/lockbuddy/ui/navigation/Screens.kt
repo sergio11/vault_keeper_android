@@ -6,6 +6,8 @@ sealed class Screens(val route: String, arguments: List<NamedNavArgument> = empt
 
     data object Splash: Screens("splash")
     data object Onboarding: Screens("onboarding")
+    data object SignIn: Screens("sign_in")
+    data object SignUp: Screens("sign_up")
 
     sealed class Main private constructor(route: String) : Screens(route) {
         companion object {

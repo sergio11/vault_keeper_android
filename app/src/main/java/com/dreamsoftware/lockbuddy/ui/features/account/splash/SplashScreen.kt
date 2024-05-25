@@ -1,4 +1,4 @@
-package com.dreamsoftware.lockbuddy.ui.features.splash
+package com.dreamsoftware.lockbuddy.ui.features.account.splash
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
