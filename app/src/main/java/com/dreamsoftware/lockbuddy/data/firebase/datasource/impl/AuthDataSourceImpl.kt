@@ -1,19 +1,20 @@
 package com.dreamsoftware.lockbuddy.data.firebase.datasource.impl
 
+import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
 import com.dreamsoftware.lockbuddy.data.firebase.datasource.IAuthDataSource
 import com.dreamsoftware.lockbuddy.data.firebase.dto.AuthUserDTO
 import com.dreamsoftware.lockbuddy.data.firebase.exception.AuthException
 import com.dreamsoftware.lockbuddy.data.firebase.exception.SignInException
 import com.dreamsoftware.lockbuddy.data.firebase.exception.SignUpException
-import com.dreamsoftware.lockbuddy.data.firebase.mapper.UserAuthenticatedMapper
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 // Implementation of the IAuthDataSource interface
 internal class AuthDataSourceImpl(
-    private val userAuthenticatedMapper: UserAuthenticatedMapper, // Mapper to convert Firebase user to AuthUserDTO
+    private val userAuthenticatedMapper: IBrownieOneSideMapper<FirebaseUser, AuthUserDTO>, // Mapper to convert Firebase user to AuthUserDTO
     private val firebaseAuth: FirebaseAuth // Firebase Authentication instance
 ) : IAuthDataSource {
 

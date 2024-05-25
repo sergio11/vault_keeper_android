@@ -1,9 +1,12 @@
 package com.dreamsoftware.lockbuddy.data.firebase.di
 
+import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
 import com.dreamsoftware.lockbuddy.data.firebase.datasource.IAuthDataSource
 import com.dreamsoftware.lockbuddy.data.firebase.datasource.impl.AuthDataSourceImpl
+import com.dreamsoftware.lockbuddy.data.firebase.dto.AuthUserDTO
 import com.dreamsoftware.lockbuddy.data.firebase.mapper.UserAuthenticatedMapper
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +24,7 @@ class FirebaseModule {
      */
     @Provides
     @Singleton
-    fun provideUserAuthenticatedMapper(): UserAuthenticatedMapper = UserAuthenticatedMapper()
+    fun provideUserAuthenticatedMapper(): IBrownieOneSideMapper<FirebaseUser, AuthUserDTO> = UserAuthenticatedMapper()
 
     /**
      * Provides a singleton instance of FirebaseAuth.
