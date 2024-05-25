@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">LockBuddy</string>
+
+    <string name="loading_dialog_title_text">Loading</string>
+    <string name="loading_dialog_description_text">Please wait while we fetch the data…</string>
+
+    <string name="splash_loading_title">Welcome to LockBuddy. We\'re setting up everything to keep your credentials secure. Please wait a moment.</string>
+
     <string name="intro_tagline_1">Securely Managing Digital Life</string>
     <string name="intro_tagline_2">You can now manage your Passwords, Cards from Anywhere, Anytime.</string>
     <string name="setup_key_tagline_1">Let\'s make your digital data secured</string>

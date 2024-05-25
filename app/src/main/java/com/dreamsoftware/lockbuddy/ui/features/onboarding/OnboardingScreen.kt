@@ -1,6 +1,5 @@
 package com.dreamsoftware.lockbuddy.ui.features.onboarding
 
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.net.ConnectivityManager
@@ -49,10 +48,9 @@ import com.dreamsoftware.lockbuddy.util.LocalSnackbar
 import com.google.android.gms.auth.api.identity.Identity
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun IntroScreen(
-    viewModel: IntroViewModel = hiltViewModel()
+fun OnboardingScreen(
+    viewModel: OnboardingViewModel = hiltViewModel()
 ) {
 
     val snackbar = LocalSnackbar.current
@@ -118,7 +116,7 @@ fun IntroScreen(
 
 @Composable
 fun IntroScreenContent(
-    viewModel: IntroViewModel = hiltViewModel(),
+    viewModel: OnboardingViewModel = hiltViewModel(),
     googleAuthUiClient: GoogleAuthUiClient,
     launcher: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>
 ) {
@@ -132,7 +130,7 @@ fun IntroScreenContent(
         modifier = Modifier.fillMaxSize()
     ) {
         Image(
-            painterResource(id = R.drawable.surviellance),
+            painterResource(id = R.drawable.main_background),
             contentDescription = "Background Image",
             contentScale = ContentScale.Crop
         )
