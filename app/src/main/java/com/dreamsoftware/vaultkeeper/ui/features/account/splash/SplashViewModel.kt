@@ -4,24 +4,35 @@ import androidx.lifecycle.viewModelScope
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
+import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserSessionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(): BrownieViewModel<SplashUiState, SplashSideEffects>() {
+class SplashViewModel @Inject constructor(
+    private val verifyUserSessionUseCase: VerifyUserSessionUseCase
+): BrownieViewModel<SplashUiState, SplashSideEffects>() {
     override fun onGetDefaultState(): SplashUiState = SplashUiState()
 
     fun verifySession() {
         viewModelScope.launch {
             delay(4000)
-            onVerifyUserSessionFailed()
+            executeUseCase(
+                useCase = verifyUserSessionUseCase,
+                onSuccess = ::onVerifyUserSessionCompleted,
+                onFailed = ::onVerifyUserSessionFailed
+            )
         }
     }
 
     private fun onVerifyUserSessionCompleted(hasActiveSession: Boolean) {
-        launchSideEffect(SplashSideEffects.UserNotAuthenticated)
+        launchSideEffect(if(hasActiveSession) {
+            SplashSideEffects.UserAlreadyAuthenticated
+        } else {
+            SplashSideEffects.UserNotAuthenticated
+        })
     }
 
     private fun onVerifyUserSessionFailed() {

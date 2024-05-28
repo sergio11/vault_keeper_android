@@ -30,6 +30,7 @@ fun AccountScreen(
     @RawRes videoResourceId: Int? = null,
     @DrawableRes screenBackgroundRes: Int? = null,
     isLoading: Boolean,
+    errorMessage: String? = null,
     enableVerticalScroll: Boolean = true,
     screenContent: @Composable ColumnScope.() -> Unit
 ) {
@@ -44,6 +45,7 @@ fun AccountScreen(
         backgroundRes = screenBackgroundRes,
         enableVerticalScroll = enableVerticalScroll,
         hasTopBar = false,
+        errorMessage = errorMessage,
         onBuildBackgroundContent = {
             videoResourceId?.let {
                 CommonVideoBackground(videoResourceId = it)

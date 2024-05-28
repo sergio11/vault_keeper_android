@@ -24,7 +24,8 @@ fun SignInScreenContent(
     with(uiState){
         AccountScreen(
             mainTitleRes = R.string.signin_main_title_text,
-            isLoading = uiState.isLoading,
+            isLoading = isLoading,
+            errorMessage = error,
             screenBackgroundRes = R.drawable.main_background) {
             BrownieText(
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp),

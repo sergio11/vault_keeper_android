@@ -1,17 +1,20 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.signin
 
 import android.util.Patterns
-import androidx.lifecycle.viewModelScope
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
+import com.dreamsoftware.brownie.utils.EMPTY
+import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
+import com.dreamsoftware.vaultkeeper.domain.usecase.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(): BrownieViewModel<SignInUiState, SignInSideEffects>(), SignInScreenActionListener {
+class SignInViewModel @Inject constructor(
+    private val signInUseCase: SignInUseCase,
+    private val signInScreenSimpleErrorMapper: SignInScreenSimpleErrorMapper
+): BrownieViewModel<SignInUiState, SignInSideEffects>(), SignInScreenActionListener {
 
     private companion object {
         const val MIN_PASSWORD_LENGTH = 6
@@ -22,7 +25,7 @@ class SignInViewModel @Inject constructor(): BrownieViewModel<SignInUiState, Sig
         updateState {
             it.copy(
                 email = newEmail,
-                isLoginButtonEnabled = loginButtonShouldBeEnabled(newEmail, it.password.orEmpty())
+                isLoginButtonEnabled = loginButtonShouldBeEnabled(newEmail, it.password)
             )
         }
     }
@@ -31,35 +34,41 @@ class SignInViewModel @Inject constructor(): BrownieViewModel<SignInUiState, Sig
         updateState {
             it.copy(
                 password = newPassword,
-                isLoginButtonEnabled = loginButtonShouldBeEnabled(it.email.orEmpty(), newPassword)
+                isLoginButtonEnabled = loginButtonShouldBeEnabled(it.email, newPassword)
             )
         }
     }
 
     override fun onSignIn() {
-        viewModelScope.launch {
-            updateState {
-                it.copy(isLoading = true)
-            }
-            delay(4500)
-            launchSideEffect(SignInSideEffects.UserAuthenticatedSuccessfully)
-            updateState {
-                it.copy(isLoading = false)
-            }
+        with(uiState.value) {
+            executeUseCaseWithParams(
+                useCase = signInUseCase,
+                params = SignInUseCase.Params(email, password),
+                onSuccess = ::onSignInSuccessfully,
+                onMapExceptionToState = ::onMapExceptionToState
+            )
         }
-
     }
 
     private fun loginButtonShouldBeEnabled(email: String, password: String) =
         Patterns.EMAIL_ADDRESS.matcher(email).matches()
                 && password.length > MIN_PASSWORD_LENGTH
+
+    private fun onSignInSuccessfully(authUserBO: AuthUserBO) {
+        launchSideEffect(SignInSideEffects.UserAuthenticatedSuccessfully)
+    }
+
+    private fun onMapExceptionToState(ex: Exception, uiState: SignInUiState) =
+        uiState.copy(
+            error = signInScreenSimpleErrorMapper.mapToMessage(ex)
+        )
 }
 
 data class SignInUiState(
     override val isLoading: Boolean = false,
     override val error: String? = null,
-    val email: String? = null,
-    val password: String? = null,
+    val email: String = String.EMPTY,
+    val password: String = String.EMPTY,
     val isLoginButtonEnabled: Boolean = false
 ): UiState<SignInUiState>(isLoading, error) {
     override fun copyState(isLoading: Boolean, error: String?): SignInUiState =

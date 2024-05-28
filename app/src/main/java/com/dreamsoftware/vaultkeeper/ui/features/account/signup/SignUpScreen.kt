@@ -17,6 +17,7 @@ fun SignUpScreen(
         onSideEffect = {
             when(it) {
                 SignUpSideEffects.NavigateToSignIn -> onGoToSignIn()
+                SignUpSideEffects.RegisteredSuccessfully -> onBackPressed()
             }
         }
     ) { uiState ->

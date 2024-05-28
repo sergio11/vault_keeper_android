@@ -20,7 +20,8 @@
     <string name="reset_key_tagline">Reset your Master Key to secure your credentials with end-to-end encryption</string>
     <string name="web_client_id">392611333096-pued9mjnmvfkfnvs6vqulkrd44c19rvl.apps.googleusercontent.com</string>
     <string name="share_message">Check out</string>
-
+    <string name="generic_form_invalid_data_provided">Invalid data provided, please check it and try again.</string>
+    <string name="generic_error_exception">An error occurred, please try again.</string>
     <!-- Onboarding screen -->
     <string name="onboarding_main_title_text">You can now manage your Passwords, Cards from Anywhere, Anytime.</string>
     <string name="onboarding_subtitle_text">Welcome to VaultKeeper!</string>
