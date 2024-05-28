@@ -47,7 +47,7 @@ class SignInViewModel @Inject constructor(
                 onSuccess = ::onSignInSuccessfully,
                 onMapExceptionToState = ::onMapExceptionToState
             )*/
-            launchSideEffect(SignInSideEffects.NoMasterKeyCreated)
+            launchSideEffect(SignInSideEffects.UserAuthenticatedSuccessfully)
         }
     }
 

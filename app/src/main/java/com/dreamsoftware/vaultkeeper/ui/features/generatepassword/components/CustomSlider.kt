@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.ui.features.generate
+package com.dreamsoftware.vaultkeeper.ui.features.generatepassword.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -10,14 +10,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.dreamsoftware.brownie.component.BrownieText
+import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +29,7 @@ fun CustomSlider(
     activeTrackColor: Color = Blue,
     inactiveTrackColor: Color = Color.DarkGray,
     thumbTextColor: Color = Color.Black, // Changed to black
-    interactionSource: MutableInteractionSource
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
     Slider(
         value = value,
@@ -55,11 +55,10 @@ fun CustomSlider(
                             .background(color = Color.White, shape = CircleShape),
                         contentAlignment = Alignment.Center,
                         content = {
-                            Text(
-                                text = value.toInt().toString(),
-                                color = thumbTextColor,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.SemiBold
+                            BrownieText(
+                                type = BrownieTextTypeEnum.LABEL_MEDIUM,
+                                titleText = value.toInt().toString(),
+                                textColor = thumbTextColor
                             )
                         }
                     )

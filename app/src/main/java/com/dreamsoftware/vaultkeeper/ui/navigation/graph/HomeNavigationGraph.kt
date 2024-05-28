@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.dreamsoftware.vaultkeeper.ui.features.generate.GenerateScreen
+import com.dreamsoftware.vaultkeeper.ui.features.generatepassword.GeneratePasswordScreen
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreen
 import com.dreamsoftware.vaultkeeper.ui.features.settings.SettingsScreen
 import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
@@ -26,7 +26,7 @@ fun NavGraphBuilder.HomeNavigationGraph(navController: NavHostController) {
             route = Screens.Main.Home.Generate.route
         ) {
             with(navController) {
-                GenerateScreen()
+                GeneratePasswordScreen()
             }
         }
 
