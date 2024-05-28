@@ -1,8 +1,7 @@
-package com.dreamsoftware.vaultkeeper.ui.core.components
+package com.dreamsoftware.vaultkeeper.ui.features.account.createmasterkey
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,18 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -43,17 +38,58 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.dreamsoftware.brownie.component.BrownieButton
+import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
+import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
+import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
 import com.dreamsoftware.vaultkeeper.ui.features.auth.AuthViewModel
-import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
-import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 
 @Composable
-fun CreateMasterKeySheetContent(
+fun CreateMasterKeyScreenContent(
+    uiState: CreateMasterKeyUiState
+) {
+    with(uiState) {
+        BrownieScreenContent(
+            enableVerticalScroll = false,
+            hasTopBar = false,
+            errorMessage = error,
+            backgroundRes = R.drawable.main_background
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceAround,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(32.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.main_logo),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(120.dp)
+                        .padding(horizontal = 32.dp, vertical = 10.dp)
+                )
+                BrownieText(
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 32.dp),
+                    textColor = MaterialTheme.colorScheme.onPrimary,
+                    type = BrownieTextTypeEnum.HEADLINE_MEDIUM,
+                    titleRes = R.string.setup_key_tagline_1
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+                CreateMasterKeySheetContent()
+            }
+        }
+    }
+}
+
+@Composable
+private fun CreateMasterKeySheetContent(
     viewModel: AuthViewModel = hiltViewModel()
 ) {
     /*
@@ -77,7 +113,6 @@ fun CreateMasterKeySheetContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = BgBlack)
     ) {
 
         Box(
@@ -104,7 +139,7 @@ fun CreateMasterKeySheetContent(
                         modifier = Modifier
                             .padding(top = 16.dp, bottom = 6.dp)
                             .fillMaxWidth(),
-                        type = BrownieTextTypeEnum.LABEL_LARGE,
+                        type = BrownieTextTypeEnum.TITLE_MEDIUM,
                         titleRes = R.string.setup_master_key,
                         textAlign = TextAlign.Center
                     )
@@ -113,7 +148,7 @@ fun CreateMasterKeySheetContent(
                         modifier = Modifier
                             .padding(top = 6.dp, start = 16.dp, end = 16.dp)
                             .fillMaxWidth(),
-                        type = BrownieTextTypeEnum.LABEL_LARGE,
+                        type = BrownieTextTypeEnum.BODY_LARGE,
                         titleRes = R.string.setup_key_tagline_2,
                         textAlign = TextAlign.Center
                     )
@@ -242,36 +277,14 @@ fun CreateMasterKeySheetContent(
                         }
                     )
 
-                    Button(
+                    BrownieButton(
                         modifier = Modifier
                             .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
                             .fillMaxWidth(),
-                        onClick = {
-                            viewModel.validateAndSaveMasterKey()
-                        },
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Blue,
-                            contentColor = Color.White
-                        )
+                        type = BrownieButtonTypeEnum.LARGE,
+                        text = "Save Master Key"
                     ) {
-                        AnimatedContent(viewModel.isLoading, label = "") {
-                            if (it) {
-                                CircularProgressIndicator(
-                                    color = Color.White,
-                                    modifier = Modifier.size(24.dp)
-                                )
-                            } else {
-                                Text(
-                                    text = "Save Master Key",
-                                    style = TextStyle(
-                                        fontSize = 22.sp,
-                                        fontFamily = poppinsFamily,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                )
-                            }
-                        }
+                        viewModel.validateAndSaveMasterKey()
                     }
                 }
             }

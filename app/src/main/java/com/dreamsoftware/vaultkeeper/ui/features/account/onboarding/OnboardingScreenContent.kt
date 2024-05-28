@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.onboarding
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -40,12 +41,14 @@ fun OnboardingScreenContent(
         )
         Spacer(modifier = Modifier.padding(bottom = 20.dp))
         BrownieButton(
+            modifier = Modifier.fillMaxWidth(0.8f),
             textRes = R.string.onboarding_login_button_text,
             type = BrownieButtonTypeEnum.LARGE,
             onClick = actionListener::onNavigateToSignIn
         )
         Spacer(modifier = Modifier.padding(bottom = 10.dp))
         BrownieButton(
+            modifier = Modifier.fillMaxWidth(0.8f),
             textRes = R.string.onboarding_signup_button_text,
             type = BrownieButtonTypeEnum.LARGE,
             style = BrownieButtonStyleTypeEnum.INVERSE,

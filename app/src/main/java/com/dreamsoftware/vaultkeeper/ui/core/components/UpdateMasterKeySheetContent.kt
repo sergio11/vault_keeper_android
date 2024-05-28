@@ -28,7 +28,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
@@ -52,7 +51,6 @@ import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun UpdateMasterKeySheetContent(
     viewModel: AuthViewModel = hiltViewModel()

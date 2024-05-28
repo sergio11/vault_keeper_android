@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.dreamsoftware.vaultkeeper.ui.features.account.createmasterkey.CreateMasterKeyScreen
 import com.dreamsoftware.vaultkeeper.ui.features.account.onboarding.OnboardingScreen
 import com.dreamsoftware.vaultkeeper.ui.features.account.signin.SignInScreen
 import com.dreamsoftware.vaultkeeper.ui.features.account.signup.SignUpScreen
@@ -57,6 +58,9 @@ fun RootNavigationGraph(
                     onAuthenticated = {
                         navigate(Screens.Main.route)
                     },
+                    onMasterKeyNeeded = {
+                        navigate(Screens.CreateMasterKey.route)
+                    },
                     onBackPressed = {
                         popBackStack()
                     }
@@ -75,6 +79,19 @@ fun RootNavigationGraph(
                     onBackPressed = {
                         popBackStack()
                     }
+                )
+            }
+        }
+
+        composable(
+            route = Screens.CreateMasterKey.route
+        ) {
+            with(navController) {
+                CreateMasterKeyScreen(
+                    onMasterKeyCreated = {
+                        navigate(Screens.Main.route)
+                    },
+                    onBackPressed = {}
                 )
             }
         }

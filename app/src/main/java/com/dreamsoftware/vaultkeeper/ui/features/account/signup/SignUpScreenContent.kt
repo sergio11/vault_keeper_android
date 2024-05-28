@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.signup
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -57,6 +58,7 @@ fun SignUpScreenContent(
             )
             Spacer(modifier = Modifier.padding(bottom = 20.dp))
             BrownieButton(
+                modifier = Modifier.fillMaxWidth(0.8f),
                 enabled = isSignUpButtonEnabled,
                 textRes = R.string.signup_signup_button_text,
                 type = BrownieButtonTypeEnum.LARGE,
@@ -64,6 +66,7 @@ fun SignUpScreenContent(
             )
             Spacer(modifier = Modifier.padding(bottom = 10.dp))
             BrownieButton(
+                modifier = Modifier.fillMaxWidth(0.8f),
                 textRes = R.string.signup_already_has_account_text,
                 type = BrownieButtonTypeEnum.LARGE,
                 style = BrownieButtonStyleTypeEnum.TRANSPARENT,

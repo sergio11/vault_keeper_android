@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.signin
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -55,6 +56,7 @@ fun SignInScreenContent(
             )
             Spacer(modifier = Modifier.padding(bottom = 20.dp))
             BrownieButton(
+                modifier = Modifier.fillMaxWidth(0.8f),
                 enabled = isLoginButtonEnabled,
                 textRes = R.string.signin_login_button_text,
                 type = BrownieButtonTypeEnum.LARGE,

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -52,9 +53,11 @@ fun AccountScreen(
             }
         },
         screenContent = {
-            if(!enableVerticalScroll) {
-                Spacer(modifier = Modifier.weight(1f))
-            }
+            Spacer(modifier = if(enableVerticalScroll) {
+                Modifier.size(30.dp)
+            } else {
+                Modifier.weight(1f)
+            })
             Image(
                 painter = painterResource(id = R.drawable.main_logo),
                 contentDescription = "",
@@ -72,9 +75,11 @@ fun AccountScreen(
                 titleRes = mainTitleRes,
                 textBold = true
             )
-            if(!enableVerticalScroll) {
-                Spacer(modifier = Modifier.weight(1f))
-            }
+            Spacer(modifier = if(enableVerticalScroll) {
+                Modifier.size(30.dp)
+            } else {
+                Modifier.weight(1f)
+            })
             BrownieCardColumn(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.7f)

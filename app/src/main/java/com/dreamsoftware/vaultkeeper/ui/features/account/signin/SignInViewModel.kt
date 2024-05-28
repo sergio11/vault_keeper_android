@@ -41,12 +41,13 @@ class SignInViewModel @Inject constructor(
 
     override fun onSignIn() {
         with(uiState.value) {
-            executeUseCaseWithParams(
+            /*executeUseCaseWithParams(
                 useCase = signInUseCase,
                 params = SignInUseCase.Params(email, password),
                 onSuccess = ::onSignInSuccessfully,
                 onMapExceptionToState = ::onMapExceptionToState
-            )
+            )*/
+            launchSideEffect(SignInSideEffects.NoMasterKeyCreated)
         }
     }
 
@@ -77,4 +78,5 @@ data class SignInUiState(
 
 sealed interface SignInSideEffects: SideEffect {
     data object UserAuthenticatedSuccessfully: SignInSideEffects
+    data object NoMasterKeyCreated: SignInSideEffects
 }
