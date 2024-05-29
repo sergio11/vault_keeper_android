@@ -3,6 +3,9 @@ package com.dreamsoftware.vaultkeeper.di
 import android.content.Context
 import androidx.room.Room
 import com.dreamsoftware.vaultkeeper.data.database.LockBuddyDatabase
+import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
+import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsDataSource
+import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.SecureCardsDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,4 +32,9 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideCardDao(db: LockBuddyDatabase) = db.cardDao()
+
+    @Singleton
+    @Provides
+    fun provideSecureCardsDataSource(cardDao: CardDao): ISecureCardsDataSource
+        = SecureCardsDataSourceImpl(cardDao)
 }

@@ -3,7 +3,7 @@ package com.dreamsoftware.vaultkeeper.data.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "card")
+@Entity(tableName = "secure_cards")
 data class CardEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,

@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CardDao {
@@ -21,12 +20,12 @@ interface CardDao {
     @Delete
     suspend fun deleteCard(cardEntity: CardEntity)
 
-    @Query("SELECT * FROM card ORDER BY id ASC")
-    fun getAllCards(): Flow<List<CardEntity>>
+    @Query("SELECT * FROM secure_cards ORDER BY id ASC")
+    fun getAllCards(): List<CardEntity>
 
-    @Query("SELECT * FROM `card` WHERE id = :id")
-    fun getCardsById(id: Int): Flow<CardEntity>
+    @Query("SELECT * FROM `secure_cards` WHERE id = :id")
+    fun getCardsById(id: Int): CardEntity?
 
-    @Query("DELETE FROM card")
+    @Query("DELETE FROM secure_cards")
     fun deleteAllCards()
 }
