@@ -7,3 +7,6 @@ class SignInException(message: String? = null, cause: Throwable? = null): UserDa
 class SignUpException(message: String? = null, cause: Throwable? = null): UserDataException(message, cause)
 class CloseSessionException(message: String? = null, cause: Throwable? = null): UserDataException(message, cause)
 class InvalidDataException(message: String? = null, cause: Throwable? = null): UserDataException(message, cause)
+
+class CardNotFoundException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)
+class RepositoryOperationException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)

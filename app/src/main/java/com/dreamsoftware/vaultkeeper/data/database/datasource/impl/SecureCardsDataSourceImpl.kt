@@ -27,7 +27,10 @@ internal class SecureCardsDataSourceImpl(
      */
     override suspend fun insertCard(cardEntity: CardEntity) = withContext(Dispatchers.IO) {
         try {
-            cardDao.insertCard(cardEntity)
+            cardDao.insertCard(cardEntity).let { id ->
+                cardEntity.copy(id = id
+                )
+            }
         } catch (ex: Exception) {
             throw AccessDatabaseException()
         }

@@ -1,9 +1,16 @@
 package com.dreamsoftware.vaultkeeper.di
 
+import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
+import com.dreamsoftware.vaultkeeper.domain.usecase.AddCardUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCardsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveCardUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignInUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignUpUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.UpdateCardUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserSessionUseCase
 import dagger.Module
 import dagger.Provides
@@ -42,4 +49,46 @@ class DomainModule {
         userRepository: IUserRepository
     ): VerifyUserSessionUseCase =
         VerifyUserSessionUseCase(userRepository = userRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideAddCardUseCase(
+        secureCardRepository: ISecureCardRepository
+    ): AddCardUseCase =
+        AddCardUseCase(secureCardRepository = secureCardRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetAllCardsUseCase(
+        secureCardRepository: ISecureCardRepository
+    ): GetAllCardsUseCase =
+        GetAllCardsUseCase(secureCardRepository = secureCardRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetCardByIdUseCase(
+        secureCardRepository: ISecureCardRepository
+    ): GetCardByIdUseCase =
+        GetCardByIdUseCase(secureCardRepository = secureCardRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideRemoveCardUseCase(
+        secureCardRepository: ISecureCardRepository
+    ): RemoveCardUseCase =
+        RemoveCardUseCase(secureCardRepository = secureCardRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideRemoveAllCardsUseCase(
+        secureCardRepository: ISecureCardRepository
+    ): RemoveAllCardsUseCase =
+        RemoveAllCardsUseCase(secureCardRepository = secureCardRepository)
+    
+    @Provides
+    @ViewModelScoped
+    fun provideUpdateCardUseCase(
+        secureCardRepository: ISecureCardRepository
+    ): UpdateCardUseCase =
+        UpdateCardUseCase(secureCardRepository = secureCardRepository)
 }

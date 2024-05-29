@@ -18,7 +18,7 @@ interface ISecureCardsDataSource {
      * @throws AccessDatabaseException If any database access error occurs.
      */
     @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
-    suspend fun insertCard(cardEntity: CardEntity)
+    suspend fun insertCard(cardEntity: CardEntity): CardEntity
 
     /**
      * Updates an existing card in the database.

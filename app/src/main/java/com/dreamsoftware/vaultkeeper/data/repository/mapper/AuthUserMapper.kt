@@ -4,7 +4,7 @@ import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
 import com.dreamsoftware.vaultkeeper.data.firebase.dto.AuthUserDTO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 
-class AuthUserMapper: IBrownieOneSideMapper<AuthUserDTO, AuthUserBO> {
+internal class AuthUserMapper: IBrownieOneSideMapper<AuthUserDTO, AuthUserBO> {
     override fun mapInToOut(input: AuthUserDTO): AuthUserBO = with(input) {
         AuthUserBO(
             uid = uid,
