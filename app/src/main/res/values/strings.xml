@@ -47,4 +47,16 @@
     <string name="signup_input_password_placeholder">Choose a secure password</string>
     <string name="signup_signup_button_text">Sign Up Now!</string>
     <string name="signup_already_has_account_text">Already have an account?</string>
+
+
+    <string name="error_card_provider">Please choose a Card Provider</string>
+    <string name="error_card_number_empty">Please provide Card Number</string>
+    <string name="error_card_number_length">Card number must be 16 digits long</string>
+    <string name="error_card_number_invalid">Invalid Card Number</string>
+    <string name="error_card_holder_name_empty">Please provide Card holder\'s name</string>
+    <string name="error_card_cvv_empty">Please provide Card CVV</string>
+    <string name="error_card_cvv_invalid">Invalid Card CVV</string>
+    <string name="error_card_cvv_length">Card CVV must be 3 digits</string>
+    <string name="error_card_expiry_date_empty">Please provide Card Expiry Date</string>
+    <string name="error_card_expiry_date_invalid">Invalid expiry date. Please enter a valid future date.</string>
 </resources>
