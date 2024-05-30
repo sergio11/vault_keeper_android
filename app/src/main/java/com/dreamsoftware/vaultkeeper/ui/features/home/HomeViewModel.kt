@@ -11,7 +11,6 @@ import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
 import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
-import com.dreamsoftware.vaultkeeper.service.encryption.EncryptionManager
 import com.dreamsoftware.vaultkeeper.util.AccountOrCard
 import com.dreamsoftware.vaultkeeper.util.oneShotFlow
 import kotlinx.coroutines.flow.Flow
@@ -24,8 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val dbAccount: AccountDao,
-    private val dbCard: CardDao,
-    private val encryptionManager: EncryptionManager
+    private val dbCard: CardDao
 ) : ViewModel() {
 
     val messages = oneShotFlow<String>()
@@ -70,7 +68,7 @@ class HomeViewModel @Inject constructor(
     private val _searchQuery = MutableStateFlow("")
     private val searchQuery: StateFlow<String> get() = _searchQuery
 
-    val combinedData: Flow<List<AccountOrCard>> = combine(
+    /*val combinedData: Flow<List<AccountOrCard>> = combine(
         dbAccount.getAllAccounts(),
         dbCard.getAllCards(),
         searchQuery
@@ -112,7 +110,7 @@ class HomeViewModel @Inject constructor(
             sortedItems
         }
         filteredItems.map { it.first }
-    }
+    }*/
 
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
@@ -143,7 +141,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun decryptInput(input: String): String {
-        return encryptionManager.decrypt(input)
+        return input
     }
 
     fun showCopyMsg(stringType: String) {

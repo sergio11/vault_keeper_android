@@ -6,7 +6,7 @@ class CheckAuthenticatedException(message: String? = null, cause: Throwable? = n
 class SignInException(message: String? = null, cause: Throwable? = null): UserDataException(message, cause)
 class SignUpException(message: String? = null, cause: Throwable? = null): UserDataException(message, cause)
 class CloseSessionException(message: String? = null, cause: Throwable? = null): UserDataException(message, cause)
-class InvalidDataException(message: String? = null, cause: Throwable? = null): UserDataException(message, cause)
+class InvalidDataException(errors: Map<String, String>, message: String? = null, cause: Throwable? = null): UserDataException(message, cause)
 
 class CardNotFoundException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)
 class RepositoryOperationException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)

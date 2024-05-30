@@ -11,20 +11,20 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Singleton
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
 class ValidatorModule {
 
     @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideSecureCardValidationMessagesResolver(
         @ApplicationContext context: Context
     ): ISecureCardValidationMessagesResolver = SecureCardValidationMessagesResolverImpl(context)
 
     @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideSecureCardValidator(
         messagesResolver: ISecureCardValidationMessagesResolver
     ): IBusinessEntityValidator<SecureCardBO> = SecureCardValidatorImpl(messagesResolver)

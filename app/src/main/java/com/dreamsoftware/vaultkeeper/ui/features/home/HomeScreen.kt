@@ -39,7 +39,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -78,7 +77,6 @@ import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
-import com.dreamsoftware.vaultkeeper.util.AccountOrCard
 import com.dreamsoftware.vaultkeeper.util.LocalSnackbar
 import com.dreamsoftware.vaultkeeper.util.cardSuggestions
 import com.dreamsoftware.vaultkeeper.util.suggestionsWithImages
@@ -93,16 +91,17 @@ fun HomeScreen(
 
     var searchQuery by rememberSaveable { mutableStateOf("") }
 
-    val combinedData by viewModel.combinedData.collectAsState(emptyList())
+    //val combinedData by viewModel.combinedData.collectAsState(emptyList())
 
     val isCombinedDataEmpty = remember {
         derivedStateOf {
-            when (viewModel.selectedOption) {
+            true
+            /*when (viewModel.selectedOption) {
                 "All" -> combinedData.isEmpty()
                 "Passwords" -> combinedData.filterIsInstance<AccountOrCard.AccountItem>().isEmpty()
                 "Cards" -> combinedData.filterIsInstance<AccountOrCard.CardItem>().isEmpty()
                 else -> {}
-            }
+            }*/
         }
     }
     var isLoading by remember { mutableStateOf(true) }
@@ -334,7 +333,7 @@ fun HomeScreen(
                     }
                     if (isLoading) {
                         ColumnProgressIndicator()
-                    } else if (isCombinedDataEmpty.value as Boolean) {
+                    } else if (isCombinedDataEmpty.value is Boolean) {
                         EmptyListPlaceholder(
                             searchQuery.isNotEmpty(),
                             viewModel.selectedOption
@@ -350,7 +349,7 @@ fun HomeScreen(
                                 .nestedScroll(nestedScrollConnection),
                         ) {
 
-                            items(combinedData) { item ->
+                            /*items(combinedData) { item ->
                                 when (item) {
                                     is AccountOrCard.AccountItem -> {
                                         if (viewModel.selectedOption == "All" || viewModel.selectedOption == "Passwords") {
@@ -364,7 +363,7 @@ fun HomeScreen(
                                         }
                                     }
                                 }
-                            }
+                            }*/
                         }
                     }
                 }

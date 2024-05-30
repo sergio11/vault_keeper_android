@@ -59,4 +59,18 @@
     <string name="error_card_cvv_length">Card CVV must be 3 digits</string>
     <string name="error_card_expiry_date_empty">Please provide Card Expiry Date</string>
     <string name="error_card_expiry_date_invalid">Invalid expiry date. Please enter a valid future date.</string>
+
+
+    <string name="card_number">Card Number</string>
+    <string name="card_number_placeholder">Card Number</string>
+
+    <string name="card_holder_name">Card Holder Name</string>
+    <string name="card_holder_name_placeholder">Card Holder Name</string>
+
+    <string name="card_expiry_date">Expiry Date</string>
+    <string name="card_expiry_date_placeholder">Expiry Date</string>
+    <string name="card_cvv">CVV</string>
+    <string name="card_cvv_placeholder">CVV</string>
+    <string name="card_provider">Card Provider</string>
+    <string name="card_provider_placeholder">Card Provider Placeholder</string>
 </resources>

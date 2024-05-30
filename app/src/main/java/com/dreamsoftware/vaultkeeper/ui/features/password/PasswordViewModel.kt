@@ -11,7 +11,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
-import com.dreamsoftware.vaultkeeper.service.encryption.EncryptionManager
 import com.dreamsoftware.vaultkeeper.util.accountSuggestions
 import com.dreamsoftware.vaultkeeper.util.generatePassword
 import com.dreamsoftware.vaultkeeper.util.getRandomNumber
@@ -21,8 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PasswordViewModel @Inject constructor(
-    private val db: AccountDao,
-    private val encryptionManager: EncryptionManager
+    private val db: AccountDao
 ) : ViewModel() {
 
     var isEditScreen by mutableStateOf(false)
@@ -50,10 +48,10 @@ class PasswordViewModel @Inject constructor(
         viewModelScope.launch {
             db.getAccountById(accountId).collect {
                 accountName = it.accountName
-                username = encryptionManager.decrypt(it.userName)
-                email = encryptionManager.decrypt(it.email)
-                mobileNumber = encryptionManager.decrypt(it.mobileNumber)
-                password = encryptionManager.decrypt(it.password)
+                //username = encryptionManager.decrypt(it.userName)
+                //email = encryptionManager.decrypt(it.email)
+                //mobileNumber = encryptionManager.decrypt(it.mobileNumber)
+                //password = encryptionManager.decrypt(it.password)
             }
         }
     }
@@ -93,10 +91,10 @@ class PasswordViewModel @Inject constructor(
             val account = AccountEntity(
                 id = 0,
                 accountName = accountName.trim(),
-                userName = encryptionManager.encrypt(username).trim(),
-                email = encryptionManager.encrypt(email).trim(),
-                mobileNumber = encryptionManager.encrypt(mobileNumber).trim(),
-                password = encryptionManager.encrypt(password).trim(),
+                userName = username,
+                email = email,
+                mobileNumber = mobileNumber,
+                password = password,
                 note = note.trim(),
                 createdAt = currentTimeInMillis
             )
@@ -117,10 +115,10 @@ class PasswordViewModel @Inject constructor(
                 val accountEntity = AccountEntity(
                     id = id,
                     accountName = accountName.trim(),
-                    userName = encryptionManager.encrypt(username.trim()),
-                    email = encryptionManager.encrypt(email.trim()),
-                    mobileNumber = encryptionManager.encrypt(mobileNumber),
-                    password = encryptionManager.encrypt(password.trim()),
+                    userName = username.trim(),
+                    email = email.trim(),
+                    mobileNumber = mobileNumber,
+                    password = password.trim(),
                     note = note.trim(),
                     createdAt = currentTimeInMillis
                 )

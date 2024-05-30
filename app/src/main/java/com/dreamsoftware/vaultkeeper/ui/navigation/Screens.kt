@@ -25,6 +25,6 @@ sealed class Screens(val route: String, arguments: List<NamedNavArgument> = empt
             data object Settings: Screens("settings")
         }
 
-        data object Card : Screens("card")
+        data object CreateCard : Screens("create_card")
     }
 }

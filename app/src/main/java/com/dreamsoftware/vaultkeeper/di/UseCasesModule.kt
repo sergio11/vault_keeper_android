@@ -19,7 +19,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 
-@Module
+@Module(includes = [ValidatorModule::class])
 @InstallIn(ViewModelComponent::class)
 class UseCasesModule {
 

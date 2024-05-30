@@ -1,5 +1,5 @@
 package com.dreamsoftware.vaultkeeper.domain.validation
 
-interface IBusinessEntityValidator<in T> {
+interface IBusinessEntityValidator<T> {
     fun validate(entity: T): Map<String, String>
 }

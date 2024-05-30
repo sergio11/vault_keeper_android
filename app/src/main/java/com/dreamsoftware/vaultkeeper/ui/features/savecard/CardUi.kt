@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.ui.features.card
+package com.dreamsoftware.vaultkeeper.ui.features.savecard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,9 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dreamsoftware.brownie.component.BrownieText
+import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.vaultkeeper.ui.theme.LightGray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.util.formatCardNumber
@@ -39,10 +40,8 @@ fun CardUi(
     cardCVV: String,
     cardIcon: Int
 ) {
-
     val formattedCardNumber = formatCardNumber(cardNumber)
     val formattedExpiryDate = formatExpiryDate(cardExpiryDate)
-
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -63,19 +62,13 @@ fun CardUi(
                         Brush.verticalGradient(randomGradient)
                     )
             ) {
-
-                Text(
+                BrownieText(
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(all = 16.dp),
-                    text = cardHolderName,
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium,
-                        fontFamily = poppinsFamily
-                    )
+                    type = BrownieTextTypeEnum.LABEL_LARGE,
+                    titleText = cardHolderName,
                 )
-
                 Image(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
@@ -84,20 +77,13 @@ fun CardUi(
                     painter = painterResource(cardIcon),
                     contentDescription = null,
                 )
-
-                Text(
+                BrownieText(
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(horizontal = 16.dp),
-                    text = formattedCardNumber,
-                    textAlign = TextAlign.Center,
-                    style = TextStyle(
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Medium,
-                        fontFamily = poppinsFamily
-                    )
+                    type = BrownieTextTypeEnum.TITLE_SMALL,
+                    titleText = formattedCardNumber,
                 )
-
                 Row(
                     modifier = Modifier
                         .padding(all = 16.dp)

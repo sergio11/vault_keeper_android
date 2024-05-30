@@ -12,7 +12,7 @@ import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
 interface CardDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCard(cardEntity: CardEntity): Int
+    suspend fun insertCard(cardEntity: CardEntity): Long
 
     @Update
     suspend fun updateCard(cardEntity: CardEntity)
