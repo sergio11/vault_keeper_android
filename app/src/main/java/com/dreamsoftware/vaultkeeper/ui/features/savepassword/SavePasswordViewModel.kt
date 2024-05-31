@@ -1,48 +1,28 @@
-package com.dreamsoftware.vaultkeeper.ui.features.password
+package com.dreamsoftware.vaultkeeper.ui.features.savepassword
 
 import android.util.Patterns
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.dreamsoftware.brownie.core.BrownieViewModel
+import com.dreamsoftware.brownie.core.SideEffect
+import com.dreamsoftware.brownie.core.UiState
+import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.utils.accountSuggestions
 import com.dreamsoftware.vaultkeeper.utils.generatePassword
 import com.dreamsoftware.vaultkeeper.utils.getRandomNumber
-import com.dreamsoftware.vaultkeeper.utils.oneShotFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PasswordViewModel @Inject constructor(
+class SavePasswordViewModel @Inject constructor(
     private val db: AccountDao
-) : ViewModel() {
+) : BrownieViewModel<SavePasswordUiState, SavePasswordUiSideEffects>(), SavePasswordScreenActionListener {
 
-    var isEditScreen by mutableStateOf(false)
-
-    val messages = oneShotFlow<String>()
-
-    var expanded by mutableStateOf(false)
-    var accountName by mutableStateOf("")
-    var suggestions = SnapshotStateList<String>()
-
-    var username by mutableStateOf("")
-
-    var email by mutableStateOf("")
-
-    var note by mutableStateOf("")
-
-    var mobileNumber by mutableStateOf("")
-    var keyVisible by mutableStateOf(false)
-
-    var password by mutableStateOf("")
-
-    val success = mutableStateOf(false)
+    override fun onGetDefaultState(): SavePasswordUiState = SavePasswordUiState()
 
     fun getAccountById(accountId: Int) {
         viewModelScope.launch {
@@ -149,4 +129,65 @@ class PasswordViewModel @Inject constructor(
         )
     }
 
+    override fun onResetSuggestions() {
+        updateState { it.copy(suggestions = SnapshotStateList()) }
+    }
+
+    override fun onAccountNameUpdated(newName: String) {
+        updateState { it.copy(
+            accountName = newName,
+            suggestions = SnapshotStateList()
+        ) }
+    }
+
+    override fun onFilterByAccountName(name: String) {
+        onAccountNameUpdated(name)
+    }
+
+    override fun onUsernameUpdated(username: String) {
+        updateState { it.copy(username = username) }
+    }
+
+    override fun onEmailUpdated(email: String) {
+        updateState { it.copy(email = email) }
+    }
+
+    override fun onMobileNumberUpdated(mobileNumber: String) {
+        updateState { it.copy(mobileNumber = mobileNumber) }
+    }
+
+    override fun onPasswordUpdated(password: String) {
+        updateState { it.copy(password = password) }
+    }
+
+    override fun onNoteUpdated(note: String) {
+        updateState { it.copy(note = note) }
+    }
+
+    override fun onGenerateRandomPassword() {
+
+    }
+
+    override fun onSave() {
+
+    }
 }
+
+data class SavePasswordUiState(
+    override val isLoading: Boolean = false,
+    override val error: String? = null,
+    val isEditScreen: Boolean = false,
+    val expanded: Boolean = false,
+    val accountName: String = String.EMPTY,
+    val suggestions: SnapshotStateList<String> = SnapshotStateList(),
+    val username: String = String.EMPTY,
+    val email: String = String.EMPTY,
+    val note: String = String.EMPTY,
+    val mobileNumber: String = String.EMPTY,
+    val password: String = String.EMPTY,
+): UiState<SavePasswordUiState>(isLoading, error) {
+    override fun copyState(isLoading: Boolean, error: String?): SavePasswordUiState =
+        copy(isLoading = isLoading, error = error)
+}
+
+sealed interface SavePasswordUiSideEffects: SideEffect

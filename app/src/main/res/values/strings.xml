@@ -78,4 +78,20 @@
     <string name="close_session_dialog_description">Logging out will delete all your saved data including cards and passwords. Are you sure you want to proceed?</string>
     <string name="close_session_dialog_cancel">Cancel</string>
     <string name="close_session_dialog_accept">Accept</string>
+
+
+    <string name="username_label">Username</string>
+    <string name="username_placeholder">Username</string>
+
+    <string name="email_label">Username</string>
+    <string name="email_placeholder">Username</string>
+
+    <string name="mobile_number_label">Mobile number</string>
+    <string name="mobile_number_placeholder">Mobile number</string>
+
+    <string name="note_label">Note</string>
+    <string name="note_placeholder">Note</string>
+
+    <string name="password_label">Password</string>
+    <string name="password_placeholder">Password</string>
 </resources>

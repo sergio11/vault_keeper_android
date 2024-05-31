@@ -129,6 +129,7 @@ fun SaveCardScreenContent(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth(),
+                        value = cardNumber,
                         labelRes = R.string.card_number,
                         placeHolderRes = R.string.card_number_placeholder,
                         supportingText = {
@@ -146,6 +147,7 @@ fun SaveCardScreenContent(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth(),
+                        value = cardHolderName,
                         isSingleLine = true,
                         labelRes = R.string.card_holder_name,
                         placeHolderRes = R.string.card_holder_name_placeholder,
