@@ -4,7 +4,7 @@ import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
-import com.dreamsoftware.vaultkeeper.util.generatePassword
+import com.dreamsoftware.vaultkeeper.utils.generatePassword
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

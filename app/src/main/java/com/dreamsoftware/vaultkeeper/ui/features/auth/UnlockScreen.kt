@@ -52,8 +52,7 @@ import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
-import com.dreamsoftware.vaultkeeper.util.LocalSnackbar
-import com.dreamsoftware.vaultkeeper.util.isBiometricSupported
+import com.dreamsoftware.vaultkeeper.utils.LocalSnackbar
 
 @Composable
 fun UnlockScreen(
@@ -97,9 +96,9 @@ fun UnlockScreen(
     )
 
     LaunchedEffect(Unit) {
-        if (viewModel.isUserLoggedIn && isBiometricSupported(context) && viewModel.getState) {
+        /*if (viewModel.isUserLoggedIn && isBiometricSupported(context) && viewModel.getState) {
             biometricPrompt.authenticate(viewModel.promptInfo)
-        }
+        }*/
     }
 
     LaunchedEffect(Unit) {

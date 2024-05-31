@@ -45,10 +45,10 @@ import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
-import com.dreamsoftware.vaultkeeper.util.MaskVisualTransformation
-import com.dreamsoftware.vaultkeeper.util.cardSuggestions
-import com.dreamsoftware.vaultkeeper.util.clickWithRipple
-import com.dreamsoftware.vaultkeeper.util.visualTransformation
+import com.dreamsoftware.vaultkeeper.utils.MaskVisualTransformation
+import com.dreamsoftware.vaultkeeper.utils.cardSuggestions
+import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
+import com.dreamsoftware.vaultkeeper.utils.visualTransformation
 import kotlinx.coroutines.delay
 
 @Composable

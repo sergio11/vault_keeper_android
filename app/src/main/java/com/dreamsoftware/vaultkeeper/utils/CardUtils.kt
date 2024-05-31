@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.util
+package com.dreamsoftware.vaultkeeper.utils
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString

@@ -57,8 +57,8 @@ import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
-import com.dreamsoftware.vaultkeeper.util.LocalSnackbar
-import com.dreamsoftware.vaultkeeper.util.clickWithRipple
+import com.dreamsoftware.vaultkeeper.utils.LocalSnackbar
+import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
 @Composable
 fun PasswordScreen(

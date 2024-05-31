@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.util
+package com.dreamsoftware.vaultkeeper.utils
 
 import com.dreamsoftware.vaultkeeper.R
 

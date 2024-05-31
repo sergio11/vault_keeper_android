@@ -39,7 +39,7 @@ import com.dreamsoftware.vaultkeeper.ui.features.generatepassword.components.Cus
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 import com.dreamsoftware.vaultkeeper.ui.theme.LightBlue
-import com.dreamsoftware.vaultkeeper.util.clickWithRipple
+import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
 @Composable
 fun GeneratePasswordScreenContent(

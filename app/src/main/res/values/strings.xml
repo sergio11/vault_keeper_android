@@ -73,4 +73,9 @@
     <string name="card_cvv_placeholder">CVV</string>
     <string name="card_provider">Card Provider</string>
     <string name="card_provider_placeholder">Card Provider Placeholder</string>
+
+    <string name="close_session_dialog_title">Logout from VaultKeeper?</string>
+    <string name="close_session_dialog_description">Logging out will delete all your saved data including cards and passwords. Are you sure you want to proceed?</string>
+    <string name="close_session_dialog_cancel">Cancel</string>
+    <string name="close_session_dialog_accept">Accept</string>
 </resources>

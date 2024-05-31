@@ -1,7 +1,6 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -11,12 +10,9 @@ import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
 import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
-import com.dreamsoftware.vaultkeeper.util.AccountOrCard
-import com.dreamsoftware.vaultkeeper.util.oneShotFlow
-import kotlinx.coroutines.flow.Flow
+import com.dreamsoftware.vaultkeeper.utils.oneShotFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

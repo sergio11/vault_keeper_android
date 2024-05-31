@@ -11,10 +11,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
-import com.dreamsoftware.vaultkeeper.util.accountSuggestions
-import com.dreamsoftware.vaultkeeper.util.generatePassword
-import com.dreamsoftware.vaultkeeper.util.getRandomNumber
-import com.dreamsoftware.vaultkeeper.util.oneShotFlow
+import com.dreamsoftware.vaultkeeper.utils.accountSuggestions
+import com.dreamsoftware.vaultkeeper.utils.generatePassword
+import com.dreamsoftware.vaultkeeper.utils.getRandomNumber
+import com.dreamsoftware.vaultkeeper.utils.oneShotFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

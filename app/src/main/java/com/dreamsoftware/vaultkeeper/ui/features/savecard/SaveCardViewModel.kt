@@ -8,7 +8,7 @@ import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveCardUseCase
-import com.dreamsoftware.vaultkeeper.util.cardSuggestions
+import com.dreamsoftware.vaultkeeper.utils.cardSuggestions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

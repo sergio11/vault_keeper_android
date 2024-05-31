@@ -34,7 +34,9 @@ fun NavGraphBuilder.HomeNavigationGraph(navController: NavHostController) {
             route = Screens.Main.Home.Settings.route
         ) {
             with(navController) {
-                SettingsScreen()
+                SettingsScreen(
+                    onGoToCreateMasterKey = {}
+                )
             }
         }
     }

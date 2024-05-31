@@ -28,9 +28,9 @@ import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.vaultkeeper.ui.theme.LightGray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
-import com.dreamsoftware.vaultkeeper.util.formatCardNumber
-import com.dreamsoftware.vaultkeeper.util.formatExpiryDate
-import com.dreamsoftware.vaultkeeper.util.randomGradient
+import com.dreamsoftware.vaultkeeper.utils.formatCardNumber
+import com.dreamsoftware.vaultkeeper.utils.formatExpiryDate
+import com.dreamsoftware.vaultkeeper.utils.randomGradient
 
 @Composable
 fun CardUi(

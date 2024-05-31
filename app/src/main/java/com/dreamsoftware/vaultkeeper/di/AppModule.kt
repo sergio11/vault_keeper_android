@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import com.dreamsoftware.vaultkeeper.util.ENCRYPTED_SHARED_PREFS_NAME
+import com.dreamsoftware.vaultkeeper.VaultKeeperApplication
+import com.dreamsoftware.vaultkeeper.utils.ENCRYPTED_SHARED_PREFS_NAME
+import com.dreamsoftware.vaultkeeper.utils.IApplicationAware
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,4 +32,8 @@ object AppModule {
         )
     }
 
+    @Provides
+    @Singleton
+    fun provideApplicationAware(@ApplicationContext context: Context): IApplicationAware =
+        context as VaultKeeperApplication
 }
