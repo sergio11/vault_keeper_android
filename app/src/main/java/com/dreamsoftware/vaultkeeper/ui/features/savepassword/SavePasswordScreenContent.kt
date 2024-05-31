@@ -192,7 +192,7 @@ fun SavePasswordScreenContent(
                                 }
                             }
                         )
-                        
+
                         Icon(
                             modifier = Modifier
                                 .padding(top = 18.dp, bottom = 12.dp, start = 8.dp, end = 8.dp)
