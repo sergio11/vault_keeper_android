@@ -37,7 +37,7 @@ fun SettingsScreenContent(
     with(uiState) {
         BrownieDialog(
             isVisible = showCloseSessionDialog,
-            mainLogoRes = R.drawable.main_logo,
+            mainLogoRes = R.drawable.main_logo_inverse,
             titleRes = R.string.close_session_dialog_title,
             descriptionRes = R.string.close_session_dialog_description,
             cancelRes = R.string.close_session_dialog_cancel,

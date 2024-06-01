@@ -11,7 +11,10 @@ import com.dreamsoftware.vaultkeeper.ui.features.savepassword.SavePasswordScreen
 import com.dreamsoftware.vaultkeeper.ui.features.settings.SettingsScreen
 import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
 
-fun NavGraphBuilder.HomeNavigationGraph(navController: NavHostController) {
+fun NavGraphBuilder.HomeNavigationGraph(
+    navController: NavHostController,
+    onGoToSignIn: () -> Unit
+) {
     navigation(
         startDestination = Screens.Main.Home.startDestination,
         route = Screens.Main.Home.route
@@ -44,7 +47,8 @@ fun NavGraphBuilder.HomeNavigationGraph(navController: NavHostController) {
         ) {
             with(navController) {
                 SettingsScreen(
-                    onGoToCreateMasterKey = {}
+                    onGoToCreateMasterKey = {},
+                    onGoToSignIn = onGoToSignIn
                 )
             }
         }

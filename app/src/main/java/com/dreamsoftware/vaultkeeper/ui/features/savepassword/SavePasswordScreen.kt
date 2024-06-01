@@ -19,7 +19,9 @@ fun SavePasswordScreen(
         onBackPressed = onBackPressed,
         onInitialUiState = { SavePasswordUiState() },
         onSideEffect = {
-
+            when(it) {
+                SavePasswordUiSideEffects.SavePasswordCancelled -> onBackPressed()
+            }
         },
         onInit = {
             params?.accountId?.let(::getAccountById)

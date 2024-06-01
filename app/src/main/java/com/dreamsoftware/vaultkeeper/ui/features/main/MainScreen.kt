@@ -13,7 +13,8 @@ import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
 
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: MainViewModel = hiltViewModel(),
+    onGoToSignIn: () -> Unit
 ) {
     val navController = rememberNavController()
     with(navController) {
@@ -35,6 +36,7 @@ fun MainScreen(
         ) { uiState ->
             MainScreenContent(
                 uiState = uiState,
+                onGoToSignIn = onGoToSignIn,
                 currentDestination = navBackStackEntry?.destination,
                 navHostController = navController
             )

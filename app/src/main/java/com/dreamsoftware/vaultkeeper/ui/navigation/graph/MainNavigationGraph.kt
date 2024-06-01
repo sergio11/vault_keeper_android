@@ -7,14 +7,16 @@ import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
 
 @Composable
 fun MainNavigationGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    onGoToSignIn: () -> Unit
 ) {
     NavHost(
         navController = navController,
         startDestination = Screens.Main.startDestination
     ) {
-
-        HomeNavigationGraph(navController)
-
+        HomeNavigationGraph(
+            navController = navController,
+            onGoToSignIn = onGoToSignIn
+        )
     }
 }

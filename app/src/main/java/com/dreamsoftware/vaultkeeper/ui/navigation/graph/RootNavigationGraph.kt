@@ -11,6 +11,7 @@ import com.dreamsoftware.vaultkeeper.ui.features.account.signup.SignUpScreen
 import com.dreamsoftware.vaultkeeper.ui.features.account.splash.SplashScreen
 import com.dreamsoftware.vaultkeeper.ui.features.main.MainScreen
 import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
+import com.dreamsoftware.vaultkeeper.ui.navigation.utils.navigateSingleTopTo
 
 @Composable
 fun RootNavigationGraph(
@@ -99,7 +100,11 @@ fun RootNavigationGraph(
         composable(
             route = Screens.Main.route
         ) {
-            MainScreen()
+            MainScreen(
+                onGoToSignIn = {
+                    navController.navigateSingleTopTo(Screens.Onboarding.route)
+                }
+            )
         }
     }
 }

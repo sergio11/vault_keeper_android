@@ -12,6 +12,7 @@ import com.dreamsoftware.vaultkeeper.ui.navigation.graph.MainNavigationGraph
 fun MainScreenContent(
     uiState: MainUiState,
     currentDestination: NavDestination?,
+    onGoToSignIn: () -> Unit,
     navHostController: NavHostController
 ) {
 
@@ -31,7 +32,10 @@ fun MainScreenContent(
                 }
             }
         ) {
-           MainNavigationGraph(navHostController)
+           MainNavigationGraph(
+               navController = navHostController,
+               onGoToSignIn = onGoToSignIn
+           )
         }
     }
 }

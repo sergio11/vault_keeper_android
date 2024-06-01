@@ -63,6 +63,7 @@ class SettingsViewModel @Inject constructor(
 
     override fun onCloseSession() {
         onUpdateCloseSessionDialogVisibility(isVisible = false)
+        launchSideEffect(SettingsUiSideEffects.SessionDeleted)
     }
 
     private fun buildItems(hasBiometric: Boolean = false) = buildList {
@@ -101,4 +102,5 @@ sealed class SettingsItem(
 sealed interface SettingsUiSideEffects: SideEffect {
     data object ShareApp: SettingsUiSideEffects
     data object ResetMasterKey: SettingsUiSideEffects
+    data object SessionDeleted: SettingsUiSideEffects
 }

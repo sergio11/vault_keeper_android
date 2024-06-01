@@ -10,7 +10,8 @@ import com.dreamsoftware.vaultkeeper.ui.utils.shareApp
 fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
     onBackPressed: () -> Unit = {},
-    onGoToCreateMasterKey: () -> Unit
+    onGoToCreateMasterKey: () -> Unit,
+    onGoToSignIn: () -> Unit
 ) {
     val context = LocalContext.current
     BrownieScreen(
@@ -21,6 +22,7 @@ fun SettingsScreen(
             when (it) {
                 SettingsUiSideEffects.ResetMasterKey -> onGoToCreateMasterKey()
                 SettingsUiSideEffects.ShareApp -> context.shareApp()
+                SettingsUiSideEffects.SessionDeleted -> onGoToSignIn()
             }
         },
         onInit = {
