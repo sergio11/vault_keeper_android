@@ -9,4 +9,5 @@ class CloseSessionException(message: String? = null, cause: Throwable? = null): 
 class InvalidDataException(errors: Map<String, String>, message: String? = null, cause: Throwable? = null): UserDataException(message, cause)
 
 class CardNotFoundException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)
+class AccountNotFoundException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)
 class RepositoryOperationException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)

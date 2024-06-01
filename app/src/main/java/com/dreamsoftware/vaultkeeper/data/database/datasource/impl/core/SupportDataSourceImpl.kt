@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 abstract class SupportDataSourceImpl(
     private val dispatcher: CoroutineDispatcher
 ) {
-    protected suspend fun <T> safeExecute(block: suspend () -> T) = withContext(dispatcher) {
+    protected suspend fun <T> safeExecute(block: suspend () -> T): T = withContext(dispatcher) {
         try {
             block()
         } catch (ex: DatabaseException) {

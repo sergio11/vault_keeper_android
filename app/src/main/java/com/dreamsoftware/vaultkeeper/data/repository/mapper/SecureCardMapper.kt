@@ -4,7 +4,7 @@ import com.dreamsoftware.brownie.utils.IBrownieMapper
 import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 
-internal class SecureCardUserMapper: IBrownieMapper<CardEntity, SecureCardBO> {
+internal class SecureCardMapper: IBrownieMapper<CardEntity, SecureCardBO> {
     override fun mapInToOut(input: CardEntity): SecureCardBO = with(input) {
         SecureCardBO(
             id = id,
