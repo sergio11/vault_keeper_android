@@ -56,7 +56,6 @@ class RepositoryModule {
             authUserMapper
         )
 
-
     @Provides
     @Singleton
     fun provideSecureCardRepository(
@@ -67,7 +66,6 @@ class RepositoryModule {
             dataSource,
             secureCardUserMapper
         )
-
 
     @Provides
     @Singleton

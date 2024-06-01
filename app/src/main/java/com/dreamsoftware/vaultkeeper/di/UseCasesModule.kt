@@ -1,12 +1,19 @@
 package com.dreamsoftware.vaultkeeper.di
 
+import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
+import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAccountUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveCardUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveCardUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignInUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
@@ -89,4 +96,43 @@ class UseCasesModule {
         secureCardRepository: ISecureCardRepository
     ): RemoveAllCardsUseCase =
         RemoveAllCardsUseCase(secureCardRepository = secureCardRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideSaveAccountUseCase(
+        accountRepository: IAccountRepository,
+        accountValidator: IBusinessEntityValidator<AccountBO>
+    ): SaveAccountUseCase =
+        SaveAccountUseCase(
+            accountRepository = accountRepository,
+            accountValidator = accountValidator
+        )
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetAllAccountsUseCase(
+        accountRepository: IAccountRepository
+    ): GetAllAccountsUseCase =
+        GetAllAccountsUseCase(accountRepository = accountRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetCardByIdUseCase(
+        accountRepository: IAccountRepository
+    ): GetAccountByIdUseCase =
+        GetAccountByIdUseCase(accountRepository = accountRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideRemoveAccountUseCase(
+        accountRepository: IAccountRepository
+    ): RemoveAccountUseCase =
+        RemoveAccountUseCase(accountRepository = accountRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideRemoveAllAccountsUseCase(
+        accountRepository: IAccountRepository
+    ): RemoveAllAccountsUseCase =
+        RemoveAllAccountsUseCase(accountRepository = accountRepository)
 }
