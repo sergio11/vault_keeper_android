@@ -89,9 +89,6 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // Firebase
-    implementation(libs.firebase.auth)
-
     // Crypto security
     implementation(libs.androidx.security.crypto)
 
@@ -111,6 +108,8 @@ dependencies {
      // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore.ktx)
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
 
