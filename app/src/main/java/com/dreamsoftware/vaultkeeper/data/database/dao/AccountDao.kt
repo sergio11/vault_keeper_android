@@ -7,13 +7,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AccountDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAccount(accountEntity: AccountEntity)
+    suspend fun insertAccount(accountEntity: AccountEntity): Long
 
     @Update
     suspend fun updateAccount(accountEntity: AccountEntity)
@@ -21,12 +20,12 @@ interface AccountDao {
     @Delete
     suspend fun deleteAccount(accountEntity: AccountEntity)
 
-    @Query("SELECT * FROM account ORDER BY id ASC")
-    fun getAllAccounts(): Flow<List<AccountEntity>>
+    @Query("SELECT * FROM accounts ORDER BY id ASC")
+    fun getAllAccounts(): List<AccountEntity>
 
-    @Query("SELECT * FROM `account` WHERE id = :id")
-    fun getAccountById(id: Int): Flow<AccountEntity>
+    @Query("SELECT * FROM `accounts` WHERE id = :id")
+    fun getAccountById(id: Int): AccountEntity?
 
-    @Query("DELETE FROM account")
+    @Query("DELETE FROM accounts")
     fun deleteAllAccounts()
 }

@@ -16,7 +16,7 @@ internal class SecureCardRepositoryImpl(
     override suspend fun addCard(card: SecureCardBO): SecureCardBO =
         try {
             dataSource
-                .insertCard(secureCardUserMapper.mapOutToIn(card))
+                .insert(secureCardUserMapper.mapOutToIn(card))
                 .let(secureCardUserMapper::mapInToOut)
         } catch (ex: Exception) {
             throw RepositoryOperationException("Failed to add card", ex)
@@ -24,7 +24,7 @@ internal class SecureCardRepositoryImpl(
 
     override suspend fun updateCard(card: SecureCardBO) {
         try {
-            dataSource.updateCard(secureCardUserMapper.mapOutToIn(card))
+            dataSource.update(secureCardUserMapper.mapOutToIn(card))
         } catch (ex: Exception) {
             throw RepositoryOperationException("Failed to update card", ex)
         }
@@ -32,7 +32,7 @@ internal class SecureCardRepositoryImpl(
 
     override suspend fun removeCard(card: SecureCardBO) {
         try {
-            dataSource.deleteCard(secureCardUserMapper.mapOutToIn(card))
+            dataSource.delete(secureCardUserMapper.mapOutToIn(card))
         } catch (ex: Exception) {
             throw RepositoryOperationException("Failed to remove card", ex)
         }
@@ -41,7 +41,7 @@ internal class SecureCardRepositoryImpl(
     override suspend fun getAllCards(): List<SecureCardBO> {
         return try {
             dataSource
-                .getAllCards()
+                .findAll()
                 .map(secureCardUserMapper::mapInToOut)
         } catch (ex: Exception) {
             throw RepositoryOperationException("Failed to retrieve all cards", ex)
@@ -61,7 +61,7 @@ internal class SecureCardRepositoryImpl(
 
     override suspend fun removeAllCards() {
         try {
-            dataSource.deleteAllCards()
+            dataSource.deleteAll()
         } catch (ex: Exception) {
             throw RepositoryOperationException("Failed to remove all cards", ex)
         }

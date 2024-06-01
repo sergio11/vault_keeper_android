@@ -18,7 +18,7 @@ interface ISecureCardsDataSource {
      * @throws AccessDatabaseException If any database access error occurs.
      */
     @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
-    suspend fun insertCard(cardEntity: CardEntity): CardEntity
+    suspend fun insert(cardEntity: CardEntity): CardEntity
 
     /**
      * Updates an existing card in the database.
@@ -28,17 +28,17 @@ interface ISecureCardsDataSource {
      * @throws AccessDatabaseException If any database access error occurs.
      */
     @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
-    suspend fun updateCard(cardEntity: CardEntity)
+    suspend fun update(cardEntity: CardEntity)
 
     /**
      * Deletes a card from the database.
      *
-     * @param cardEntity The card entity to be deleted.
+     * @param id The card entity to be deleted.
      * @throws SecureCardNotFoundException If the card is not found.
      * @throws AccessDatabaseException If any database access error occurs.
      */
     @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
-    suspend fun deleteCard(cardEntity: CardEntity)
+    suspend fun delete(id: Int)
 
     /**
      * Retrieves all cards from the database.
@@ -47,7 +47,7 @@ interface ISecureCardsDataSource {
      * @throws AccessDatabaseException If any database access error occurs.
      */
     @Throws(AccessDatabaseException::class)
-    suspend fun getAllCards(): List<CardEntity>
+    suspend fun findAll(): List<CardEntity>
 
     /**
      * Finds a card by its ID.
@@ -66,5 +66,5 @@ interface ISecureCardsDataSource {
      * @throws AccessDatabaseException If any database access error occurs.
      */
     @Throws(AccessDatabaseException::class)
-    suspend fun deleteAllCards()
+    suspend fun deleteAll()
 }
