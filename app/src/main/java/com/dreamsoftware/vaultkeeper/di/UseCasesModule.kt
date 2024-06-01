@@ -117,7 +117,7 @@ class UseCasesModule {
 
     @Provides
     @ViewModelScoped
-    fun provideGetCardByIdUseCase(
+    fun provideGetAccountByIdUseCase(
         accountRepository: IAccountRepository
     ): GetAccountByIdUseCase =
         GetAccountByIdUseCase(accountRepository = accountRepository)

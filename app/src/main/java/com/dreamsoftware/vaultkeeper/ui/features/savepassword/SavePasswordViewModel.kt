@@ -1,132 +1,28 @@
 package com.dreamsoftware.vaultkeeper.ui.features.savepassword
 
-import android.util.Patterns
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.viewModelScope
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
-import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
-import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
 import com.dreamsoftware.vaultkeeper.utils.accountSuggestions
 import com.dreamsoftware.vaultkeeper.utils.generatePassword
 import com.dreamsoftware.vaultkeeper.utils.getRandomNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SavePasswordViewModel @Inject constructor(
-    private val db: AccountDao
+    private val saveAccountUseCase: SaveAccountUseCase,
+    private val getAccountByIdUseCase: GetAccountByIdUseCase
 ) : BrownieViewModel<SavePasswordUiState, SavePasswordUiSideEffects>(), SavePasswordScreenActionListener {
 
     override fun onGetDefaultState(): SavePasswordUiState = SavePasswordUiState()
 
     fun getAccountById(accountId: Int) {
-        viewModelScope.launch {
-            db.getAccountById(accountId).collect {
-                accountName = it.accountName
-                //username = encryptionManager.decrypt(it.userName)
-                //email = encryptionManager.decrypt(it.email)
-                //mobileNumber = encryptionManager.decrypt(it.mobileNumber)
-                //password = encryptionManager.decrypt(it.password)
-            }
-        }
-    }
 
-    private fun validateFields(): Boolean {
-        if (accountName.isBlank()) {
-            messages.tryEmit("Please provide an account name")
-            return false
-        }
-        if (username.isEmpty() && email.isBlank() && mobileNumber.isBlank()) {
-            messages.tryEmit("Please provide a username, email, or mobile number")
-            return false
-        }
-        if (password.isBlank()) {
-            messages.tryEmit("Password cannot be empty")
-            return false
-        }
-        if (password.trim().isEmpty() || password.contains("\\s+".toRegex())) {
-            messages.tryEmit("Password cannot contain whitespace")
-            return false
-        }
-        if (email.isNotBlank() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            messages.tryEmit("Invalid email address")
-            return false
-        }
-        if (!mobileNumber.isDigitsOnly()) {
-            messages.tryEmit("Invalid mobile number")
-            return false
-        }
-        return true
-    }
-
-    fun validateAndInsert() {
-
-        if (validateFields()) {
-            val currentTimeInMillis = System.currentTimeMillis()
-            val account = AccountEntity(
-                id = 0,
-                accountName = accountName.trim(),
-                userName = username,
-                email = email,
-                mobileNumber = mobileNumber,
-                password = password,
-                note = note.trim(),
-                createdAt = currentTimeInMillis
-            )
-
-            viewModelScope.launch {
-                db.insertAccount(account)
-                messages.tryEmit("Credentials Added!")
-                success.value = true
-            }
-        }
-
-    }
-
-    fun validationAndUpdate(id: Int) {
-        if (validateFields()) {
-            viewModelScope.launch {
-                val currentTimeInMillis = System.currentTimeMillis()
-                val accountEntity = AccountEntity(
-                    id = id,
-                    accountName = accountName.trim(),
-                    userName = username.trim(),
-                    email = email.trim(),
-                    mobileNumber = mobileNumber,
-                    password = password.trim(),
-                    note = note.trim(),
-                    createdAt = currentTimeInMillis
-                )
-                db.updateAccount(accountEntity)
-                messages.tryEmit("Successfully Updated!")
-                success.value = true
-            }
-        }
-    }
-    fun filter(accountName: String) {
-        suggestions.clear()
-        if (accountName.isNotEmpty()) {
-            suggestions.addAll(accountSuggestions.filter { it.contains(accountName, true) })
-        }
-    }
-
-    fun resetSuggestions() {
-        suggestions.clear()
-    }
-
-    fun generateRandomPassword() {
-        password = generatePassword(
-            length = getRandomNumber(),
-            lowerCase = true,
-            upperCase = true,
-            digits = true,
-            specialCharacters = true
-        )
     }
 
     override fun onResetSuggestions() {
@@ -141,7 +37,14 @@ class SavePasswordViewModel @Inject constructor(
     }
 
     override fun onFilterByAccountName(name: String) {
-        onAccountNameUpdated(name)
+        updateState { it.copy(
+            accountName = name,
+            suggestions = SnapshotStateList<String>().apply {
+                if(name.isNotEmpty()) {
+                    addAll(accountSuggestions.filter { result -> result.contains(name, true) })
+                }
+            }
+        ) }
     }
 
     override fun onUsernameUpdated(username: String) {
@@ -165,7 +68,15 @@ class SavePasswordViewModel @Inject constructor(
     }
 
     override fun onGenerateRandomPassword() {
-
+        updateState {
+            it.copy(password = generatePassword(
+                length = getRandomNumber(),
+                lowerCase = true,
+                upperCase = true,
+                digits = true,
+                specialCharacters = true
+            ))
+        }
     }
 
     override fun onSave() {

@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.ui.features.savepassword
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,8 +47,6 @@ fun SavePasswordScreenContent(
             modifier = Modifier
                 .background(color = BgBlack)
         ) {
-
-            val focusManager = LocalFocusManager.current
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -253,4 +251,18 @@ fun SavePasswordScreenContent(
             }
         }
     }
+}
+
+@Composable
+private fun TextFieldSeparator(
+    height: Int
+) {
+    Box(
+        modifier = Modifier
+            .padding(end = 12.dp)
+            .height(height.dp)
+            .width(1.dp)
+            .background(color = Color.LightGray),
+        contentAlignment = Alignment.Center
+    ) {}
 }
