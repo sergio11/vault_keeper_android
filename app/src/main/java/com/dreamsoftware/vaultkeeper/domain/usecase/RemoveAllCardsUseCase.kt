@@ -7,6 +7,6 @@ class RemoveAllCardsUseCase(
     private val secureCardRepository: ISecureCardRepository
 ): BrownieUseCase<Unit>() {
     override suspend fun onExecuted() {
-        secureCardRepository.removeAllCards()
+        secureCardRepository.deleteAll()
     }
 }

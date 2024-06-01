@@ -8,10 +8,7 @@ class RemoveCardUseCase(
 ): BrownieUseCaseWithParams<RemoveCardUseCase.Params, Unit>() {
 
     override suspend fun onExecuted(params: Params) {
-        with(secureCardRepository) {
-            val secureCard = getCardById(params.id)
-            removeCard(secureCard)
-        }
+        secureCardRepository.deleteById(params.id)
     }
 
     data class Params(

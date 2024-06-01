@@ -16,7 +16,7 @@ class SaveCardUseCase(
             secureCardValidator.validate(secureCardBO).takeIf { it.isNotEmpty() }?.let { errors ->
                 throw InvalidDataException(errors, "Invalid data provided")
             } ?: run {
-                secureCardRepository.addCard(secureCardBO)
+                secureCardRepository.insert(secureCardBO)
             }
         }
 

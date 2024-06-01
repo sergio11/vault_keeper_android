@@ -94,4 +94,10 @@
 
     <string name="password_label">Password</string>
     <string name="password_placeholder">Password</string>
+
+    <string name="invalid_account_name">Please provide an account name</string>
+    <string name="invalid_user_name">Invalid username</string>
+    <string name="invalid_password">Invalid Password</string>
+    <string name="invalid_email_address">Invalid email address</string>
+    <string name="invalid_mobile_number">Invalid mobile number</string>
 </resources>

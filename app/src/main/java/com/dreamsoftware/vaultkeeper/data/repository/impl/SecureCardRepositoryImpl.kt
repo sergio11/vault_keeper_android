@@ -13,7 +13,7 @@ internal class SecureCardRepositoryImpl(
     private val dataSource: ISecureCardsDataSource,
     private val secureCardUserMapper: IBrownieMapper<CardEntity, SecureCardBO>
 ): ISecureCardRepository {
-    override suspend fun addCard(card: SecureCardBO): SecureCardBO =
+    override suspend fun insert(card: SecureCardBO): SecureCardBO =
         try {
             dataSource
                 .insert(secureCardUserMapper.mapOutToIn(card))
@@ -22,7 +22,7 @@ internal class SecureCardRepositoryImpl(
             throw RepositoryOperationException("Failed to add card", ex)
         }
 
-    override suspend fun updateCard(card: SecureCardBO) {
+    override suspend fun update(card: SecureCardBO) {
         try {
             dataSource.update(secureCardUserMapper.mapOutToIn(card))
         } catch (ex: Exception) {
@@ -30,15 +30,15 @@ internal class SecureCardRepositoryImpl(
         }
     }
 
-    override suspend fun removeCard(card: SecureCardBO) {
+    override suspend fun deleteById(cardId: Int) {
         try {
-            dataSource.delete(secureCardUserMapper.mapOutToIn(card))
+            dataSource.delete(cardId)
         } catch (ex: Exception) {
             throw RepositoryOperationException("Failed to remove card", ex)
         }
     }
 
-    override suspend fun getAllCards(): List<SecureCardBO> {
+    override suspend fun findAll(): List<SecureCardBO> {
         return try {
             dataSource
                 .findAll()
@@ -48,7 +48,7 @@ internal class SecureCardRepositoryImpl(
         }
     }
 
-    override suspend fun getCardById(id: Int): SecureCardBO {
+    override suspend fun findById(id: Int): SecureCardBO {
         return try {
             dataSource.findById(id)
                 .let(secureCardUserMapper::mapInToOut)
@@ -59,7 +59,7 @@ internal class SecureCardRepositoryImpl(
         }
     }
 
-    override suspend fun removeAllCards() {
+    override suspend fun deleteAll() {
         try {
             dataSource.deleteAll()
         } catch (ex: Exception) {

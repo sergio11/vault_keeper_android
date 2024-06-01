@@ -7,20 +7,20 @@ import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 interface ISecureCardRepository {
 
     @Throws(CardNotFoundException::class, RepositoryOperationException::class)
-    suspend fun addCard(card: SecureCardBO): SecureCardBO
+    suspend fun insert(card: SecureCardBO): SecureCardBO
 
     @Throws(CardNotFoundException::class, RepositoryOperationException::class)
-    suspend fun updateCard(card: SecureCardBO)
+    suspend fun update(card: SecureCardBO)
 
     @Throws(CardNotFoundException::class, RepositoryOperationException::class)
-    suspend fun removeCard(card: SecureCardBO)
+    suspend fun deleteById(cardId: Int)
 
     @Throws(RepositoryOperationException::class)
-    suspend fun getAllCards(): List<SecureCardBO>
+    suspend fun findAll(): List<SecureCardBO>
 
     @Throws(CardNotFoundException::class, RepositoryOperationException::class)
-    suspend fun getCardById(id: Int): SecureCardBO
+    suspend fun findById(id: Int): SecureCardBO
 
     @Throws(RepositoryOperationException::class)
-    suspend fun removeAllCards()
+    suspend fun deleteAll()
 }

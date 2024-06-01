@@ -9,7 +9,7 @@ class GetCardByIdUseCase(
 ): BrownieUseCaseWithParams<GetCardByIdUseCase.Params, SecureCardBO>() {
 
     override suspend fun onExecuted(params: Params): SecureCardBO =
-        secureCardRepository.getCardById(params.id)
+        secureCardRepository.findById(params.id)
 
     data class Params(
         val id: Int
