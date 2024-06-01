@@ -7,8 +7,8 @@ import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
+import com.dreamsoftware.vaultkeeper.utils.PasswordUtils
 import com.dreamsoftware.vaultkeeper.utils.accountSuggestions
-import com.dreamsoftware.vaultkeeper.utils.generatePassword
 import com.dreamsoftware.vaultkeeper.utils.getRandomNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -69,12 +69,12 @@ class SavePasswordViewModel @Inject constructor(
 
     override fun onGenerateRandomPassword() {
         updateState {
-            it.copy(password = generatePassword(
+            it.copy(password = PasswordUtils.generatePassword(
                 length = getRandomNumber(),
-                lowerCase = true,
-                upperCase = true,
-                digits = true,
-                specialCharacters = true
+                isWithSpecial = true,
+                isWithUppercase = true,
+                isWithLetters = true,
+                isWithNumbers = true
             ))
         }
     }
