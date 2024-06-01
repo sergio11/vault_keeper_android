@@ -1,68 +1,37 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.dreamsoftware.brownie.core.BrownieViewModel
+import com.dreamsoftware.brownie.core.SideEffect
+import com.dreamsoftware.brownie.core.UiState
+import com.dreamsoftware.brownie.utils.EMPTY
+import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
-import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
-import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
-import com.dreamsoftware.vaultkeeper.utils.oneShotFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.ICredentialBO
+import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
+import com.dreamsoftware.vaultkeeper.ui.core.components.fab.FabButtonItem
+import com.dreamsoftware.vaultkeeper.ui.core.components.fab.FabButtonMain
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val dbAccount: AccountDao,
     private val dbCard: CardDao
-) : ViewModel() {
+) : BrownieViewModel<HomeUiState, HomeSideEffects>(), HomeScreenActionListener {
 
-    val messages = oneShotFlow<String>()
+    private companion object {
+        const val ADD_CARD_BUTTON_ID = 1
+        const val ADD_PASSWORD_BUTTON_ID = 2
+    }
 
-    var selectedOption by mutableStateOf("All")
-
-    val filterOptions = listOf(
-        "All",
-        "Passwords",
-        "Cards"
-    )
-
-    var showAccountDeleteDialog by mutableStateOf(false)
-
-    var showCardDeleteDialog by mutableStateOf(false)
-
-    var accountToDelete by mutableStateOf(
-        AccountEntity(
-            -1,
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            0L
+    override fun onGetDefaultState(): HomeUiState = HomeUiState(
+        fabButtonItemList = listOf(
+            FabButtonItem(id = ADD_CARD_BUTTON_ID, iconRes = R.drawable.icon_card, label = "Add Card"),
+            FabButtonItem(id = ADD_PASSWORD_BUTTON_ID, iconRes = R.drawable.icon_pass, label = "Add Password")
         )
     )
-
-    var cardToDelete by mutableStateOf(
-        CardEntity(
-            -1,
-            "",
-            "",
-            "",
-            "",
-            "",
-            0L
-        )
-    )
-
-    private val _searchQuery = MutableStateFlow("")
-    private val searchQuery: StateFlow<String> get() = _searchQuery
 
     /*val combinedData: Flow<List<AccountOrCard>> = combine(
         dbAccount.getAllAccounts(),
@@ -108,40 +77,107 @@ class HomeViewModel @Inject constructor(
         filteredItems.map { it.first }
     }*/
 
-    fun setSearchQuery(query: String) {
-        _searchQuery.value = query
+    override fun onDeleteAccount(account: AccountBO) {
+       updateState {
+           it.copy(
+               showAccountDeleteDialog = true,
+               accountToDelete = account
+           )
+       }
     }
 
-    fun onUserAccountDeleteClick(accountEntity: AccountEntity) {
-        accountToDelete = accountEntity
-        showAccountDeleteDialog = true
-    }
-
-    fun deleteAccount() {
-        viewModelScope.launch {
-            dbAccount.deleteAccount(accountToDelete)
-            showAccountDeleteDialog = false
+    override fun onDeleteAccountConfirmed() {
+        updateState {
+            it.copy(
+                showAccountDeleteDialog = false,
+                accountToDelete = null
+            )
         }
     }
 
-    fun onUserCardDeleteClick(cardEntity: CardEntity) {
-        cardToDelete = cardEntity
-        showCardDeleteDialog = true
-    }
-
-    fun deleteCard() {
-        viewModelScope.launch {
-            dbCard.deleteCard(cardToDelete)
-            showCardDeleteDialog = false
+    override fun onDeleteAccountCancelled() {
+        updateState {
+            it.copy(
+                showAccountDeleteDialog = false,
+                accountToDelete = null
+            )
         }
     }
 
-    fun decryptInput(input: String): String {
-        return input
+    override fun onDeleteSecureCard(secureCard: SecureCardBO) {
+        updateState {
+            it.copy(
+                showCardDeleteDialog = true,
+                secureCardToDelete = secureCard
+            )
+        }
     }
 
-    fun showCopyMsg(stringType: String) {
-        messages.tryEmit("$stringType copied to clipboard.")
+    override fun onDeleteSecureCardConfirmed() {
+        updateState {
+            it.copy(
+                showCardDeleteDialog = false,
+                secureCardToDelete = null
+            )
+        }
     }
 
+    override fun onDeleteSecureCardCancelled() {
+        updateState {
+            it.copy(
+                showCardDeleteDialog = false,
+                secureCardToDelete = null
+            )
+        }
+    }
+
+    override fun onSearchQueryUpdated(newSearchQuery: String) {
+        updateState { it.copy(searchQuery = newSearchQuery) }
+    }
+
+    override fun onFilterOptionUpdated(newFilterOption: FilterOptionsEnum) {
+        updateState { it.copy(
+            selectedOption = newFilterOption,
+            searchQuery = String.EMPTY,
+            showSheet = false
+        ) }
+    }
+
+    override fun onFabItemClicked(fabButtonItem: FabButtonItem) {
+        when (fabButtonItem.id) {
+            ADD_CARD_BUTTON_ID -> launchSideEffect(HomeSideEffects.AddNewSecureCard)
+            ADD_PASSWORD_BUTTON_ID -> launchSideEffect(HomeSideEffects.AddNewAccountPassword)
+            else -> {
+                // To handle other cases if needed
+            }
+        }
+    }
+}
+
+data class HomeUiState(
+    override val isLoading: Boolean = false,
+    override val error: String? = null,
+    val selectedOption: FilterOptionsEnum = FilterOptionsEnum.ALL,
+    val filterOptions: List<FilterOptionsEnum> = FilterOptionsEnum.entries,
+    val accountToDelete: AccountBO? = null,
+    val showAccountDeleteDialog: Boolean = false,
+    val secureCardToDelete: SecureCardBO? = null,
+    val showCardDeleteDialog: Boolean = false,
+    val showSheet: Boolean = false,
+    val searchQuery: String = String.EMPTY,
+    val fabButtonItemList: List<FabButtonItem> = emptyList(),
+    val fabButtonMain: FabButtonMain = FabButtonMain(R.drawable.icon_add),
+    val credentials: List<ICredentialBO> = emptyList()
+): UiState<HomeUiState>(isLoading, error) {
+    override fun copyState(isLoading: Boolean, error: String?): HomeUiState =
+        copy(isLoading = isLoading, error = error)
+}
+
+enum class FilterOptionsEnum {
+    ALL, PASSWORDS, CARDS
+}
+
+sealed interface HomeSideEffects: SideEffect {
+    data object AddNewSecureCard: HomeSideEffects
+    data object AddNewAccountPassword: HomeSideEffects
 }

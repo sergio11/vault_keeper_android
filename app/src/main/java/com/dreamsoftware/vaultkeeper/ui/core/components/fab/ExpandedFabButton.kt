@@ -1,3 +1,5 @@
+package com.dreamsoftware.vaultkeeper.ui.core.components.fab
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
@@ -14,8 +16,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -24,19 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.dreamsoftware.brownie.component.BrownieImageIcon
+import com.dreamsoftware.brownie.component.BrownieImageSize
+import com.dreamsoftware.brownie.component.BrownieText
+import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
+import com.dreamsoftware.brownie.component.BrownieType
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.core.components.fab.FabButtonItem
-import com.dreamsoftware.vaultkeeper.ui.core.components.fab.FabButtonMain
-import com.dreamsoftware.vaultkeeper.ui.core.components.fab.FabButtonState
-import com.dreamsoftware.vaultkeeper.ui.core.components.fab.FabButtonSub
-import com.dreamsoftware.vaultkeeper.ui.core.components.fab.rememberMultiFabState
-import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 
 /**
  * Composable function to display a Multi-Floating Action Button (Multi-FAB) that can be expanded to reveal sub-items.
@@ -106,12 +101,14 @@ fun MultiFloatingActionButton(
             contentColor = fabOption.iconTint
         ) {
             // Icon for the main FAB with optional rotation based on its state (expanded or collapsed)
-            Icon(
-                painter = painterResource(fabIcon.iconRes),
-                contentDescription = null,
-                modifier = Modifier.size(32.dp)
+            BrownieImageIcon(
+                type = BrownieType.ICON,
+                size = BrownieImageSize.NORMAL,
+                modifier = Modifier
+                    .size(32.dp)
                     .rotate(rotation),
-                tint = fabOption.iconTint
+                iconRes = fabIcon.iconRes,
+                tintColor = fabOption.iconTint
             )
         }
     }
@@ -138,14 +135,11 @@ fun MiniFabItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Text label for the sub-item displayed in a rounded-corner background
-        Text(
-            text = item.label,
-            style = TextStyle(
-                fontFamily = poppinsFamily,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium
-            ),
-            color = Color.White,
+        BrownieText(
+            type = BrownieTextTypeEnum.LABEL_MEDIUM,
+            titleRes = item.labelRes,
+            titleText = item.label,
+            textColor = Color.White,
             modifier = Modifier
                 .clip(RoundedCornerShape(size = 8.dp))
                 .background(Color(0xFF000000).copy(alpha = 0.5f))
@@ -160,10 +154,11 @@ fun MiniFabItem(
             contentColor = fabOption.iconTint
         ) {
             // Icon for the sub-item with customized tint
-            Icon(
-                painter = painterResource(item.iconRes),
-                contentDescription = null,
-                tint = fabOption.iconTint
+            BrownieImageIcon(
+                type = BrownieType.ICON,
+                size = BrownieImageSize.SMALL,
+                iconRes = item.iconRes,
+                tintColor = fabOption.iconTint
             )
         }
     }
@@ -173,12 +168,10 @@ fun MiniFabItem(
 @Preview(showBackground = true, showSystemUi = true)
 fun MultiFloatingActionButtonPreview(){
     val items = listOf(
-        FabButtonItem(R.drawable.icon_lock, "lock"),
-        FabButtonItem(R.drawable.icon_note, "note")
+        FabButtonItem(id = 1, iconRes = R.drawable.icon_lock, label = "lock"),
+        FabButtonItem(id = 2, iconRes = R.drawable.icon_note, label = "note")
     )
-
     val fabIcon = FabButtonMain(R.drawable.icon_add)
-
     MultiFloatingActionButton(
         items = items,
         fabIcon = fabIcon,

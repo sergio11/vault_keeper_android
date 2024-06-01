@@ -100,4 +100,14 @@
     <string name="invalid_password">Invalid Password</string>
     <string name="invalid_email_address">Invalid email address</string>
     <string name="invalid_mobile_number">Invalid mobile number</string>
+
+    <string name="delete_password_dialog_title">Delete Password?</string>
+    <string name="delete_password_dialog_description">Are you sure you want to delete this password?</string>
+    <string name="delete_password_dialog_cancel">Cancel</string>
+    <string name="delete_password_dialog_accept">Delete</string>
+
+    <string name="delete_card_dialog_title">Delete Card?</string>
+    <string name="delete_card_dialog_description">Are you sure you want to delete this Card?</string>
+    <string name="delete_card_dialog_cancel">Cancel</string>
+    <string name="delete_card_dialog_accept">Delete</string>
 </resources>
