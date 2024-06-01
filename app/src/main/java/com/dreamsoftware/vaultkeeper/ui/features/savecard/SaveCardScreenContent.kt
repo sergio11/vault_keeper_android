@@ -18,7 +18,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +28,6 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -38,8 +36,11 @@ import androidx.compose.ui.window.PopupProperties
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
+import com.dreamsoftware.brownie.component.BrownieImageIcon
+import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
+import com.dreamsoftware.brownie.component.BrownieType
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
@@ -68,13 +69,15 @@ fun SaveCardScreenContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(Modifier.width(16.dp))
-                Icon(
-                    painter = painterResource(R.drawable.icon_arrow_left),
-                    tint = Color.White,
-                    contentDescription = "Go back",
+
+                BrownieImageIcon(
                     modifier = Modifier.clickWithRipple {
-                        //navigator.popBackStack()
-                    }
+                        actionListener.onCancel()
+                    },
+                    type = BrownieType.ICON,
+                    size = BrownieImageSize.LARGE,
+                    iconRes = R.drawable.icon_arrow_left,
+                    tintColor = Color.White
                 )
 
                 BrownieText(
@@ -82,7 +85,7 @@ fun SaveCardScreenContent(
                         top = 18.dp, bottom = 12.dp,
                         start = 16.dp, end = 16.dp
                     ),
-                    type = BrownieTextTypeEnum.TITLE_MEDIUM,
+                    type = BrownieTextTypeEnum.TITLE_LARGE,
                     titleText = if (isEditScreen) "Edit Card" else "Add New Card",
                     textColor = MaterialTheme.colorScheme.onPrimary
                 )
@@ -130,6 +133,9 @@ fun SaveCardScreenContent(
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth(),
                         value = cardNumber,
+                        onValueChanged = {
+                            actionListener.onCardNumberUpdated(newCardNumber = it)
+                        },
                         labelRes = R.string.card_number,
                         placeHolderRes = R.string.card_number_placeholder,
                         supportingText = {
@@ -148,6 +154,9 @@ fun SaveCardScreenContent(
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth(),
                         value = cardHolderName,
+                        onValueChanged = {
+                            actionListener.onCardHolderNameUpdated(newCardHolderName = it)
+                        },
                         isSingleLine = true,
                         labelRes = R.string.card_holder_name,
                         placeHolderRes = R.string.card_holder_name_placeholder,
@@ -221,11 +230,6 @@ fun SaveCardScreenContent(
                         onClick = actionListener::onSaveSecureCard,
                         text =  if (isEditScreen) "Update Card" else "Save Card"
                     )
-                    /*if (success.value) {
-                        LaunchedEffect(Unit) {
-                            //navigator.popBackStack()
-                        }
-                    }*/
                 }
             }
         }

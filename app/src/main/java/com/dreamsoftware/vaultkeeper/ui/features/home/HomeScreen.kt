@@ -8,14 +8,19 @@ import com.dreamsoftware.brownie.component.screen.BrownieScreen
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onGoToAddNewAccount: () -> Unit,
+    onGoToAddNewSecureCard: () -> Unit
 ) {
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
     BrownieScreen(
         viewModel = viewModel,
         onInitialUiState = { HomeUiState() },
         onSideEffect = {
-
+            when(it) {
+                HomeSideEffects.AddNewAccountPassword -> onGoToAddNewAccount()
+                HomeSideEffects.AddNewSecureCard -> onGoToAddNewSecureCard()
+            }
         }
     ) { uiState ->
         HomeScreenContent(

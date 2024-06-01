@@ -19,7 +19,9 @@ fun SaveCardScreen(
         onBackPressed = onBackPressed,
         onInitialUiState = { SaveCardUiState() },
         onSideEffect = {
-
+            when(it) {
+                SaveCardUiSideEffects.SaveSecureCardCancelled -> onBackPressed()
+            }
         },
         onInit = {
             params?.cardId?.let(::getCardById)

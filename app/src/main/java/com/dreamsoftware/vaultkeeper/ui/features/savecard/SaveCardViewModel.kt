@@ -41,6 +41,10 @@ class SaveCardViewModel @Inject constructor(
         }
     }
 
+    override fun onCancel() {
+        launchSideEffect(SaveCardUiSideEffects.SaveSecureCardCancelled)
+    }
+
     override fun onCardNumberUpdated(newCardNumber: String) {
         updateState { it.copy(cardNumber = newCardNumber) }
     }
@@ -101,4 +105,8 @@ data class SaveCardUiState(
         copy(isLoading = isLoading, error = error)
 }
 
-sealed interface SaveCardUiSideEffects: SideEffect
+sealed interface SaveCardUiSideEffects: SideEffect {
+
+    data object SaveSecureCardCancelled: SaveCardUiSideEffects
+
+}

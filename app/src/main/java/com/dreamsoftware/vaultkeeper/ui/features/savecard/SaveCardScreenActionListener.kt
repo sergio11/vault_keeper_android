@@ -2,6 +2,7 @@ package com.dreamsoftware.vaultkeeper.ui.features.savecard
 
 interface SaveCardScreenActionListener {
     fun onSaveSecureCard()
+    fun onCancel()
     fun onCardNumberUpdated(newCardNumber: String)
     fun onCardHolderNameUpdated(newCardHolderName: String)
     fun onCardExpiryDateUpdated(newCardExpiryDate: String)

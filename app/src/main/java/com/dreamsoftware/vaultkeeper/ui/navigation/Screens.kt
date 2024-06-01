@@ -23,6 +23,8 @@ sealed class Screens(val route: String, arguments: List<NamedNavArgument> = empt
             data object Info : Screens("info")
             data object Generate : Screens("generate")
             data object Settings: Screens("settings")
+            data object CreateAccountPassword : Screens("create_account_password")
+            data object CreateSecureCard : Screens("create_secured_card")
         }
 
         data object CreateCard : Screens("create_card")

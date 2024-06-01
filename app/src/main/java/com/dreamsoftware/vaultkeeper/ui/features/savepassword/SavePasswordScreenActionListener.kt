@@ -11,4 +11,5 @@ interface SavePasswordScreenActionListener {
     fun onNoteUpdated(note: String)
     fun onGenerateRandomPassword()
     fun onSave()
+    fun onCancel()
 }

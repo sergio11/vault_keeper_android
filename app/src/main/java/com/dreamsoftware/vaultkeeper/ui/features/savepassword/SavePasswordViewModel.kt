@@ -82,6 +82,10 @@ class SavePasswordViewModel @Inject constructor(
     override fun onSave() {
 
     }
+
+    override fun onCancel() {
+        launchSideEffect(SavePasswordUiSideEffects.SavePasswordCancelled)
+    }
 }
 
 data class SavePasswordUiState(
@@ -101,4 +105,6 @@ data class SavePasswordUiState(
         copy(isLoading = isLoading, error = error)
 }
 
-sealed interface SavePasswordUiSideEffects: SideEffect
+sealed interface SavePasswordUiSideEffects: SideEffect {
+    data object SavePasswordCancelled: SavePasswordUiSideEffects
+}

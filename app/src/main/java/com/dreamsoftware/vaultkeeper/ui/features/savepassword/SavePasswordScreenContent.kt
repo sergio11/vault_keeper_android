@@ -15,26 +15,27 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
+import com.dreamsoftware.brownie.component.BrownieImageIcon
+import com.dreamsoftware.brownie.component.BrownieImageSize
+import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextFieldPassword
+import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
+import com.dreamsoftware.brownie.component.BrownieType
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
 import com.dreamsoftware.vaultkeeper.ui.features.savepassword.component.SearchOutlinedTextFieldWithDropdown
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
-import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
 @Composable
@@ -53,27 +54,24 @@ fun SavePasswordScreenContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(Modifier.width(16.dp))
-                Icon(
-                    painter = painterResource(R.drawable.icon_arrow_left),
-                    tint = Color.White,
-                    contentDescription = "Go back",
+                BrownieImageIcon(
+                    type = BrownieType.ICON,
+                    size = BrownieImageSize.LARGE,
+                    iconRes = R.drawable.icon_arrow_left,
+                    tintColor = Color.White,
                     modifier = Modifier.clickWithRipple {
-                        //navigator.popBackStack()
+                        actionListener.onCancel()
                     }
                 )
 
-                Text(
+                BrownieText(
                     modifier = Modifier.padding(
                         top = 18.dp, bottom = 12.dp,
                         start = 16.dp, end = 16.dp
                     ),
-                    text = if (isEditScreen) "Edit Password" else "Add New Password",
-                    color = Color.White,
-                    style = TextStyle(
-                        fontSize = 24.sp,
-                        fontFamily = poppinsFamily,
-                        fontWeight = FontWeight.SemiBold
-                    ),
+                    type = BrownieTextTypeEnum.TITLE_LARGE,
+                    titleText = if (isEditScreen) "Edit Password" else "Add New Password",
+                    textColor = MaterialTheme.colorScheme.onPrimary
                 )
             }
 

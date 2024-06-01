@@ -6,6 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.dreamsoftware.vaultkeeper.ui.features.generatepassword.GeneratePasswordScreen
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreen
+import com.dreamsoftware.vaultkeeper.ui.features.savecard.SaveCardScreen
+import com.dreamsoftware.vaultkeeper.ui.features.savepassword.SavePasswordScreen
 import com.dreamsoftware.vaultkeeper.ui.features.settings.SettingsScreen
 import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
 
@@ -18,7 +20,14 @@ fun NavGraphBuilder.HomeNavigationGraph(navController: NavHostController) {
             route = Screens.Main.Home.Info.route
         ) {
             with(navController) {
-                HomeScreen()
+                HomeScreen(
+                    onGoToAddNewAccount = {
+                        navigate(Screens.Main.Home.CreateAccountPassword.route)
+                    },
+                    onGoToAddNewSecureCard = {
+                        navigate(Screens.Main.Home.CreateSecureCard.route)
+                    }
+                )
             }
         }
 
@@ -36,6 +45,30 @@ fun NavGraphBuilder.HomeNavigationGraph(navController: NavHostController) {
             with(navController) {
                 SettingsScreen(
                     onGoToCreateMasterKey = {}
+                )
+            }
+        }
+
+        composable(
+            route = Screens.Main.Home.CreateAccountPassword.route
+        ) {
+            with(navController) {
+                SavePasswordScreen(
+                    onBackPressed = {
+                        popBackStack()
+                    }
+                )
+            }
+        }
+
+        composable(
+            route = Screens.Main.Home.CreateSecureCard.route
+        ) {
+            with(navController) {
+                SaveCardScreen(
+                    onBackPressed = {
+                        popBackStack()
+                    }
                 )
             }
         }
