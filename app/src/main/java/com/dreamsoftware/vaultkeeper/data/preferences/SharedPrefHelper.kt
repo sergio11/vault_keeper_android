@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.data.local
+package com.dreamsoftware.vaultkeeper.data.preferences
 
 import android.content.SharedPreferences
 import androidx.core.content.edit

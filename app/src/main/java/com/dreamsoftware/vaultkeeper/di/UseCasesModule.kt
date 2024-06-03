@@ -3,6 +3,7 @@ package com.dreamsoftware.vaultkeeper.di
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
+import com.dreamsoftware.vaultkeeper.domain.repository.IPreferenceRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
@@ -34,9 +35,13 @@ class UseCasesModule {
     @Provides
     @ViewModelScoped
     fun provideSignInUseCase(
-        userRepository: IUserRepository
+        userRepository: IUserRepository,
+        preferenceRepository: IPreferenceRepository
     ): SignInUseCase =
-        SignInUseCase(userRepository = userRepository)
+        SignInUseCase(
+            userRepository = userRepository,
+            preferenceRepository = preferenceRepository
+        )
 
     @Provides
     @ViewModelScoped
@@ -52,9 +57,13 @@ class UseCasesModule {
     @Provides
     @ViewModelScoped
     fun provideSignOffUseCase(
-        userRepository: IUserRepository
+        userRepository: IUserRepository,
+        preferenceRepository: IPreferenceRepository
     ): SignOffUseCase =
-        SignOffUseCase(userRepository = userRepository)
+        SignOffUseCase(
+            userRepository = userRepository,
+            preferenceRepository = preferenceRepository
+        )
 
     @Provides
     @ViewModelScoped

@@ -8,7 +8,7 @@ import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
 import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
-import com.dreamsoftware.vaultkeeper.data.local.SharedPrefHelper
+import com.dreamsoftware.vaultkeeper.data.preferences.SharedPrefHelper
 import com.dreamsoftware.vaultkeeper.utils.IApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

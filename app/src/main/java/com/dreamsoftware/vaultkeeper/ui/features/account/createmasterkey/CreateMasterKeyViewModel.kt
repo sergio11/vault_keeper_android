@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
-import com.dreamsoftware.vaultkeeper.data.local.SharedPrefHelper
+import com.dreamsoftware.vaultkeeper.data.preferences.SharedPrefHelper
 import com.dreamsoftware.vaultkeeper.utils.oneShotFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

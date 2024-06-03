@@ -10,7 +10,9 @@ import com.dreamsoftware.vaultkeeper.data.firebase.datasource.IAuthDataSource
 import com.dreamsoftware.vaultkeeper.data.firebase.datasource.ISecretDataSource
 import com.dreamsoftware.vaultkeeper.data.firebase.dto.AuthUserDTO
 import com.dreamsoftware.vaultkeeper.data.firebase.dto.SecretDTO
+import com.dreamsoftware.vaultkeeper.data.preferences.IPreferencesDataSource
 import com.dreamsoftware.vaultkeeper.data.repository.impl.AccountRepositoryImpl
+import com.dreamsoftware.vaultkeeper.data.repository.impl.PreferenceRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.SecretRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.SecureCardRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.UserRepositoryImpl
@@ -23,6 +25,7 @@ import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.model.PBEDataBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
+import com.dreamsoftware.vaultkeeper.domain.repository.IPreferenceRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
@@ -104,4 +107,11 @@ class RepositoryModule {
             pbeDataMapper,
             cryptoService
         )
+
+    @Provides
+    @Singleton
+    fun providePreferenceRepository(
+        preferenceDataSource: IPreferencesDataSource
+    ): IPreferenceRepository =
+        PreferenceRepositoryImpl(preferenceDataSource)
 }

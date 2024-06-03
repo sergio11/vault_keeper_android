@@ -30,6 +30,7 @@ material-icons-extended = "1.6.7"
 exoplayer = "2.18.7"
 appcompat = "1.6.1"
 material = "1.12.0"
+datastore-preferences = "1.1.1"
 
 [libraries]
 core-library-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
@@ -40,6 +41,7 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebase-auth-ktx" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebase-firestore-ktx" }
 material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons-extended" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
 #hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-android" }
