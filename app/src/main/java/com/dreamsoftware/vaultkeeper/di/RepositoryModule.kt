@@ -26,6 +26,7 @@ import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
+import com.dreamsoftware.vaultkeeper.domain.service.ICryptoService
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import dagger.Module
 import dagger.Provides
@@ -94,11 +95,13 @@ class RepositoryModule {
     fun provideSecretRepository(
         secretDataSource: ISecretDataSource,
         passwordGenerator: IPasswordGeneratorService,
-        pbeDataMapper: IBrownieOneSideMapper<SecretDTO, PBEDataBO>
+        pbeDataMapper: IBrownieOneSideMapper<SecretDTO, PBEDataBO>,
+        cryptoService: ICryptoService
     ): ISecretRepository =
         SecretRepositoryImpl(
             secretDataSource,
             passwordGenerator,
-            pbeDataMapper
+            pbeDataMapper,
+            cryptoService
         )
 }

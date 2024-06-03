@@ -1,6 +1,9 @@
 import java.io.FileInputStream
 import java.util.Properties
 
+include(":secureLib")
+
+
 pluginManagement {
     repositories {
         google {
@@ -36,3 +39,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "VaultKeeper"
 include(":app")
+include(":secureLib")

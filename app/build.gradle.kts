@@ -119,6 +119,8 @@ dependencies {
     // SplashScreen
     implementation(libs.core.splashscreen)
 
+    implementation(project(":secureLib"))
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

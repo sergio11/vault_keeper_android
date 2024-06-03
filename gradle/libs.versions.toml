@@ -28,6 +28,8 @@ desugar-jdk-libs = "2.0.4"
 brownie-ui = "0.0.14"
 material-icons-extended = "1.6.7"
 exoplayer = "2.18.7"
+appcompat = "1.6.1"
+material = "1.12.0"
 
 [libraries]
 core-library-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
@@ -66,9 +68,12 @@ firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.r
 brownie-ui = { module = "com.dreamsoftware.libraries:brownie-ui", version.ref = "brownie-ui" }
 #Exoplayer
 exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle" }
 jetbrains-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android" }
+androidLibrary = { id = "com.android.library", version.ref = "android-gradle" }
