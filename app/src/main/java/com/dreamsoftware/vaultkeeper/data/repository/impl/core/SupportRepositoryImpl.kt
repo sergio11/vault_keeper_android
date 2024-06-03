@@ -4,7 +4,6 @@ import com.dreamsoftware.vaultkeeper.domain.exception.DomainRepositoryException
 import com.dreamsoftware.vaultkeeper.domain.exception.RepositoryOperationException
 
 abstract class SupportRepositoryImpl {
-
     protected suspend fun <T> safeExecute(block: suspend () -> T): T = try {
         block()
     }

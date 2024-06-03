@@ -30,6 +30,7 @@ import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
 import com.dreamsoftware.vaultkeeper.domain.service.ICryptoService
+import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import dagger.Module
 import dagger.Provides
@@ -75,11 +76,13 @@ class RepositoryModule {
     @Singleton
     fun provideSecureCardRepository(
         dataSource: ISecureCardsDataSource,
-        secureCardUserMapper: IBrownieMapper<CardEntity, SecureCardBO>
+        secureCardUserMapper: IBrownieMapper<CardEntity, SecureCardBO>,
+        dataProtectionService: IDataProtectionService
     ): ISecureCardRepository =
         SecureCardRepositoryImpl(
             dataSource,
-            secureCardUserMapper
+            secureCardUserMapper,
+            dataProtectionService
         )
 
     @Provides

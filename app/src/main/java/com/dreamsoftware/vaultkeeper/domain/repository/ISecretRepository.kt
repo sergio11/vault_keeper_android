@@ -10,5 +10,5 @@ interface ISecretRepository {
     suspend fun generate(userUid: String): PBEDataBO
 
     @Throws(GetSecretException::class)
-    suspend fun get(userUid: String): PBEDataBO
+    suspend fun getSecretForUser(userUid: String): PBEDataBO
 }

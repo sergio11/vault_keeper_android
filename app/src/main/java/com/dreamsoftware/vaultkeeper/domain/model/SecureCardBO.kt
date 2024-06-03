@@ -8,7 +8,7 @@ data class SecureCardBO(
     val cardExpiryDate: String,
     val cardCvv: String,
     val cardProvider: String
-): ICredentialBO {
+): ICredentialBO, ICryptable<SecureCardBO> {
     companion object {
         const val FIELD_ID = "id"
         const val FIELD_CARD_HOLDER_NAME = "cardHolderName"
@@ -17,5 +17,15 @@ data class SecureCardBO(
         const val FIELD_CARD_CVV = "cardCvv"
         const val FIELD_CARD_PROVIDER = "cardProvider"
         const val FIELD_CREATED_AT = "createdAt"
+    }
+
+    override fun accept(visitor: ICryptoVisitor): SecureCardBO = with(visitor) {
+        copy(
+            cardHolderName = visit(FIELD_CARD_HOLDER_NAME, cardHolderName),
+            cardNumber = visit(FIELD_CARD_NUMBER, cardNumber),
+            cardExpiryDate = visit(FIELD_CARD_EXPIRY_DATE, cardExpiryDate),
+            cardCvv = visit(FIELD_CARD_CVV, cardCvv),
+            cardProvider = visit(FIELD_CARD_PROVIDER, cardProvider)
+        )
     }
 }

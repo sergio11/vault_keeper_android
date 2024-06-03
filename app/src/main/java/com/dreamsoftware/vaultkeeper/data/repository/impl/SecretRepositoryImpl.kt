@@ -50,7 +50,7 @@ internal class SecretRepositoryImpl(
     }
 
     @Throws(GetSecretException::class)
-    override suspend fun get(userUid: String): PBEDataBO = try {
+    override suspend fun getSecretForUser(userUid: String): PBEDataBO = try {
         val secret = secretDataSource.getByUserUid(userUid)
         mapAndDecrypt(secret)
     } catch (ex: Exception) {
