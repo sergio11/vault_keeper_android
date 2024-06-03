@@ -11,3 +11,8 @@ class InvalidDataException(errors: Map<String, String>, message: String? = null,
 class CardNotFoundException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)
 class AccountNotFoundException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)
 class RepositoryOperationException(message: String? = null, cause: Throwable? = null) : DomainRepositoryException(message, cause)
+
+// Secrets Repository Exception
+abstract class SecretDataException(message: String? = null, cause: Throwable? = null): DomainRepositoryException(message, cause)
+class GenerateSecretException(message: String? = null, cause: Throwable? = null): SecretDataException(message, cause)
+class GetSecretException(message: String? = null, cause: Throwable? = null): SecretDataException(message, cause)

@@ -2,7 +2,7 @@ package com.dreamsoftware.vaultkeeper.utils
 
 import java.security.SecureRandom
 
-object PasswordUtils {
+class PasswordGenerator {
 
     private val letters : String = "abcdefghijklmnopqrstuvwxyz"
     private val uppercaseLetters : String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

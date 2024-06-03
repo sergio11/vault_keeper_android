@@ -4,12 +4,14 @@ import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
-import com.dreamsoftware.vaultkeeper.utils.PasswordUtils
+import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class GenerateViewModel @Inject constructor() : BrownieViewModel<GenerateUiState, GenerateSideEffects>(), GeneratePasswordScreenActionListener {
+class GenerateViewModel @Inject constructor(
+    private val passwordGenerator: IPasswordGeneratorService
+) : BrownieViewModel<GenerateUiState, GenerateSideEffects>(), GeneratePasswordScreenActionListener {
 
     override fun onGetDefaultState(): GenerateUiState = GenerateUiState()
     override fun onPasswordLength(newLength: Int) {
@@ -37,7 +39,7 @@ class GenerateViewModel @Inject constructor() : BrownieViewModel<GenerateUiState
             if (!(it.lowerCase || it.upperCase || it.digits || it.specialCharacters)) {
                 it.copy(message = "Please toggle at least one option.")
             } else {
-                it.copy(password = PasswordUtils.generatePassword(
+                it.copy(password = passwordGenerator.generatePassword(
                     length = it.passwordLength,
                     isWithSpecial = it.specialCharacters,
                     isWithUppercase = it.upperCase,
@@ -54,7 +56,7 @@ class GenerateViewModel @Inject constructor() : BrownieViewModel<GenerateUiState
 
     fun generateInitialPassword() {
         updateState {
-            it.copy(password = PasswordUtils.generatePassword(
+            it.copy(password = passwordGenerator.generatePassword(
                 length = it.passwordLength,
                 isWithSpecial = it.specialCharacters,
                 isWithUppercase = it.upperCase,
