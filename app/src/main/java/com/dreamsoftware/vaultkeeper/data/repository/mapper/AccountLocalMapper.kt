@@ -4,7 +4,7 @@ import com.dreamsoftware.brownie.utils.IBrownieMapper
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 
-internal class AccountMapper: IBrownieMapper<AccountEntity, AccountBO> {
+internal class AccountLocalMapper: IBrownieMapper<AccountEntity, AccountBO> {
     override fun mapInToOut(input: AccountEntity): AccountBO = with(input) {
         AccountBO(
             uid = uid,

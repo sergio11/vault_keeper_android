@@ -5,6 +5,7 @@ import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsLocalD
 import com.dreamsoftware.vaultkeeper.data.database.entity.SecureCardEntity
 import com.dreamsoftware.vaultkeeper.data.database.exception.SecureCardNotFoundException
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecureCardsRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.dto.SecureCardDTO
 import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepositoryImpl
 import com.dreamsoftware.vaultkeeper.domain.exception.CardNotFoundException
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
@@ -15,6 +16,7 @@ internal class SecureCardRepositoryImpl(
     private val localDataSource: ISecureCardsLocalDataSource,
     private val remoteDataSource: ISecureCardsRemoteDataSource,
     private val secureCardLocalUserMapper: IBrownieMapper<SecureCardEntity, SecureCardBO>,
+    private val secureCardRemoteUserMapper: IBrownieMapper<SecureCardDTO, SecureCardBO>,
     private val dataProtectionService: IDataProtectionService
 ): SupportRepositoryImpl(), ISecureCardRepository {
 

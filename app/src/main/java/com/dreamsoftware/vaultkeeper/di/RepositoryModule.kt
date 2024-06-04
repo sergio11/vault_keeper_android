@@ -11,17 +11,21 @@ import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAccountRemoteDataSo
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecureCardsRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.dto.AccountDTO
 import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
 import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
+import com.dreamsoftware.vaultkeeper.data.remote.dto.SecureCardDTO
 import com.dreamsoftware.vaultkeeper.data.repository.impl.AccountRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.PreferenceRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.SecretRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.SecureCardRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.UserRepositoryImpl
-import com.dreamsoftware.vaultkeeper.data.repository.mapper.AccountMapper
+import com.dreamsoftware.vaultkeeper.data.repository.mapper.AccountLocalMapper
+import com.dreamsoftware.vaultkeeper.data.repository.mapper.AccountRemoteMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.AuthUserMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.PBEDataMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.SecureCardLocalMapper
+import com.dreamsoftware.vaultkeeper.data.repository.mapper.SecureCardRemoteMapper
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.model.PBEDataBO
@@ -53,11 +57,19 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideSecureCardMapper(): IBrownieMapper<SecureCardEntity, SecureCardBO> = SecureCardLocalMapper()
+    fun provideSecureCardLocalMapper(): IBrownieMapper<SecureCardEntity, SecureCardBO> = SecureCardLocalMapper()
 
     @Provides
     @Singleton
-    fun provideAccountMapper(): IBrownieMapper<AccountEntity, AccountBO> = AccountMapper()
+    fun provideSecureCardRemoteMapper(): IBrownieMapper<SecureCardDTO, SecureCardBO> = SecureCardRemoteMapper()
+
+    @Provides
+    @Singleton
+    fun provideAccountLocalMapper(): IBrownieMapper<AccountEntity, AccountBO> = AccountLocalMapper()
+
+    @Provides
+    @Singleton
+    fun provideAccountRemoteMapper(): IBrownieMapper<AccountDTO, AccountBO> = AccountRemoteMapper()
 
     @Provides
     @Singleton
@@ -79,13 +91,15 @@ class RepositoryModule {
     fun provideSecureCardRepository(
         localDataSource: ISecureCardsLocalDataSource,
         remoteDataSource: ISecureCardsRemoteDataSource,
-        secureCardUserMapper: IBrownieMapper<SecureCardEntity, SecureCardBO>,
+        secureCardLocalUserMapper: IBrownieMapper<SecureCardEntity, SecureCardBO>,
+        secureCardRemoteUserMapper: IBrownieMapper<SecureCardDTO, SecureCardBO>,
         dataProtectionService: IDataProtectionService
     ): ISecureCardRepository =
         SecureCardRepositoryImpl(
             localDataSource,
             remoteDataSource,
-            secureCardUserMapper,
+            secureCardLocalUserMapper,
+            secureCardRemoteUserMapper,
             dataProtectionService
         )
 
@@ -94,13 +108,15 @@ class RepositoryModule {
     fun provideAccountRepository(
         localDataSource: IAccountLocalDataSource,
         remoteDataSource: IAccountRemoteDataSource,
-        accountMapper: IBrownieMapper<AccountEntity, AccountBO>,
+        accountLocalMapper: IBrownieMapper<AccountEntity, AccountBO>,
+        accountRemoteMapper: IBrownieMapper<AccountDTO, AccountBO>,
         dataProtectionService: IDataProtectionService
     ): IAccountRepository =
         AccountRepositoryImpl(
             localDataSource,
             remoteDataSource,
-            accountMapper,
+            accountLocalMapper,
+            accountRemoteMapper,
             dataProtectionService
         )
 
