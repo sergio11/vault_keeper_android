@@ -14,19 +14,19 @@ import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
 internal class SecureCardRepositoryImpl(
     private val localDataSource: ISecureCardsLocalDataSource,
     private val remoteDataSource: ISecureCardsRemoteDataSource,
-    private val secureCardUserMapper: IBrownieMapper<SecureCardEntity, SecureCardBO>,
+    private val secureCardLocalUserMapper: IBrownieMapper<SecureCardEntity, SecureCardBO>,
     private val dataProtectionService: IDataProtectionService
 ): SupportRepositoryImpl(), ISecureCardRepository {
 
     override suspend fun insert(card: SecureCardBO): SecureCardBO = safeExecute {
         localDataSource
-            .insert(secureCardUserMapper.mapOutToIn(dataProtectionService.wrap(card)))
-            .let(secureCardUserMapper::mapInToOut)
+            .insert(secureCardLocalUserMapper.mapOutToIn(dataProtectionService.wrap(card)))
+            .let(secureCardLocalUserMapper::mapInToOut)
             .let { dataProtectionService.unwrap(it) }
     }
 
     override suspend fun update(card: SecureCardBO) = safeExecute {
-        localDataSource.update(secureCardUserMapper.mapOutToIn(card))
+        localDataSource.update(secureCardLocalUserMapper.mapOutToIn(card))
     }
 
     override suspend fun deleteById(cardUid: String) = safeExecute {
@@ -36,14 +36,14 @@ internal class SecureCardRepositoryImpl(
     override suspend fun findAll(): List<SecureCardBO> = safeExecute {
         localDataSource
             .findAll()
-            .map(secureCardUserMapper::mapInToOut)
+            .map(secureCardLocalUserMapper::mapInToOut)
             .map { dataProtectionService.unwrap(it) }
     }
 
     override suspend fun findById(cardUid: String): SecureCardBO = safeExecute {
         try {
             localDataSource.findById(cardUid)
-                .let(secureCardUserMapper::mapInToOut)
+                .let(secureCardLocalUserMapper::mapInToOut)
                 .let { dataProtectionService.unwrap(it) }
         } catch (ex: SecureCardNotFoundException) {
             throw CardNotFoundException("Card with ID $cardUid not found", ex)

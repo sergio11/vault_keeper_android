@@ -12,5 +12,6 @@ data class SecureCardEntity(
     val cardExpiryDate: String,
     val cardCvv: String,
     val cardProvider: String,
-    val createdAt: Long
+    val createdAt: Long,
+    val userUid: String
 )

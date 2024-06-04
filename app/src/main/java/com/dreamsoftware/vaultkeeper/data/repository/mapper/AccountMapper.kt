@@ -14,7 +14,8 @@ internal class AccountMapper: IBrownieMapper<AccountEntity, AccountBO> {
             mobileNumber = mobileNumber,
             password = password,
             note = note,
-            createdAt = createdAt
+            createdAt = createdAt,
+            userUid = userUid
         )
     }
 
@@ -33,7 +34,8 @@ internal class AccountMapper: IBrownieMapper<AccountEntity, AccountBO> {
             mobileNumber = mobileNumber,
             password = password,
             note = note,
-            createdAt = createdAt
+            createdAt = createdAt,
+            userUid = userUid
         )
     }
 }

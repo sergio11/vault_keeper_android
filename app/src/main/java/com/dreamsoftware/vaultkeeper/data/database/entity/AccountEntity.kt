@@ -13,5 +13,6 @@ data class AccountEntity(
     val mobileNumber: String,
     val password: String,
     val note: String,
-    val createdAt: Long
+    val createdAt: Long,
+    val userUid: String
 )

@@ -10,7 +10,8 @@ data class AccountBO(
     val email: String,
     val mobileNumber: String,
     val password: String,
-    val note: String
+    val note: String,
+    val userUid: String
 ): ICredentialBO, ICryptable<AccountBO> {
     companion object {
         const val FIELD_UID = "uid"
@@ -21,7 +22,9 @@ data class AccountBO(
         const val FIELD_PASSWORD = "password"
         const val FIELD_NOTE = "note"
         const val FIELD_CREATED_AT = "createdAt"
+        const val FIELD_USER_UID = "userUid"
     }
+
     val displayInfo = when {
         email.isNotBlank() -> email
         userName.isNotBlank() -> userName

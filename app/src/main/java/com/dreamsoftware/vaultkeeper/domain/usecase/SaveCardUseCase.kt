@@ -28,7 +28,8 @@ class SaveCardUseCase(
         cardExpiryDate = cardExpiryDate,
         cardCvv = cardCvv,
         cardProvider = cardProvider,
-        createdAt = System.currentTimeMillis()
+        createdAt = System.currentTimeMillis(),
+        userUid = String.EMPTY
     )
 
     data class Params(

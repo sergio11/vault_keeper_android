@@ -29,7 +29,8 @@ class SaveAccountUseCase(
         mobileNumber = mobileNumber,
         password = password,
         note = note,
-        createdAt = System.currentTimeMillis()
+        createdAt = System.currentTimeMillis(),
+        userUid = String.EMPTY
     )
 
     data class Params(

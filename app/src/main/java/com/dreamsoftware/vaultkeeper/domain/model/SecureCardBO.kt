@@ -7,7 +7,8 @@ data class SecureCardBO(
     val cardNumber: String,
     val cardExpiryDate: String,
     val cardCvv: String,
-    val cardProvider: String
+    val cardProvider: String,
+    val userUid: String
 ): ICredentialBO, ICryptable<SecureCardBO> {
     companion object {
         const val FIELD_UID = "uid"
@@ -16,6 +17,7 @@ data class SecureCardBO(
         const val FIELD_CARD_EXPIRY_DATE = "cardExpiryDate"
         const val FIELD_CARD_CVV = "cardCvv"
         const val FIELD_CARD_PROVIDER = "cardProvider"
+        const val FIELD_USER_UID = "userUid"
         const val FIELD_CREATED_AT = "createdAt"
     }
 

@@ -21,7 +21,7 @@ import com.dreamsoftware.vaultkeeper.data.repository.impl.UserRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.AccountMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.AuthUserMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.PBEDataMapper
-import com.dreamsoftware.vaultkeeper.data.repository.mapper.SecureCardMapper
+import com.dreamsoftware.vaultkeeper.data.repository.mapper.SecureCardLocalMapper
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.model.PBEDataBO
@@ -53,7 +53,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideSecureCardMapper(): IBrownieMapper<SecureCardEntity, SecureCardBO> = SecureCardMapper()
+    fun provideSecureCardMapper(): IBrownieMapper<SecureCardEntity, SecureCardBO> = SecureCardLocalMapper()
 
     @Provides
     @Singleton
