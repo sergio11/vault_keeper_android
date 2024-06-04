@@ -2,14 +2,18 @@ package com.dreamsoftware.vaultkeeper.di
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.IAuthDataSource
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.ISecretDataSource
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.impl.AuthDataSourceImpl
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.impl.SecretDataSourceImpl
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.AuthUserDTO
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.SecretDTO
-import com.dreamsoftware.vaultkeeper.data.firebase.mapper.SecretMapper
-import com.dreamsoftware.vaultkeeper.data.firebase.mapper.UserAuthenticatedMapper
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecureCardsRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.impl.AuthRemoteDataSourceImpl
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.impl.SecretRemoteDataSourceImpl
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.impl.SecureCardsRemoteDataSourceImpl
+import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
+import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
+import com.dreamsoftware.vaultkeeper.data.remote.dto.SecureCardDTO
+import com.dreamsoftware.vaultkeeper.data.remote.mapper.SecretMapper
+import com.dreamsoftware.vaultkeeper.data.remote.mapper.SecureCardMapper
+import com.dreamsoftware.vaultkeeper.data.remote.mapper.UserAuthenticatedMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,6 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 // Dagger module for providing Firebase-related dependencies
@@ -37,6 +42,11 @@ class FirebaseModule {
     @Provides
     @Singleton
     fun provideSecretMapper(): IBrownieMapper<SecretDTO, Map<String, Any?>> = SecretMapper()
+
+
+    @Provides
+    @Singleton
+    fun provideSecureCardMapper():  IBrownieMapper<SecureCardDTO, Map<String, Any?>> = SecureCardMapper()
 
     /**
      * Provides a singleton instance of FirebaseAuth.
@@ -62,21 +72,33 @@ class FirebaseModule {
      */
     @Provides
     @Singleton
-    fun provideAuthDataSource(
+    fun provideAuthRemoteDataSource(
         userAuthenticatedMapper: IBrownieOneSideMapper<FirebaseUser, AuthUserDTO>,
         firebaseAuth: FirebaseAuth
-    ): IAuthDataSource = AuthDataSourceImpl(
+    ): IAuthRemoteDataSource = AuthRemoteDataSourceImpl(
         userAuthenticatedMapper,
         firebaseAuth
     )
 
     @Provides
     @Singleton
-    fun provideSecretDataSource(
+    fun provideSecretRemoteDataSource(
         fireStore: FirebaseFirestore,
         secretsMapper: IBrownieMapper<SecretDTO, Map<String, Any?>>
-    ): ISecretDataSource = SecretDataSourceImpl(
+    ): ISecretRemoteDataSource = SecretRemoteDataSourceImpl(
         fireStore,
         secretsMapper
+    )
+
+    @Provides
+    @Singleton
+    fun provideSecureCardsRemoteDataSource(
+        firebaseStore: FirebaseFirestore,
+        mapper: IBrownieMapper<SecureCardDTO, Map<String, Any?>>,
+        dispatcher: CoroutineDispatcher
+    ): ISecureCardsRemoteDataSource = SecureCardsRemoteDataSourceImpl(
+        firebaseStore,
+        mapper,
+        dispatcher
     )
 }

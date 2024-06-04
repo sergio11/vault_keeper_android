@@ -1,15 +1,15 @@
-package com.dreamsoftware.vaultkeeper.data.firebase.datasource
+package com.dreamsoftware.vaultkeeper.data.remote.datasource
 
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.AuthUserDTO
-import com.dreamsoftware.vaultkeeper.data.firebase.exception.AuthException
-import com.dreamsoftware.vaultkeeper.data.firebase.exception.SignInException
-import com.dreamsoftware.vaultkeeper.data.firebase.exception.SignUpException
+import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
+import com.dreamsoftware.vaultkeeper.data.remote.exception.AuthException
+import com.dreamsoftware.vaultkeeper.data.remote.exception.SignInException
+import com.dreamsoftware.vaultkeeper.data.remote.exception.SignUpException
 
 /**
  * Interface for authentication data source.
  * Provides methods for user authentication, user retrieval, and session management.
  */
-interface IAuthDataSource {
+interface IAuthRemoteDataSource {
 
     /**
      * Checks if the user is authenticated.

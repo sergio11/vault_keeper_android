@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.data.firebase.dto
+package com.dreamsoftware.vaultkeeper.data.remote.dto
 
 data class SecretDTO(
     val userUid: String,

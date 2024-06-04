@@ -1,11 +1,11 @@
-package com.dreamsoftware.vaultkeeper.data.firebase.datasource.impl
+package com.dreamsoftware.vaultkeeper.data.remote.datasource.impl
 
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.IAuthDataSource
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.AuthUserDTO
-import com.dreamsoftware.vaultkeeper.data.firebase.exception.AuthException
-import com.dreamsoftware.vaultkeeper.data.firebase.exception.SignInException
-import com.dreamsoftware.vaultkeeper.data.firebase.exception.SignUpException
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
+import com.dreamsoftware.vaultkeeper.data.remote.exception.AuthException
+import com.dreamsoftware.vaultkeeper.data.remote.exception.SignInException
+import com.dreamsoftware.vaultkeeper.data.remote.exception.SignUpException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
@@ -13,10 +13,10 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 // Implementation of the IAuthDataSource interface
-internal class AuthDataSourceImpl(
+internal class AuthRemoteDataSourceImpl(
     private val userAuthenticatedMapper: IBrownieOneSideMapper<FirebaseUser, AuthUserDTO>, // Mapper to convert Firebase user to AuthUserDTO
     private val firebaseAuth: FirebaseAuth // Firebase Authentication instance
-) : IAuthDataSource {
+) : IAuthRemoteDataSource {
 
     /**
      * Checks if the user is authenticated.

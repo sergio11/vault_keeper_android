@@ -1,7 +1,7 @@
 package com.dreamsoftware.vaultkeeper.data.repository.mapper
 
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.SecretDTO
+import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
 import com.dreamsoftware.vaultkeeper.domain.model.PBEDataBO
 
 class PBEDataMapper: IBrownieOneSideMapper<SecretDTO, PBEDataBO> {

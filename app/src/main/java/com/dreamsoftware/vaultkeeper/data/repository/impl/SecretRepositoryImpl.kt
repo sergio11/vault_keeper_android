@@ -1,8 +1,8 @@
 package com.dreamsoftware.vaultkeeper.data.repository.impl
 
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.ISecretDataSource
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.SecretDTO
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
 import com.dreamsoftware.vaultkeeper.domain.exception.GenerateSecretException
 import com.dreamsoftware.vaultkeeper.domain.exception.GetSecretException
 import com.dreamsoftware.vaultkeeper.domain.model.PBEDataBO
@@ -19,7 +19,7 @@ import com.dreamsoftware.vaultkeeper.securelib.VaultKeeperNativeSecretsAPI
  * @param cryptoService
  */
 internal class SecretRepositoryImpl(
-    private val secretDataSource: ISecretDataSource,
+    private val secretDataSource: ISecretRemoteDataSource,
     private val passwordGenerator: IPasswordGeneratorService,
     private val pbeDataMapper: IBrownieOneSideMapper<SecretDTO, PBEDataBO>,
     private val cryptoService: ICryptoService

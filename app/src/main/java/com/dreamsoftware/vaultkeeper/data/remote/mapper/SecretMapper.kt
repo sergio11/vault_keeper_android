@@ -1,7 +1,7 @@
-package com.dreamsoftware.vaultkeeper.data.firebase.mapper
+package com.dreamsoftware.vaultkeeper.data.remote.mapper
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.SecretDTO
+import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
 
 class SecretMapper : IBrownieMapper<SecretDTO, Map<String, Any?>> {
 

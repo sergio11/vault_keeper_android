@@ -1,8 +1,8 @@
 package com.dreamsoftware.vaultkeeper.data.repository.impl
 
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.IAuthDataSource
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.AuthUserDTO
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
 import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepositoryImpl
 import com.dreamsoftware.vaultkeeper.domain.exception.CheckAuthenticatedException
 import com.dreamsoftware.vaultkeeper.domain.exception.CloseSessionException
@@ -13,7 +13,7 @@ import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
 
 internal class UserRepositoryImpl(
-    private val authDataSource: IAuthDataSource,
+    private val authDataSource: IAuthRemoteDataSource,
     private val authUserMapper: IBrownieOneSideMapper<AuthUserDTO, AuthUserBO>
 ): SupportRepositoryImpl(), IUserRepository {
 

@@ -1,11 +1,11 @@
-package com.dreamsoftware.vaultkeeper.data.firebase.datasource.impl
+package com.dreamsoftware.vaultkeeper.data.remote.datasource.impl
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.ISecretDataSource
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.SecretDTO
-import com.dreamsoftware.vaultkeeper.data.firebase.exception.FirebaseException
-import com.dreamsoftware.vaultkeeper.data.firebase.exception.SaveSecretException
-import com.dreamsoftware.vaultkeeper.data.firebase.exception.SecretNotFoundException
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
+import com.dreamsoftware.vaultkeeper.data.remote.exception.FirebaseException
+import com.dreamsoftware.vaultkeeper.data.remote.exception.SaveSecretException
+import com.dreamsoftware.vaultkeeper.data.remote.exception.SecretNotFoundException
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -16,10 +16,10 @@ import kotlinx.coroutines.withContext
  * @param firebaseStore
  * @param secretMapper
  */
-internal class SecretDataSourceImpl(
+internal class SecretRemoteDataSourceImpl(
     private val firebaseStore: FirebaseFirestore,
     private val secretMapper: IBrownieMapper<SecretDTO, Map<String, Any?>>
-): ISecretDataSource {
+): ISecretRemoteDataSource {
 
     private companion object {
         const val COLLECTION_NAME = "secrets"

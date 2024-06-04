@@ -1,7 +1,7 @@
-package com.dreamsoftware.vaultkeeper.data.firebase.mapper
+package com.dreamsoftware.vaultkeeper.data.remote.mapper
 
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.AuthUserDTO
+import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
 import com.google.firebase.auth.FirebaseUser
 
 class UserAuthenticatedMapper : IBrownieOneSideMapper<FirebaseUser, AuthUserDTO> {

@@ -6,10 +6,10 @@ import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountDataSource
 import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsDataSource
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.IAuthDataSource
-import com.dreamsoftware.vaultkeeper.data.firebase.datasource.ISecretDataSource
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.AuthUserDTO
-import com.dreamsoftware.vaultkeeper.data.firebase.dto.SecretDTO
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
+import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
 import com.dreamsoftware.vaultkeeper.data.preferences.IPreferencesDataSource
 import com.dreamsoftware.vaultkeeper.data.repository.impl.AccountRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.PreferenceRepositoryImpl
@@ -64,7 +64,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideUserRepository(
-        authDataSource: IAuthDataSource,
+        authDataSource: IAuthRemoteDataSource,
         authUserMapper: IBrownieOneSideMapper<AuthUserDTO, AuthUserBO>
     ): IUserRepository =
         UserRepositoryImpl(
@@ -101,7 +101,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideSecretRepository(
-        secretDataSource: ISecretDataSource,
+        secretDataSource: ISecretRemoteDataSource,
         passwordGenerator: IPasswordGeneratorService,
         pbeDataMapper: IBrownieOneSideMapper<SecretDTO, PBEDataBO>,
         cryptoService: ICryptoService
