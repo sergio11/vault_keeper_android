@@ -8,7 +8,7 @@ import com.dreamsoftware.vaultkeeper.data.database.exception.SecureCardNotFoundE
  * Interface for the secure cards data source.
  * Defines all the necessary operations for managing card entities in the database.
  */
-interface ISecureCardsDataSource {
+interface ISecureCardsLocalDataSource {
 
     /**
      * Inserts a card into the database.

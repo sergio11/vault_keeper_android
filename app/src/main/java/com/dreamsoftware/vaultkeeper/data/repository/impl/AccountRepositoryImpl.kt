@@ -1,7 +1,7 @@
 package com.dreamsoftware.vaultkeeper.data.repository.impl
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
-import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountDataSource
+import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.data.database.exception.SecureCardNotFoundException
 import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepositoryImpl
@@ -11,7 +11,7 @@ import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
 import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
 
 internal class AccountRepositoryImpl(
-    private val dataSource: IAccountDataSource,
+    private val dataSource: IAccountLocalDataSource,
     private val accountMapper: IBrownieMapper<AccountEntity, AccountBO>,
     private val dataProtectionService: IDataProtectionService
 ): SupportRepositoryImpl(), IAccountRepository {

@@ -4,7 +4,7 @@ import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.data.database.exception.AccessDatabaseException
 import com.dreamsoftware.vaultkeeper.data.database.exception.AccountNotFoundException
 
-interface IAccountDataSource {
+interface IAccountLocalDataSource {
 
     @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
     suspend fun insert(accountEntity: AccountEntity): AccountEntity

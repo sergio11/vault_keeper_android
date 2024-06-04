@@ -2,15 +2,19 @@ package com.dreamsoftware.vaultkeeper.di
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAccountRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecureCardsRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.impl.AccountsRemoteDataSourceImpl
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.impl.AuthRemoteDataSourceImpl
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.impl.SecretRemoteDataSourceImpl
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.impl.SecureCardsRemoteDataSourceImpl
+import com.dreamsoftware.vaultkeeper.data.remote.dto.AccountDTO
 import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
 import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
 import com.dreamsoftware.vaultkeeper.data.remote.dto.SecureCardDTO
+import com.dreamsoftware.vaultkeeper.data.remote.mapper.AccountMapper
 import com.dreamsoftware.vaultkeeper.data.remote.mapper.SecretMapper
 import com.dreamsoftware.vaultkeeper.data.remote.mapper.SecureCardMapper
 import com.dreamsoftware.vaultkeeper.data.remote.mapper.UserAuthenticatedMapper
@@ -47,6 +51,10 @@ class FirebaseModule {
     @Provides
     @Singleton
     fun provideSecureCardMapper():  IBrownieMapper<SecureCardDTO, Map<String, Any?>> = SecureCardMapper()
+
+    @Provides
+    @Singleton
+    fun provideAccountMapper():  IBrownieMapper<AccountDTO, Map<String, Any?>> = AccountMapper()
 
     /**
      * Provides a singleton instance of FirebaseAuth.
@@ -95,8 +103,20 @@ class FirebaseModule {
     fun provideSecureCardsRemoteDataSource(
         firebaseStore: FirebaseFirestore,
         mapper: IBrownieMapper<SecureCardDTO, Map<String, Any?>>,
-        dispatcher: CoroutineDispatcher
+        @IoDispatcher dispatcher: CoroutineDispatcher
     ): ISecureCardsRemoteDataSource = SecureCardsRemoteDataSourceImpl(
+        firebaseStore,
+        mapper,
+        dispatcher
+    )
+
+    @Provides
+    @Singleton
+    fun provideAccountsRemoteDataSource(
+        firebaseStore: FirebaseFirestore,
+        mapper: IBrownieMapper<AccountDTO, Map<String, Any?>>,
+        @IoDispatcher dispatcher: CoroutineDispatcher
+    ): IAccountRemoteDataSource = AccountsRemoteDataSourceImpl(
         firebaseStore,
         mapper,
         dispatcher

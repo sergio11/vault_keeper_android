@@ -1,7 +1,7 @@
 package com.dreamsoftware.vaultkeeper.data.database.datasource.impl
 
 import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
-import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsDataSource
+import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.core.SupportDataSourceImpl
 import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
 import com.dreamsoftware.vaultkeeper.data.database.exception.AccessDatabaseException
@@ -13,10 +13,10 @@ import kotlinx.coroutines.CoroutineDispatcher
  * Implementation of the ISecureCardsDataSource interface.
  * Uses CardDao to perform database operations.
  */
-internal class SecureCardsDataSourceImpl(
+internal class SecureCardsLocalDataSourceImpl(
     private val cardDao: CardDao,
     dispatcher: CoroutineDispatcher
-) : SupportDataSourceImpl(dispatcher), ISecureCardsDataSource {
+) : SupportDataSourceImpl(dispatcher), ISecureCardsLocalDataSource {
 
     /**
      * Inserts a card into the database.

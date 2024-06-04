@@ -5,10 +5,10 @@ import androidx.room.Room
 import com.dreamsoftware.vaultkeeper.data.database.LockBuddyDatabase
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
 import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
-import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountDataSource
-import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsDataSource
-import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.AccountDataSourceImpl
-import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.SecureCardsDataSourceImpl
+import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountLocalDataSource
+import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsLocalDataSource
+import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.AccountLocalDataSourceImpl
+import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.SecureCardsLocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,7 +42,7 @@ object DatabaseModule {
     fun provideSecureCardsDataSource(
         cardDao: CardDao,
         @IoDispatcher dispatcher: CoroutineDispatcher
-    ): ISecureCardsDataSource = SecureCardsDataSourceImpl(cardDao, dispatcher)
+    ): ISecureCardsLocalDataSource = SecureCardsLocalDataSourceImpl(cardDao, dispatcher)
 
 
     @Singleton
@@ -50,5 +50,5 @@ object DatabaseModule {
     fun provideAccountDataSource(
         accountDao: AccountDao,
         @IoDispatcher dispatcher: CoroutineDispatcher
-    ): IAccountDataSource = AccountDataSourceImpl(accountDao, dispatcher)
+    ): IAccountLocalDataSource = AccountLocalDataSourceImpl(accountDao, dispatcher)
 }

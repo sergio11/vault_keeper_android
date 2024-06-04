@@ -1,11 +1,13 @@
 package com.dreamsoftware.vaultkeeper.data.remote.datasource.impl
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
-import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecureCardsRemoteDataSource
-import com.dreamsoftware.vaultkeeper.data.remote.dto.SecureCardDTO
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAccountRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.dto.AccountDTO
+import com.dreamsoftware.vaultkeeper.data.remote.exception.DeleteAccountException
 import com.dreamsoftware.vaultkeeper.data.remote.exception.DeleteSecureCardException
-import com.dreamsoftware.vaultkeeper.data.remote.exception.FetchSecureCardException
+import com.dreamsoftware.vaultkeeper.data.remote.exception.FetchAccountException
 import com.dreamsoftware.vaultkeeper.data.remote.exception.FirebaseException
+import com.dreamsoftware.vaultkeeper.data.remote.exception.SaveAccountException
 import com.dreamsoftware.vaultkeeper.data.remote.exception.SaveSecureCardException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -13,36 +15,36 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-internal class SecureCardsRemoteDataSourceImpl(
+internal class AccountsRemoteDataSourceImpl(
     private val firebaseStore: FirebaseFirestore,
-    private val dtoMapper: IBrownieMapper<SecureCardDTO, Map<String, Any?>>,
+    private val dtoMapper: IBrownieMapper<AccountDTO, Map<String, Any?>>,
     private val dispatcher: CoroutineDispatcher
-) : ISecureCardsRemoteDataSource {
+) : IAccountRemoteDataSource {
 
     private companion object {
         const val COLLECTION_NAME = "users"
-        const val SUB_COLLECTION_NAME = "secure_cards"
+        const val SUB_COLLECTION_NAME = "accounts"
     }
 
-    @Throws(SaveSecureCardException::class)
-    override suspend fun save(secureCard: SecureCardDTO): Unit = withContext(dispatcher) {
+    @Throws(SaveAccountException::class)
+    override suspend fun save(account: AccountDTO): Unit = withContext(dispatcher) {
         try {
             firebaseStore.collection(COLLECTION_NAME)
-                .document(secureCard.userUid)
+                .document(account.userUid)
                 .collection(SUB_COLLECTION_NAME)
-                .document(secureCard.uid)
-                .set(dtoMapper.mapInToOut(secureCard), SetOptions.merge())
+                .document(account.uid)
+                .set(dtoMapper.mapInToOut(account), SetOptions.merge())
                 .await()
         } catch (ex: Exception) {
             throw SaveSecureCardException(
-                "An error occurred when trying to save secure card information",
+                "An error occurred when trying to save account information",
                 ex
             )
         }
     }
 
-    @Throws(FetchSecureCardException::class)
-    override suspend fun getAllByUserUid(userUid: String): List<SecureCardDTO> =
+    @Throws(FetchAccountException::class)
+    override suspend fun getAllByUserUid(userUid: String): List<AccountDTO> =
         withContext(dispatcher) {
             try {
                 val snapshot = firebaseStore.collection(COLLECTION_NAME)
@@ -52,38 +54,38 @@ internal class SecureCardsRemoteDataSourceImpl(
                     .await()
                 snapshot.documents.map { document ->
                     dtoMapper.mapOutToIn(
-                        document.data ?: throw FetchSecureCardException("Document data is null")
+                        document.data ?: throw FetchAccountException("Document data is null")
                     )
                 }
             } catch (ex: FirebaseException) {
                 throw ex
             } catch (ex: Exception) {
-                throw FetchSecureCardException(
-                    "An error occurred when trying to fetch secure cards by user UID",
+                throw FetchAccountException(
+                    "An error occurred when trying to fetch account by user UID",
                     ex
                 )
             }
         }
 
-    @Throws(DeleteSecureCardException::class)
-    override suspend fun deleteById(userUid: String, cardUid: String): Unit =
+    @Throws(DeleteAccountException::class)
+    override suspend fun deleteById(userUid: String, accountUid: String): Unit =
         withContext(dispatcher) {
             try {
                 firebaseStore.collection(COLLECTION_NAME)
                     .document(userUid)
                     .collection(SUB_COLLECTION_NAME)
-                    .document(cardUid)
+                    .document(accountUid)
                     .delete()
                     .await()
             } catch (ex: Exception) {
                 throw DeleteSecureCardException(
-                    "An error occurred when trying to delete the secure card with ID $cardUid",
+                    "An error occurred when trying to delete the account with ID $accountUid",
                     ex
                 )
             }
         }
 
-    @Throws(DeleteSecureCardException::class)
+    @Throws(DeleteAccountException::class)
     override suspend fun deleteAllByUserUid(userUid: String): Unit = withContext(dispatcher) {
         try {
             val batch = firebaseStore.batch()
@@ -105,24 +107,24 @@ internal class SecureCardsRemoteDataSourceImpl(
         }
     }
 
-    @Throws(FetchSecureCardException::class)
-    override suspend fun getById(userUid: String, cardUid: String): SecureCardDTO =
+    @Throws(FetchAccountException::class)
+    override suspend fun getById(userUid: String, accountUid: String): AccountDTO =
         withContext(dispatcher) {
             try {
                 val document = firebaseStore.collection(COLLECTION_NAME)
                     .document(userUid)
                     .collection(SUB_COLLECTION_NAME)
-                    .document(cardUid)
+                    .document(accountUid)
                     .get()
                     .await()
                 dtoMapper.mapOutToIn(
-                    document.data ?: throw FetchSecureCardException("Document data is null")
+                    document.data ?: throw FetchAccountException("Document data is null")
                 )
             } catch (ex: FirebaseException) {
                 throw ex
             } catch (ex: Exception) {
-                throw FetchSecureCardException(
-                    "An error occurred when trying to fetch the secure card with ID $cardUid",
+                throw FetchAccountException(
+                    "An error occurred when trying to fetch the account with ID $accountUid",
                     ex
                 )
             }

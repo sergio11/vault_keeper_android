@@ -2,15 +2,16 @@ package com.dreamsoftware.vaultkeeper.di
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
-import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountDataSource
-import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsDataSource
+import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountLocalDataSource
+import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
+import com.dreamsoftware.vaultkeeper.data.preferences.IPreferencesDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecureCardsRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
 import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
-import com.dreamsoftware.vaultkeeper.data.preferences.IPreferencesDataSource
 import com.dreamsoftware.vaultkeeper.data.repository.impl.AccountRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.PreferenceRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.impl.SecretRepositoryImpl
@@ -75,12 +76,14 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideSecureCardRepository(
-        dataSource: ISecureCardsDataSource,
+        localDataSource: ISecureCardsLocalDataSource,
+        remoteDataSource: ISecureCardsRemoteDataSource,
         secureCardUserMapper: IBrownieMapper<CardEntity, SecureCardBO>,
         dataProtectionService: IDataProtectionService
     ): ISecureCardRepository =
         SecureCardRepositoryImpl(
-            dataSource,
+            localDataSource,
+            remoteDataSource,
             secureCardUserMapper,
             dataProtectionService
         )
@@ -88,7 +91,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideAccountRepository(
-        dataSource: IAccountDataSource,
+        dataSource: IAccountLocalDataSource,
         accountMapper: IBrownieMapper<AccountEntity, AccountBO>,
         dataProtectionService: IDataProtectionService
     ): IAccountRepository =

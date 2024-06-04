@@ -1,17 +1,17 @@
 package com.dreamsoftware.vaultkeeper.data.database.datasource.impl
 
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
-import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountDataSource
+import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.core.SupportDataSourceImpl
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.data.database.exception.AccessDatabaseException
 import com.dreamsoftware.vaultkeeper.data.database.exception.AccountNotFoundException
 import kotlinx.coroutines.CoroutineDispatcher
 
-internal class AccountDataSourceImpl(
+internal class AccountLocalDataSourceImpl(
     private val accountDao: AccountDao,
     dispatcher: CoroutineDispatcher
-): SupportDataSourceImpl(dispatcher), IAccountDataSource {
+): SupportDataSourceImpl(dispatcher), IAccountLocalDataSource {
 
     @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
     override suspend fun insert(accountEntity: AccountEntity): AccountEntity = safeExecute {
