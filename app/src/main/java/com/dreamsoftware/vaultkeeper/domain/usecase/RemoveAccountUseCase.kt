@@ -8,10 +8,10 @@ class RemoveAccountUseCase(
 ): BrownieUseCaseWithParams<RemoveAccountUseCase.Params, Unit>() {
 
     override suspend fun onExecuted(params: Params) {
-        accountRepository.deleteById(params.id)
+        accountRepository.deleteById(params.uid)
     }
 
     data class Params(
-        val id: Int
+        val uid: String
     )
 }

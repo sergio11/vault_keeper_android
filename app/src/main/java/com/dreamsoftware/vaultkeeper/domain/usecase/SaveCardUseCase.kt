@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.domain.usecase
 
 import com.dreamsoftware.brownie.core.BrownieUseCaseWithParams
+import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.domain.exception.InvalidDataException
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
@@ -21,7 +22,7 @@ class SaveCardUseCase(
         }
 
     private fun Params.toSecureCardBO() = SecureCardBO(
-        id = id ?: 0,
+        uid = uid ?: String.EMPTY,
         cardHolderName = cardHolderName,
         cardNumber = cardNumber,
         cardExpiryDate = cardExpiryDate,
@@ -31,7 +32,7 @@ class SaveCardUseCase(
     )
 
     data class Params(
-        val id: Int? = null,
+        val uid: String? = null,
         val cardHolderName: String,
         val cardNumber: String,
         val cardExpiryDate: String,

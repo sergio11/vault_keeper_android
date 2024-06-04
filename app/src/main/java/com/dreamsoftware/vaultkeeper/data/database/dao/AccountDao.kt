@@ -12,7 +12,7 @@ import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 interface AccountDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAccount(accountEntity: AccountEntity): Long
+    suspend fun insertAccount(accountEntity: AccountEntity)
 
     @Update
     suspend fun updateAccount(accountEntity: AccountEntity)
@@ -20,11 +20,11 @@ interface AccountDao {
     @Delete
     suspend fun deleteAccount(accountEntity: AccountEntity)
 
-    @Query("SELECT * FROM accounts ORDER BY id ASC")
+    @Query("SELECT * FROM accounts ORDER BY uid ASC")
     fun getAllAccounts(): List<AccountEntity>
 
-    @Query("SELECT * FROM `accounts` WHERE id = :id")
-    fun getAccountById(id: Int): AccountEntity?
+    @Query("SELECT * FROM `accounts` WHERE uid = :uid")
+    fun getAccountById(uid: String): AccountEntity?
 
     @Query("DELETE FROM accounts")
     fun deleteAllAccounts()

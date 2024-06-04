@@ -6,7 +6,7 @@ import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
-import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
+import com.dreamsoftware.vaultkeeper.data.database.dao.SecureCardDao
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.ICredentialBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val dbAccount: AccountDao,
-    private val dbCard: CardDao
+    private val dbCard: SecureCardDao
 ) : BrownieViewModel<HomeUiState, HomeSideEffects>(), HomeScreenActionListener {
 
     private companion object {

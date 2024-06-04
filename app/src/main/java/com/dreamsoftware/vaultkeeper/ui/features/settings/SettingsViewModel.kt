@@ -7,7 +7,7 @@ import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
-import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
+import com.dreamsoftware.vaultkeeper.data.database.dao.SecureCardDao
 import com.dreamsoftware.vaultkeeper.data.preferences.SharedPrefHelper
 import com.dreamsoftware.vaultkeeper.utils.IApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val application: IApplicationAware,
     private val dbAccount: AccountDao,
-    private val dbCard: CardDao,
+    private val dbCard: SecureCardDao,
     private val prefs: SharedPrefHelper
 ) : BrownieViewModel<SettingsUiState, SettingsUiSideEffects>(), SettingsScreenActionListener {
 

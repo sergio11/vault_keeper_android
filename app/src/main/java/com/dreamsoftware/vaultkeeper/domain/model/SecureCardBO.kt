@@ -1,7 +1,7 @@
 package com.dreamsoftware.vaultkeeper.domain.model
 
 data class SecureCardBO(
-    override val id: Int,
+    override val uid: String,
     override val createdAt: Long,
     val cardHolderName: String,
     val cardNumber: String,
@@ -10,7 +10,7 @@ data class SecureCardBO(
     val cardProvider: String
 ): ICredentialBO, ICryptable<SecureCardBO> {
     companion object {
-        const val FIELD_ID = "id"
+        const val FIELD_UID = "uid"
         const val FIELD_CARD_HOLDER_NAME = "cardHolderName"
         const val FIELD_CARD_NUMBER = "cardNumber"
         const val FIELD_CARD_EXPIRY_DATE = "cardExpiryDate"

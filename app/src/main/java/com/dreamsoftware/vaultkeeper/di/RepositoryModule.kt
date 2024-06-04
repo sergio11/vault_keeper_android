@@ -5,8 +5,9 @@ import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
 import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
-import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
+import com.dreamsoftware.vaultkeeper.data.database.entity.SecureCardEntity
 import com.dreamsoftware.vaultkeeper.data.preferences.IPreferencesDataSource
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAccountRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecureCardsRemoteDataSource
@@ -52,7 +53,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideSecureCardMapper(): IBrownieMapper<CardEntity, SecureCardBO> = SecureCardMapper()
+    fun provideSecureCardMapper(): IBrownieMapper<SecureCardEntity, SecureCardBO> = SecureCardMapper()
 
     @Provides
     @Singleton
@@ -78,7 +79,7 @@ class RepositoryModule {
     fun provideSecureCardRepository(
         localDataSource: ISecureCardsLocalDataSource,
         remoteDataSource: ISecureCardsRemoteDataSource,
-        secureCardUserMapper: IBrownieMapper<CardEntity, SecureCardBO>,
+        secureCardUserMapper: IBrownieMapper<SecureCardEntity, SecureCardBO>,
         dataProtectionService: IDataProtectionService
     ): ISecureCardRepository =
         SecureCardRepositoryImpl(
@@ -91,12 +92,14 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideAccountRepository(
-        dataSource: IAccountLocalDataSource,
+        localDataSource: IAccountLocalDataSource,
+        remoteDataSource: IAccountRemoteDataSource,
         accountMapper: IBrownieMapper<AccountEntity, AccountBO>,
         dataProtectionService: IDataProtectionService
     ): IAccountRepository =
         AccountRepositoryImpl(
-            dataSource,
+            localDataSource,
+            remoteDataSource,
             accountMapper,
             dataProtectionService
         )

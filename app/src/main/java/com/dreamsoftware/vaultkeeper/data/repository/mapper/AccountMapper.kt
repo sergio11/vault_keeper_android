@@ -7,7 +7,7 @@ import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 internal class AccountMapper: IBrownieMapper<AccountEntity, AccountBO> {
     override fun mapInToOut(input: AccountEntity): AccountBO = with(input) {
         AccountBO(
-            id = id,
+            uid = uid,
             accountName = accountName,
             userName = userName,
             email = email,
@@ -26,7 +26,7 @@ internal class AccountMapper: IBrownieMapper<AccountEntity, AccountBO> {
 
     override fun mapOutToIn(input: AccountBO): AccountEntity = with(input) {
         AccountEntity(
-            id = id,
+            uid = uid,
             accountName = accountName,
             userName = userName,
             email = email,

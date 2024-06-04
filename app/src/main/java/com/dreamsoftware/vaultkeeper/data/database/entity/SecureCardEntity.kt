@@ -4,9 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "secure_cards")
-data class CardEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
+data class SecureCardEntity(
+    @PrimaryKey
+    val uid: String,
     val cardHolderName: String,
     val cardNumber: String,
     val cardExpiryDate: String,

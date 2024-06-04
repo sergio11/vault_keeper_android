@@ -2,9 +2,9 @@ package com.dreamsoftware.vaultkeeper.di
 
 import android.content.Context
 import androidx.room.Room
-import com.dreamsoftware.vaultkeeper.data.database.LockBuddyDatabase
+import com.dreamsoftware.vaultkeeper.data.database.VaultKeeperDatabase
 import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
-import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
+import com.dreamsoftware.vaultkeeper.data.database.dao.SecureCardDao
 import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.AccountLocalDataSourceImpl
@@ -25,24 +25,24 @@ object DatabaseModule {
     @Singleton
     fun provideRoomInstance(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
-        LockBuddyDatabase::class.java,
+        VaultKeeperDatabase::class.java,
         "lockbuddy_database"
     ).build()
 
     @Singleton
     @Provides
-    fun provideAccountDao(db: LockBuddyDatabase) = db.accountDao()
+    fun provideAccountDao(db: VaultKeeperDatabase) = db.accountDao()
 
     @Singleton
     @Provides
-    fun provideCardDao(db: LockBuddyDatabase) = db.cardDao()
+    fun provideCardDao(db: VaultKeeperDatabase) = db.cardDao()
 
     @Singleton
     @Provides
     fun provideSecureCardsDataSource(
-        cardDao: CardDao,
+        secureCardDao: SecureCardDao,
         @IoDispatcher dispatcher: CoroutineDispatcher
-    ): ISecureCardsLocalDataSource = SecureCardsLocalDataSourceImpl(cardDao, dispatcher)
+    ): ISecureCardsLocalDataSource = SecureCardsLocalDataSourceImpl(secureCardDao, dispatcher)
 
 
     @Singleton

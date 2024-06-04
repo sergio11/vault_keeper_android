@@ -1,9 +1,9 @@
 package com.dreamsoftware.vaultkeeper.data.database.datasource.impl
 
-import com.dreamsoftware.vaultkeeper.data.database.dao.CardDao
+import com.dreamsoftware.vaultkeeper.data.database.dao.SecureCardDao
 import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.core.SupportDataSourceImpl
-import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
+import com.dreamsoftware.vaultkeeper.data.database.entity.SecureCardEntity
 import com.dreamsoftware.vaultkeeper.data.database.exception.AccessDatabaseException
 import com.dreamsoftware.vaultkeeper.data.database.exception.AccountNotFoundException
 import com.dreamsoftware.vaultkeeper.data.database.exception.SecureCardNotFoundException
@@ -14,7 +14,7 @@ import kotlinx.coroutines.CoroutineDispatcher
  * Uses CardDao to perform database operations.
  */
 internal class SecureCardsLocalDataSourceImpl(
-    private val cardDao: CardDao,
+    private val secureCardDao: SecureCardDao,
     dispatcher: CoroutineDispatcher
 ) : SupportDataSourceImpl(dispatcher), ISecureCardsLocalDataSource {
 
@@ -24,12 +24,13 @@ internal class SecureCardsLocalDataSourceImpl(
      * Uses Dispatchers.IO to ensure the database operation is performed on an IO-optimized thread.
      * Catches and throws appropriate exceptions.
      *
-     * @param cardEntity The card entity to be inserted.
+     * @param secureCardEntity The card entity to be inserted.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    override suspend fun insert(cardEntity: CardEntity) = safeExecute {
-        cardDao.insertCard(cardEntity).let { id ->
-            cardEntity.copy(id = id.toInt())
+    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
+    override suspend fun insert(secureCardEntity: SecureCardEntity) = safeExecute {
+        secureCardDao.insertCard(secureCardEntity).let {
+            secureCardDao.getCardsById(secureCardEntity.uid) ?: throw SecureCardNotFoundException("Secure card not found")
         }
     }
 
@@ -39,11 +40,11 @@ internal class SecureCardsLocalDataSourceImpl(
      * Uses Dispatchers.IO to ensure the database operation is performed on an IO-optimized thread.
      * Catches and throws appropriate exceptions.
      *
-     * @param cardEntity The card entity to be updated.
+     * @param secureCardEntity The card entity to be updated.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    override suspend fun update(cardEntity: CardEntity) = safeExecute {
-        cardDao.updateCard(cardEntity)
+    override suspend fun update(secureCardEntity: SecureCardEntity) = safeExecute {
+        secureCardDao.updateCard(secureCardEntity)
     }
 
     /**
@@ -52,12 +53,12 @@ internal class SecureCardsLocalDataSourceImpl(
      * Uses Dispatchers.IO to ensure the database operation is performed on an IO-optimized thread.
      * Catches and throws appropriate exceptions.
      *
-     * @param id The card entity to be deleted.
+     * @param cardUid The card entity to be deleted.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    override suspend fun delete(id: Int) = safeExecute {
-        with(cardDao) {
-            val account = getCardsById(id)
+    override suspend fun delete(cardUid: String) = safeExecute {
+        with(secureCardDao) {
+            val account = getCardsById(cardUid)
             account ?: throw AccountNotFoundException()
             deleteCard(account)
         }
@@ -72,8 +73,8 @@ internal class SecureCardsLocalDataSourceImpl(
      * @return A list of all card entities.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    override suspend fun findAll(): List<CardEntity> = safeExecute {
-        cardDao.getAllCards()
+    override suspend fun findAll(): List<SecureCardEntity> = safeExecute {
+        secureCardDao.getAllCards()
     }
 
     /**
@@ -83,13 +84,13 @@ internal class SecureCardsLocalDataSourceImpl(
      * Catches and throws appropriate exceptions.
      * Throws SecureCardNotFoundException if the card is not found.
      *
-     * @param id The ID of the card to be retrieved.
+     * @param cardUid The ID of the card to be retrieved.
      * @return The card entity if found.
      * @throws SecureCardNotFoundException If the card is not found.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    override suspend fun findById(id: Int): CardEntity = safeExecute {
-        val card = cardDao.getCardsById(id)
+    override suspend fun findById(cardUid: String): SecureCardEntity = safeExecute {
+        val card = secureCardDao.getCardsById(cardUid)
         card ?: throw SecureCardNotFoundException()
     }
 
@@ -102,6 +103,6 @@ internal class SecureCardsLocalDataSourceImpl(
      * @throws AccessDatabaseException If any database access error occurs.
      */
     override suspend fun deleteAll() = safeExecute {
-        cardDao.deleteAllCards()
+        secureCardDao.deleteAllCards()
     }
 }

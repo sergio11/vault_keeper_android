@@ -13,13 +13,13 @@ interface IAccountLocalDataSource {
     suspend fun update(accountEntity: AccountEntity)
 
     @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
-    suspend fun delete(id: Int)
+    suspend fun delete(uid: String)
 
     @Throws(AccessDatabaseException::class)
     suspend fun findAll(): List<AccountEntity>
 
     @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
-    suspend fun findById(id: Int): AccountEntity
+    suspend fun findById(uid: String): AccountEntity
 
     @Throws(AccessDatabaseException::class)
     suspend fun deleteAll()

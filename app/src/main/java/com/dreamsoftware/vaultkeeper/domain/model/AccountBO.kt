@@ -3,7 +3,7 @@ package com.dreamsoftware.vaultkeeper.domain.model
 import com.dreamsoftware.brownie.utils.EMPTY
 
 data class AccountBO(
-    override val id: Int,
+    override val uid: String,
     override val createdAt: Long,
     val accountName: String,
     val userName: String,
@@ -13,7 +13,7 @@ data class AccountBO(
     val note: String
 ): ICredentialBO, ICryptable<AccountBO> {
     companion object {
-        const val FIELD_ID = "id"
+        const val FIELD_UID = "uid"
         const val FIELD_ACCOUNT_NAME = "accountName"
         const val FIELD_USER_NAME = "userName"
         const val FIELD_EMAIL = "email"
@@ -32,10 +32,10 @@ data class AccountBO(
     override fun accept(visitor: ICryptoVisitor): AccountBO =
         copy(
             accountName = visitor.visit(FIELD_ACCOUNT_NAME, accountName),
-            userName = visitor.visit(FIELD_ACCOUNT_NAME, userName),
-            email = visitor.visit(FIELD_ACCOUNT_NAME, email),
-            mobileNumber = visitor.visit(FIELD_ACCOUNT_NAME, mobileNumber),
-            password = visitor.visit(FIELD_ACCOUNT_NAME, password),
-            note = visitor.visit(FIELD_ACCOUNT_NAME, note)
+            userName = visitor.visit(FIELD_USER_NAME, userName),
+            email = visitor.visit(FIELD_EMAIL, email),
+            mobileNumber = visitor.visit(FIELD_MOBILE_NUMBER, mobileNumber),
+            password = visitor.visit(FIELD_PASSWORD, password),
+            note = visitor.visit(FIELD_NOTE, note)
         )
 }

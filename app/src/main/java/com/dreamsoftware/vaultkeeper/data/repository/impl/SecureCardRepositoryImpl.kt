@@ -2,7 +2,7 @@ package com.dreamsoftware.vaultkeeper.data.repository.impl
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
 import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsLocalDataSource
-import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
+import com.dreamsoftware.vaultkeeper.data.database.entity.SecureCardEntity
 import com.dreamsoftware.vaultkeeper.data.database.exception.SecureCardNotFoundException
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecureCardsRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepositoryImpl
@@ -14,7 +14,7 @@ import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
 internal class SecureCardRepositoryImpl(
     private val localDataSource: ISecureCardsLocalDataSource,
     private val remoteDataSource: ISecureCardsRemoteDataSource,
-    private val secureCardUserMapper: IBrownieMapper<CardEntity, SecureCardBO>,
+    private val secureCardUserMapper: IBrownieMapper<SecureCardEntity, SecureCardBO>,
     private val dataProtectionService: IDataProtectionService
 ): SupportRepositoryImpl(), ISecureCardRepository {
 
@@ -29,8 +29,8 @@ internal class SecureCardRepositoryImpl(
         localDataSource.update(secureCardUserMapper.mapOutToIn(card))
     }
 
-    override suspend fun deleteById(cardId: Int) = safeExecute {
-        localDataSource.delete(cardId)
+    override suspend fun deleteById(cardUid: String) = safeExecute {
+        localDataSource.delete(cardUid)
     }
 
     override suspend fun findAll(): List<SecureCardBO> = safeExecute {
@@ -40,13 +40,13 @@ internal class SecureCardRepositoryImpl(
             .map { dataProtectionService.unwrap(it) }
     }
 
-    override suspend fun findById(id: Int): SecureCardBO = safeExecute {
+    override suspend fun findById(cardUid: String): SecureCardBO = safeExecute {
         try {
-            localDataSource.findById(id)
+            localDataSource.findById(cardUid)
                 .let(secureCardUserMapper::mapInToOut)
                 .let { dataProtectionService.unwrap(it) }
         } catch (ex: SecureCardNotFoundException) {
-            throw CardNotFoundException("Card with ID $id not found", ex)
+            throw CardNotFoundException("Card with ID $cardUid not found", ex)
         }
     }
 

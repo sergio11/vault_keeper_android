@@ -9,9 +9,9 @@ class GetAccountByIdUseCase(
 ): BrownieUseCaseWithParams<GetAccountByIdUseCase.Params, AccountBO>() {
 
     override suspend fun onExecuted(params: Params): AccountBO =
-        accountRepository.findById(params.id)
+        accountRepository.findById(params.uid)
 
     data class Params(
-        val id: Int
+        val uid: String
     )
 }

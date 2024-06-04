@@ -15,8 +15,8 @@ internal class AccountLocalDataSourceImpl(
 
     @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
     override suspend fun insert(accountEntity: AccountEntity): AccountEntity = safeExecute {
-        accountDao.insertAccount(accountEntity).let { id ->
-            accountEntity.copy(id = id.toInt())
+        accountDao.insertAccount(accountEntity).let {
+            accountDao.getAccountById(accountEntity.uid) ?: throw AccountNotFoundException("Account not found")
         }
     }
 
@@ -26,9 +26,9 @@ internal class AccountLocalDataSourceImpl(
     }
 
     @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
-    override suspend fun delete(id: Int) = safeExecute {
+    override suspend fun delete(uid: String) = safeExecute {
         with(accountDao) {
-            val account = getAccountById(id)
+            val account = getAccountById(uid)
             account ?: throw AccountNotFoundException()
             deleteAccount(account)
         }
@@ -40,8 +40,8 @@ internal class AccountLocalDataSourceImpl(
     }
 
     @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
-    override suspend fun findById(id: Int): AccountEntity = safeExecute {
-        val account = accountDao.getAccountById(id)
+    override suspend fun findById(uid: String): AccountEntity = safeExecute {
+        val account = accountDao.getAccountById(uid)
         account ?: throw AccountNotFoundException()
     }
 

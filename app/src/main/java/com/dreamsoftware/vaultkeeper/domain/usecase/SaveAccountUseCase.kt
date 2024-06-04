@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.domain.usecase
 
 import com.dreamsoftware.brownie.core.BrownieUseCaseWithParams
+import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.domain.exception.InvalidDataException
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
@@ -21,7 +22,7 @@ class SaveAccountUseCase(
         }
 
     private fun Params.toAccountBO() = AccountBO(
-        id = id ?: 0,
+        uid = uid ?: String.EMPTY,
         accountName = accountName,
         userName = userName,
         email = email,
@@ -32,7 +33,7 @@ class SaveAccountUseCase(
     )
 
     data class Params(
-        val id: Int? = null,
+        val uid: String? = null,
         val accountName: String,
         val userName: String,
         val email: String,

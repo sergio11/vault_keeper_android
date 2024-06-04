@@ -1,6 +1,6 @@
 package com.dreamsoftware.vaultkeeper.domain.model
 
 interface ICredentialBO {
-    val id: Int
+    val uid: String
     val createdAt: Long
 }

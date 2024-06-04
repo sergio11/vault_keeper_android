@@ -1,13 +1,13 @@
 package com.dreamsoftware.vaultkeeper.data.repository.mapper
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
-import com.dreamsoftware.vaultkeeper.data.database.entity.CardEntity
+import com.dreamsoftware.vaultkeeper.data.database.entity.SecureCardEntity
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 
-internal class SecureCardMapper: IBrownieMapper<CardEntity, SecureCardBO> {
-    override fun mapInToOut(input: CardEntity): SecureCardBO = with(input) {
+internal class SecureCardMapper: IBrownieMapper<SecureCardEntity, SecureCardBO> {
+    override fun mapInToOut(input: SecureCardEntity): SecureCardBO = with(input) {
         SecureCardBO(
-            id = id,
+            uid = uid,
             cardHolderName = cardHolderName,
             cardNumber = cardNumber,
             cardExpiryDate = cardExpiryDate,
@@ -17,15 +17,15 @@ internal class SecureCardMapper: IBrownieMapper<CardEntity, SecureCardBO> {
         )
     }
 
-    override fun mapInListToOutList(input: Iterable<CardEntity>): Iterable<SecureCardBO> =
+    override fun mapInListToOutList(input: Iterable<SecureCardEntity>): Iterable<SecureCardBO> =
         input.map(::mapInToOut)
 
-    override fun mapOutListToInList(input: Iterable<SecureCardBO>): Iterable<CardEntity> =
+    override fun mapOutListToInList(input: Iterable<SecureCardBO>): Iterable<SecureCardEntity> =
         input.map(::mapOutToIn)
 
-    override fun mapOutToIn(input: SecureCardBO): CardEntity = with(input) {
-        CardEntity(
-            id = id,
+    override fun mapOutToIn(input: SecureCardBO): SecureCardEntity = with(input) {
+        SecureCardEntity(
+            uid = uid,
             cardHolderName = cardHolderName,
             cardNumber = cardNumber,
             cardExpiryDate = cardExpiryDate,
