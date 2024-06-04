@@ -8,20 +8,23 @@ import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepository
 import com.dreamsoftware.vaultkeeper.domain.exception.CardNotFoundException
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
+import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
 
 internal class AccountRepositoryImpl(
     private val dataSource: IAccountDataSource,
-    private val accountMapper: IBrownieMapper<AccountEntity, AccountBO>
+    private val accountMapper: IBrownieMapper<AccountEntity, AccountBO>,
+    private val dataProtectionService: IDataProtectionService
 ): SupportRepositoryImpl(), IAccountRepository {
 
     override suspend fun insert(account: AccountBO): AccountBO = safeExecute {
         dataSource
-            .insert(accountMapper.mapOutToIn(account))
+            .insert(accountMapper.mapOutToIn(dataProtectionService.wrap(account)))
             .let(accountMapper::mapInToOut)
+            .let { dataProtectionService.unwrap(it) }
     }
 
     override suspend fun update(account: AccountBO) = safeExecute {
-        dataSource.update(accountMapper.mapOutToIn(account))
+        dataSource.update(accountMapper.mapOutToIn(dataProtectionService.wrap(account)))
     }
 
     override suspend fun deleteById(accountId: Int) = safeExecute {
@@ -32,12 +35,14 @@ internal class AccountRepositoryImpl(
         dataSource
             .findAll()
             .map(accountMapper::mapInToOut)
+            .map { dataProtectionService.unwrap(it) }
     }
 
     override suspend fun findById(id: Int): AccountBO = safeExecute {
         try {
             dataSource.findById(id)
                 .let(accountMapper::mapInToOut)
+                .let { dataProtectionService.unwrap(it) }
         } catch (ex: SecureCardNotFoundException) {
             throw CardNotFoundException("Account with ID $id not found", ex)
         }

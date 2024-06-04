@@ -89,11 +89,13 @@ class RepositoryModule {
     @Singleton
     fun provideAccountRepository(
         dataSource: IAccountDataSource,
-        accountMapper: IBrownieMapper<AccountEntity, AccountBO>
+        accountMapper: IBrownieMapper<AccountEntity, AccountBO>,
+        dataProtectionService: IDataProtectionService
     ): IAccountRepository =
         AccountRepositoryImpl(
             dataSource,
-            accountMapper
+            accountMapper,
+            dataProtectionService
         )
 
     @Provides

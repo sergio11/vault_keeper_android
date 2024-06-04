@@ -11,7 +11,7 @@ data class AccountBO(
     val mobileNumber: String,
     val password: String,
     val note: String
-): ICredentialBO {
+): ICredentialBO, ICryptable<AccountBO> {
     companion object {
         const val FIELD_ID = "id"
         const val FIELD_ACCOUNT_NAME = "accountName"
@@ -28,4 +28,14 @@ data class AccountBO(
         mobileNumber.isNotBlank() -> mobileNumber
         else -> String.EMPTY
     }
+
+    override fun accept(visitor: ICryptoVisitor): AccountBO =
+        copy(
+            accountName = visitor.visit(FIELD_ACCOUNT_NAME, accountName),
+            userName = visitor.visit(FIELD_ACCOUNT_NAME, userName),
+            email = visitor.visit(FIELD_ACCOUNT_NAME, email),
+            mobileNumber = visitor.visit(FIELD_ACCOUNT_NAME, mobileNumber),
+            password = visitor.visit(FIELD_ACCOUNT_NAME, password),
+            note = visitor.visit(FIELD_ACCOUNT_NAME, note)
+        )
 }
