@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.dreamsoftware.brownie.component.screen.BrownieScreen
 
 data class Params(
-    val accountId: Int
+    val accountUid: String
 )
 
 @Composable
@@ -24,7 +24,7 @@ fun SavePasswordScreen(
             }
         },
         onInit = {
-            params?.accountId?.let(::getAccountById)
+            params?.accountUid?.let(::getAccountById)
         }
     ) { uiState ->
         SavePasswordScreenContent(

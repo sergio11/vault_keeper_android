@@ -18,11 +18,16 @@ class SaveCardViewModel @Inject constructor(
     private val saveCardUseCase: SaveCardUseCase
 ) : BrownieViewModel<SaveCardUiState, SaveCardUiSideEffects>(), SaveCardScreenActionListener {
 
-    override fun onGetDefaultState(): SaveCardUiState = SaveCardUiState()
-
-    fun getCardById(cardId: Int) {
-
+    fun getCardById(cardUid: String) {
+        executeUseCaseWithParams(
+            useCase = getCardByIdUseCase,
+            params = GetCardByIdUseCase.Params(uid = cardUid),
+            onSuccess = ::onFetchSecureCardDetailsSuccessfully,
+            onMapExceptionToState = ::onMapExceptionToState
+        )
     }
+
+    override fun onGetDefaultState(): SaveCardUiState = SaveCardUiState()
 
     override fun onSaveSecureCard() {
         with(uiState.value) {
@@ -76,8 +81,31 @@ class SaveCardViewModel @Inject constructor(
         ) }
     }
 
-    private fun onSecureCardSavedSuccessfully(secureCard: SecureCardBO) {
+    private fun onFetchSecureCardDetailsSuccessfully(secureCard: SecureCardBO) {
+        updateState {
+            it.copy(
+                cardUid = secureCard.cardProvider,
+                cardProviderName = secureCard.cardProvider,
+                cardNumber = secureCard.cardNumber,
+                cardHolderName = secureCard.cardHolderName,
+                cardExpiryDate = secureCard.cardExpiryDate,
+                cardCVV = secureCard.cardCvv
+            )
+        }
+    }
 
+    private fun onSecureCardSavedSuccessfully(secureCard: SecureCardBO) {
+        updateState {
+            it.copy(
+                isEditScreen = true,
+                cardUid = secureCard.cardProvider,
+                cardProviderName = secureCard.cardProvider,
+                cardNumber = secureCard.cardNumber,
+                cardHolderName = secureCard.cardHolderName,
+                cardExpiryDate = secureCard.cardExpiryDate,
+                cardCVV = secureCard.cardCvv
+            )
+        }
     }
 
     private fun onMapExceptionToState(ex: Exception, uiState: SaveCardUiState) =
@@ -91,6 +119,7 @@ data class SaveCardUiState(
     override val error: String? = null,
     val message: String? = null,
     val isEditScreen: Boolean = false,
+    val cardUid: String? = null,
     val cardProviderName: String = "Select Card Provider",
     val cardNumber: String = String.EMPTY,
     val cardHolderName: String = String.EMPTY,
@@ -108,5 +137,4 @@ data class SaveCardUiState(
 sealed interface SaveCardUiSideEffects: SideEffect {
 
     data object SaveSecureCardCancelled: SaveCardUiSideEffects
-
 }

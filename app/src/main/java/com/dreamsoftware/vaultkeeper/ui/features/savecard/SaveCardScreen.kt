@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.dreamsoftware.brownie.component.screen.BrownieScreen
 
 data class Params(
-    val cardId: Int
+    val cardUid: String
 )
 
 @Composable
@@ -24,7 +24,7 @@ fun SaveCardScreen(
             }
         },
         onInit = {
-            params?.cardId?.let(::getCardById)
+            params?.cardUid?.let(::getCardById)
         }
     ) { uiState ->
         SaveCardScreenContent(

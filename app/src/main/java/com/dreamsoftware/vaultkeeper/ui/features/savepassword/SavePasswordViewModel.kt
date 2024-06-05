@@ -5,6 +5,7 @@ import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
+import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
@@ -20,11 +21,16 @@ class SavePasswordViewModel @Inject constructor(
     private val passwordGeneratorService: IPasswordGeneratorService
 ) : BrownieViewModel<SavePasswordUiState, SavePasswordUiSideEffects>(), SavePasswordScreenActionListener {
 
-    override fun onGetDefaultState(): SavePasswordUiState = SavePasswordUiState()
-
-    fun getAccountById(accountId: Int) {
-
+    fun getAccountById(accountUid: String) {
+        executeUseCaseWithParams(
+            useCase = getAccountByIdUseCase,
+            params = GetAccountByIdUseCase.Params(uid = accountUid),
+            onSuccess = ::onFetchAccountDetailsSuccessfully,
+            onMapExceptionToState = ::onMapExceptionToState
+        )
     }
+
+    override fun onGetDefaultState(): SavePasswordUiState = SavePasswordUiState()
 
     override fun onResetSuggestions() {
         updateState { it.copy(suggestions = SnapshotStateList()) }
@@ -81,12 +87,61 @@ class SavePasswordViewModel @Inject constructor(
     }
 
     override fun onSave() {
-
+        with(uiState.value) {
+            executeUseCaseWithParams(
+                useCase = saveAccountUseCase,
+                params = SaveAccountUseCase.Params(
+                    uid = accountUid,
+                    accountName = accountName,
+                    userName = username,
+                    email = email,
+                    mobileNumber = mobileNumber,
+                    password = password,
+                    note = note
+                ),
+                onSuccess = ::onAccountSavedSuccessfully,
+                onMapExceptionToState = ::onMapExceptionToState
+            )
+        }
     }
 
     override fun onCancel() {
         launchSideEffect(SavePasswordUiSideEffects.SavePasswordCancelled)
     }
+
+    private fun onFetchAccountDetailsSuccessfully(account: AccountBO) {
+        updateState {
+            it.copy(
+                accountUid = account.uid,
+                accountName = account.accountName,
+                username = account.userName,
+                email = account.email,
+                note = account.note,
+                mobileNumber = account.mobileNumber,
+                password = account.password
+            )
+        }
+    }
+
+    private fun onAccountSavedSuccessfully(account: AccountBO) {
+        updateState {
+            it.copy(
+                isEditScreen = true,
+                accountUid = account.uid,
+                accountName = account.accountName,
+                username = account.userName,
+                email = account.email,
+                note = account.note,
+                mobileNumber = account.mobileNumber,
+                password = account.password
+            )
+        }
+    }
+
+    private fun onMapExceptionToState(ex: Exception, uiState: SavePasswordUiState) =
+        uiState.copy(
+            error = null
+        )
 }
 
 data class SavePasswordUiState(
@@ -94,13 +149,14 @@ data class SavePasswordUiState(
     override val error: String? = null,
     val isEditScreen: Boolean = false,
     val expanded: Boolean = false,
+    val accountUid: String? = null,
     val accountName: String = String.EMPTY,
-    val suggestions: SnapshotStateList<String> = SnapshotStateList(),
     val username: String = String.EMPTY,
     val email: String = String.EMPTY,
     val note: String = String.EMPTY,
     val mobileNumber: String = String.EMPTY,
     val password: String = String.EMPTY,
+    val suggestions: SnapshotStateList<String> = SnapshotStateList(),
 ): UiState<SavePasswordUiState>(isLoading, error) {
     override fun copyState(isLoading: Boolean, error: String?): SavePasswordUiState =
         copy(isLoading = isLoading, error = error)
