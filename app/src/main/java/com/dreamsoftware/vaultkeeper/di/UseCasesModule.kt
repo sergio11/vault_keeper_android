@@ -141,28 +141,44 @@ class UseCasesModule {
     @Provides
     @ViewModelScoped
     fun provideGetAllAccountsUseCase(
-        accountRepository: IAccountRepository
+        accountRepository: IAccountRepository,
+        preferenceRepository: IPreferenceRepository
     ): GetAllAccountsUseCase =
-        GetAllAccountsUseCase(accountRepository = accountRepository)
+        GetAllAccountsUseCase(
+            accountRepository = accountRepository,
+            preferenceRepository = preferenceRepository
+        )
 
     @Provides
     @ViewModelScoped
     fun provideGetAccountByIdUseCase(
-        accountRepository: IAccountRepository
+        accountRepository: IAccountRepository,
+        preferenceRepository: IPreferenceRepository
     ): GetAccountByIdUseCase =
-        GetAccountByIdUseCase(accountRepository = accountRepository)
+        GetAccountByIdUseCase(
+            accountRepository = accountRepository,
+            preferenceRepository = preferenceRepository
+        )
 
     @Provides
     @ViewModelScoped
     fun provideRemoveAccountUseCase(
-        accountRepository: IAccountRepository
+        accountRepository: IAccountRepository,
+        preferenceRepository: IPreferenceRepository
     ): RemoveAccountUseCase =
-        RemoveAccountUseCase(accountRepository = accountRepository)
+        RemoveAccountUseCase(
+            accountRepository = accountRepository,
+            preferenceRepository = preferenceRepository
+        )
 
     @Provides
     @ViewModelScoped
     fun provideRemoveAllAccountsUseCase(
-        accountRepository: IAccountRepository
+        accountRepository: IAccountRepository,
+        preferenceRepository: IPreferenceRepository
     ): RemoveAllAccountsUseCase =
-        RemoveAllAccountsUseCase(accountRepository = accountRepository)
+        RemoveAllAccountsUseCase(
+            accountRepository = accountRepository,
+            preferenceRepository = preferenceRepository
+        )
 }

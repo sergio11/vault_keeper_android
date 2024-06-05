@@ -43,6 +43,7 @@ internal class SecureCardsLocalDataSourceImpl(
      * @param secureCardEntity The card entity to be updated.
      * @throws AccessDatabaseException If any database access error occurs.
      */
+    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
     override suspend fun update(secureCardEntity: SecureCardEntity) = safeExecute {
         secureCardDao.updateCard(secureCardEntity)
     }
@@ -56,6 +57,7 @@ internal class SecureCardsLocalDataSourceImpl(
      * @param cardUid The card entity to be deleted.
      * @throws AccessDatabaseException If any database access error occurs.
      */
+    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
     override suspend fun delete(cardUid: String) = safeExecute {
         with(secureCardDao) {
             val account = getCardsById(cardUid)
@@ -73,8 +75,9 @@ internal class SecureCardsLocalDataSourceImpl(
      * @return A list of all card entities.
      * @throws AccessDatabaseException If any database access error occurs.
      */
+    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
     override suspend fun findAll(): List<SecureCardEntity> = safeExecute {
-        secureCardDao.getAllCards()
+        secureCardDao.getAllCards().takeIf { it.isNotEmpty() } ?: throw SecureCardNotFoundException("No secure cards were found")
     }
 
     /**
@@ -89,6 +92,7 @@ internal class SecureCardsLocalDataSourceImpl(
      * @throws SecureCardNotFoundException If the card is not found.
      * @throws AccessDatabaseException If any database access error occurs.
      */
+    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
     override suspend fun findById(cardUid: String): SecureCardEntity = safeExecute {
         val card = secureCardDao.getCardsById(cardUid)
         card ?: throw SecureCardNotFoundException()
@@ -102,6 +106,7 @@ internal class SecureCardsLocalDataSourceImpl(
      *
      * @throws AccessDatabaseException If any database access error occurs.
      */
+    @Throws(AccessDatabaseException::class)
     override suspend fun deleteAll() = safeExecute {
         secureCardDao.deleteAllCards()
     }

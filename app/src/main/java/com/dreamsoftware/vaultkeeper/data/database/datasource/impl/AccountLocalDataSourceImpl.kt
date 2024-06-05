@@ -36,7 +36,7 @@ internal class AccountLocalDataSourceImpl(
 
     @Throws(AccessDatabaseException::class)
     override suspend fun findAll(): List<AccountEntity> = safeExecute {
-        accountDao.getAllAccounts()
+        accountDao.getAllAccounts().takeIf { it.isNotEmpty() } ?: throw AccountNotFoundException("No accounts were found")
     }
 
     @Throws(AccountNotFoundException::class, AccessDatabaseException::class)

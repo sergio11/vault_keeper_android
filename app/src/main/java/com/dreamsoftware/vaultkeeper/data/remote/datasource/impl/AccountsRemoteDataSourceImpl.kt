@@ -44,7 +44,7 @@ internal class AccountsRemoteDataSourceImpl(
     }
 
     @Throws(FetchAccountException::class)
-    override suspend fun getAllByUserUid(userUid: String): List<AccountDTO> =
+    override suspend fun findAllByUserUid(userUid: String): List<AccountDTO> =
         withContext(dispatcher) {
             try {
                 val snapshot = firebaseStore.collection(COLLECTION_NAME)
@@ -108,7 +108,7 @@ internal class AccountsRemoteDataSourceImpl(
     }
 
     @Throws(FetchAccountException::class)
-    override suspend fun getById(userUid: String, accountUid: String): AccountDTO =
+    override suspend fun findById(userUid: String, accountUid: String): AccountDTO =
         withContext(dispatcher) {
             try {
                 val document = firebaseStore.collection(COLLECTION_NAME)

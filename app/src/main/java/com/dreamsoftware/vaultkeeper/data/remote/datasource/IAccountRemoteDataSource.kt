@@ -11,7 +11,7 @@ interface IAccountRemoteDataSource {
     suspend fun save(account: AccountDTO)
 
     @Throws(FetchAccountException::class)
-    suspend fun getAllByUserUid(userUid: String): List<AccountDTO>
+    suspend fun findAllByUserUid(userUid: String): List<AccountDTO>
 
     @Throws(DeleteAccountException::class)
     suspend fun deleteById(userUid: String, accountUid: String)
@@ -20,5 +20,5 @@ interface IAccountRemoteDataSource {
     suspend fun deleteAllByUserUid(userUid: String)
 
     @Throws(FetchAccountException::class)
-    suspend fun getById(userUid: String, accountUid: String): AccountDTO
+    suspend fun findById(userUid: String, accountUid: String): AccountDTO
 }

@@ -34,7 +34,6 @@ internal class SecureCardRepositoryImpl(
         remoteDataSource.save(secureCardRemoteUserMapper.mapOutToIn(secureCardProtected)).also {
             localDataSource.update(secureCardLocalUserMapper.mapOutToIn(secureCardProtected))
         }
-
     }
 
     override suspend fun deleteById(userUid: String, cardUid: String) = safeExecute {
