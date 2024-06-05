@@ -86,30 +86,46 @@ class UseCasesModule {
     @Provides
     @ViewModelScoped
     fun provideGetAllCardsUseCase(
+        preferenceRepository: IPreferenceRepository,
         secureCardRepository: ISecureCardRepository
     ): GetAllCardsUseCase =
-        GetAllCardsUseCase(secureCardRepository = secureCardRepository)
+        GetAllCardsUseCase(
+            preferencesRepository = preferenceRepository,
+            secureCardRepository = secureCardRepository
+        )
 
     @Provides
     @ViewModelScoped
     fun provideGetCardByIdUseCase(
+        preferenceRepository: IPreferenceRepository,
         secureCardRepository: ISecureCardRepository
     ): GetCardByIdUseCase =
-        GetCardByIdUseCase(secureCardRepository = secureCardRepository)
+        GetCardByIdUseCase(
+            preferencesRepository = preferenceRepository,
+            secureCardRepository = secureCardRepository
+        )
 
     @Provides
     @ViewModelScoped
     fun provideRemoveCardUseCase(
+        preferenceRepository: IPreferenceRepository,
         secureCardRepository: ISecureCardRepository
     ): RemoveCardUseCase =
-        RemoveCardUseCase(secureCardRepository = secureCardRepository)
+        RemoveCardUseCase(
+            preferenceRepository = preferenceRepository,
+            secureCardRepository = secureCardRepository
+        )
 
     @Provides
     @ViewModelScoped
     fun provideRemoveAllCardsUseCase(
+        preferenceRepository: IPreferenceRepository,
         secureCardRepository: ISecureCardRepository
     ): RemoveAllCardsUseCase =
-        RemoveAllCardsUseCase(secureCardRepository = secureCardRepository)
+        RemoveAllCardsUseCase(
+            preferencesRepository = preferenceRepository,
+            secureCardRepository = secureCardRepository
+        )
 
     @Provides
     @ViewModelScoped

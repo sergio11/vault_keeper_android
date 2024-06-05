@@ -11,7 +11,7 @@ interface ISecureCardsRemoteDataSource {
     suspend fun save(secureCard: SecureCardDTO)
 
     @Throws(FetchSecureCardException::class)
-    suspend fun getAllByUserUid(userUid: String): List<SecureCardDTO>
+    suspend fun findAllByUserUid(userUid: String): List<SecureCardDTO>
 
     @Throws(DeleteSecureCardException::class)
     suspend fun deleteById(userUid: String, cardUid: String)
@@ -20,5 +20,5 @@ interface ISecureCardsRemoteDataSource {
     suspend fun deleteAllByUserUid(userUid: String)
 
     @Throws(FetchSecureCardException::class)
-    suspend fun getById(userUid: String, cardUid: String): SecureCardDTO
+    suspend fun findById(userUid: String, cardUid: String): SecureCardDTO
 }

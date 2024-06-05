@@ -46,7 +46,7 @@ interface ISecureCardsLocalDataSource {
      * @return A list of all card entities.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    @Throws(AccessDatabaseException::class)
+    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
     suspend fun findAll(): List<SecureCardEntity>
 
     /**

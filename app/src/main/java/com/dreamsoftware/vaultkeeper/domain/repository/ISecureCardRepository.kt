@@ -13,14 +13,14 @@ interface ISecureCardRepository {
     suspend fun update(card: SecureCardBO)
 
     @Throws(CardNotFoundException::class, RepositoryOperationException::class)
-    suspend fun deleteById(cardUid: String)
+    suspend fun deleteById(userUid: String, cardUid: String)
 
     @Throws(RepositoryOperationException::class)
-    suspend fun findAll(): List<SecureCardBO>
+    suspend fun findAllByUser(userUid: String): List<SecureCardBO>
 
     @Throws(CardNotFoundException::class, RepositoryOperationException::class)
-    suspend fun findById(cardUid: String): SecureCardBO
+    suspend fun findById(userUid: String, cardUid: String): SecureCardBO
 
     @Throws(RepositoryOperationException::class)
-    suspend fun deleteAll()
+    suspend fun deleteAllByUser(userUid: String)
 }

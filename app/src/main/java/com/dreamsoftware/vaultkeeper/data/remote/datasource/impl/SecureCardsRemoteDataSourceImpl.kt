@@ -42,7 +42,7 @@ internal class SecureCardsRemoteDataSourceImpl(
     }
 
     @Throws(FetchSecureCardException::class)
-    override suspend fun getAllByUserUid(userUid: String): List<SecureCardDTO> =
+    override suspend fun findAllByUserUid(userUid: String): List<SecureCardDTO> =
         withContext(dispatcher) {
             try {
                 val snapshot = firebaseStore.collection(COLLECTION_NAME)
@@ -106,7 +106,7 @@ internal class SecureCardsRemoteDataSourceImpl(
     }
 
     @Throws(FetchSecureCardException::class)
-    override suspend fun getById(userUid: String, cardUid: String): SecureCardDTO =
+    override suspend fun findById(userUid: String, cardUid: String): SecureCardDTO =
         withContext(dispatcher) {
             try {
                 val document = firebaseStore.collection(COLLECTION_NAME)
