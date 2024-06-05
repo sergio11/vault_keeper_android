@@ -1,39 +1,26 @@
 package com.dreamsoftware.vaultkeeper.ui.features.settings
 
 import androidx.annotation.DrawableRes
-import androidx.lifecycle.viewModelScope
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
-import com.dreamsoftware.vaultkeeper.data.database.dao.SecureCardDao
-import com.dreamsoftware.vaultkeeper.data.preferences.SharedPrefHelper
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCredentialsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
 import com.dreamsoftware.vaultkeeper.utils.IApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val application: IApplicationAware,
-    private val dbAccount: AccountDao,
-    private val dbCard: SecureCardDao,
-    private val prefs: SharedPrefHelper
+    private val signOffUseCase: SignOffUseCase,
+    private val removeAllCredentialsUseCase: RemoveAllCredentialsUseCase
 ) : BrownieViewModel<SettingsUiState, SettingsUiSideEffects>(), SettingsScreenActionListener {
 
     override fun onGetDefaultState(): SettingsUiState = SettingsUiState(
         items = buildItems()
     )
-
-    fun deleteAll() {
-        prefs.resetMasterKeyAndSwitch()
-        viewModelScope.launch(Dispatchers.IO) {
-            dbAccount.deleteAllAccounts()
-            dbCard.deleteAllCards()
-        }
-    }
 
     fun onInit() {
         if(application.isBiometricSupported()) {
@@ -58,11 +45,13 @@ class SettingsViewModel @Inject constructor(
             SettingsItem.LogoutItem -> onUpdateCloseSessionDialogVisibility(isVisible = true)
             SettingsItem.MaterKeyItem -> launchSideEffect(SettingsUiSideEffects.ResetMasterKey)
             SettingsItem.ShareItem -> launchSideEffect(SettingsUiSideEffects.ShareApp)
+            SettingsItem.RemoveAllCredentials -> onRemoveAllCredentials()
         }
     }
 
     override fun onCloseSession() {
         onUpdateCloseSessionDialogVisibility(isVisible = false)
+        executeUseCase(useCase = signOffUseCase)
         launchSideEffect(SettingsUiSideEffects.SessionDeleted)
     }
 
@@ -74,6 +63,17 @@ class SettingsViewModel @Inject constructor(
         add(SettingsItem.ShareItem)
         add(SettingsItem.AboutItem)
         add(SettingsItem.LogoutItem)
+    }
+
+    private fun onRemoveAllCredentials() {
+        executeUseCase(
+            useCase = removeAllCredentialsUseCase,
+            onSuccess = { onAllCredentialsRemoved() }
+        )
+    }
+
+    private fun onAllCredentialsRemoved() {
+
     }
 }
 
@@ -96,6 +96,7 @@ sealed class SettingsItem(
     data class BiometricItem(val isEnabled: Boolean): SettingsItem(text = "Fingerprint Unlock", icon = R.drawable.icon_fingerprint)
     data object ShareItem: SettingsItem(text = "Share", icon = R.drawable.icon_share)
     data object AboutItem: SettingsItem(text = "About", icon = R.drawable.icon_info)
+    data object RemoveAllCredentials: SettingsItem(text = "Remove all credentials", icon = R.drawable.icon_info)
     data object LogoutItem: SettingsItem(text = "Logout", icon = R.drawable.icon_logout)
 }
 

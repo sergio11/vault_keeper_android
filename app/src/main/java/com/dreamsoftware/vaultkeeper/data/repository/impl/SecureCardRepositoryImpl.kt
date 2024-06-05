@@ -70,7 +70,7 @@ internal class SecureCardRepositoryImpl(
         }.let { dataProtectionService.unwrap(it) }
     }
 
-    override suspend fun deleteAllByUser(userUid: String) = safeExecute {
+    override suspend fun deleteAllByUserId(userUid: String) = safeExecute {
         remoteDataSource.deleteAllByUserUid(userUid)
         localDataSource.deleteAll()
     }

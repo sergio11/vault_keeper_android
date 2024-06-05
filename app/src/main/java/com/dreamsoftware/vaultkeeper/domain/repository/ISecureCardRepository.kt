@@ -22,5 +22,5 @@ interface ISecureCardRepository {
     suspend fun findById(userUid: String, cardUid: String): SecureCardBO
 
     @Throws(RepositoryOperationException::class)
-    suspend fun deleteAllByUser(userUid: String)
+    suspend fun deleteAllByUserId(userUid: String)
 }

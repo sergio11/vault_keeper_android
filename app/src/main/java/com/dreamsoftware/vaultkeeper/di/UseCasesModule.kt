@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.di
 
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.SaveMasterKeyBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IPreferenceRepository
@@ -14,9 +15,11 @@ import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCardsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCredentialsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveCardUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveCardUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.SaveMasterKeyUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignInUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignUpUseCase
@@ -46,13 +49,9 @@ class UseCasesModule {
     @Provides
     @ViewModelScoped
     fun provideSignUpUseCase(
-        userRepository: IUserRepository,
-        secretRepository: ISecretRepository
+        userRepository: IUserRepository
     ): SignUpUseCase =
-        SignUpUseCase(
-            userRepository = userRepository,
-            secretRepository = secretRepository
-        )
+        SignUpUseCase(userRepository = userRepository)
 
     @Provides
     @ViewModelScoped
@@ -181,4 +180,28 @@ class UseCasesModule {
             accountRepository = accountRepository,
             preferenceRepository = preferenceRepository
         )
+
+    @Provides
+    @ViewModelScoped
+    fun provideRemoveAllCredentialsUseCase(
+        accountRepository: IAccountRepository,
+        secureCardRepository: ISecureCardRepository,
+        preferenceRepository: IPreferenceRepository
+    ): RemoveAllCredentialsUseCase = RemoveAllCredentialsUseCase(
+        accountRepository = accountRepository,
+        secureCardRepository = secureCardRepository,
+        preferenceRepository = preferenceRepository
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideSaveMasterKeyUseCaseUseCase(
+        preferencesRepository: IPreferenceRepository,
+        secretRepository: ISecretRepository,
+        masterKeyValidator: IBusinessEntityValidator<SaveMasterKeyBO>
+    ): SaveMasterKeyUseCase = SaveMasterKeyUseCase(
+        preferencesRepository = preferencesRepository,
+        secretRepository = secretRepository,
+        masterKeyValidator = masterKeyValidator
+    )
 }

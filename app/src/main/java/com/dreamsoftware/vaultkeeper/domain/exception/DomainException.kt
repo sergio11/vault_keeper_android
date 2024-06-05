@@ -14,7 +14,7 @@ class RepositoryOperationException(message: String? = null, cause: Throwable? = 
 
 // Secrets Repository Exception
 abstract class SecretDataException(message: String? = null, cause: Throwable? = null): DomainRepositoryException(message, cause)
-class GenerateSecretException(message: String? = null, cause: Throwable? = null): SecretDataException(message, cause)
+class SaveSecretException(message: String? = null, cause: Throwable? = null): SecretDataException(message, cause)
 class GetSecretException(message: String? = null, cause: Throwable? = null): SecretDataException(message, cause)
 
 class PreferenceDataException(message: String? = null, cause: Throwable? = null): DomainRepositoryException(message, cause)

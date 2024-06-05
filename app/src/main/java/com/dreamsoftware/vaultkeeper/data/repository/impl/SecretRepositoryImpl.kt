@@ -3,9 +3,10 @@ package com.dreamsoftware.vaultkeeper.data.repository.impl
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
-import com.dreamsoftware.vaultkeeper.domain.exception.GenerateSecretException
 import com.dreamsoftware.vaultkeeper.domain.exception.GetSecretException
+import com.dreamsoftware.vaultkeeper.domain.exception.SaveSecretException
 import com.dreamsoftware.vaultkeeper.domain.model.PBEDataBO
+import com.dreamsoftware.vaultkeeper.domain.model.SaveMasterKeyBO
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.service.ICryptoService
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
@@ -26,7 +27,6 @@ internal class SecretRepositoryImpl(
 ) : ISecretRepository {
 
     private companion object {
-        const val SECRET_LENGTH = 60
         const val SECRET_SALT_LENGTH = 20
     }
 
@@ -36,17 +36,16 @@ internal class SecretRepositoryImpl(
         }
     }
 
-    @Throws(GenerateSecretException::class)
-    override suspend fun generate(userUid: String): PBEDataBO = try {
-        val secret = passwordGenerator.generatePassword(length = SECRET_LENGTH)
+    @Throws(SaveSecretException::class)
+    override suspend fun save(secret: SaveMasterKeyBO): PBEDataBO = try {
         val secretSalt = passwordGenerator.generatePassword(length = SECRET_SALT_LENGTH)
-        val secretEncrypted = cryptoService.encryptAndEncode(password = rootPBEData.secret, salt = rootPBEData.salt, data = secret)
+        val secretEncrypted = cryptoService.encryptAndEncode(password = rootPBEData.secret, salt = rootPBEData.salt, data = secret.key)
         val secretSaltEncrypted = cryptoService.encryptAndEncode(password = rootPBEData.secret, salt = rootPBEData.salt, data = secretSalt)
-        secretDataSource.save(SecretDTO(userUid, secretEncrypted, secretSaltEncrypted))
-        mapAndDecrypt(secretDataSource.getByUserUid(userUid))
+        secretDataSource.save(SecretDTO(secret.userUid, secretEncrypted, secretSaltEncrypted))
+        mapAndDecrypt(secretDataSource.getByUserUid(secret.userUid))
     } catch (ex: Exception) {
         ex.printStackTrace()
-        throw GenerateSecretException("An error occurred when trying to save secret information", ex)
+        throw SaveSecretException("An error occurred when trying to save secret information", ex)
     }
 
     @Throws(GetSecretException::class)

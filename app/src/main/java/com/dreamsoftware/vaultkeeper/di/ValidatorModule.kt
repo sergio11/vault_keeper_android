@@ -2,13 +2,17 @@ package com.dreamsoftware.vaultkeeper.di
 
 import android.content.Context
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.SaveMasterKeyBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.validation.IAccountValidationMessagesResolver
 import com.dreamsoftware.vaultkeeper.domain.validation.IBusinessEntityValidator
+import com.dreamsoftware.vaultkeeper.domain.validation.ISaveMasterKeyValidationMessagesResolver
 import com.dreamsoftware.vaultkeeper.domain.validation.ISecureCardValidationMessagesResolver
 import com.dreamsoftware.vaultkeeper.domain.validation.impl.AccountValidatorImpl
+import com.dreamsoftware.vaultkeeper.domain.validation.impl.SaveMasterKeyValidatorImpl
 import com.dreamsoftware.vaultkeeper.domain.validation.impl.SecureCardValidatorImpl
 import com.dreamsoftware.vaultkeeper.ui.validation.AccountValidationMessagesResolverImpl
+import com.dreamsoftware.vaultkeeper.ui.validation.SaveMasterKeyValidationMessagesResolverImpl
 import com.dreamsoftware.vaultkeeper.ui.validation.SecureCardValidationMessagesResolverImpl
 import dagger.Module
 import dagger.Provides
@@ -35,6 +39,12 @@ class ValidatorModule {
 
     @Provides
     @ViewModelScoped
+    fun provideSaveMasterKeyValidationMessagesResolver(
+        @ApplicationContext context: Context
+    ): ISaveMasterKeyValidationMessagesResolver = SaveMasterKeyValidationMessagesResolverImpl(context)
+    
+    @Provides
+    @ViewModelScoped
     fun provideSecureCardValidator(
         messagesResolver: ISecureCardValidationMessagesResolver
     ): IBusinessEntityValidator<SecureCardBO> = SecureCardValidatorImpl(messagesResolver)
@@ -44,4 +54,10 @@ class ValidatorModule {
     fun provideAccountValidator(
         messagesResolver: IAccountValidationMessagesResolver
     ): IBusinessEntityValidator<AccountBO> = AccountValidatorImpl(messagesResolver)
+
+    @Provides
+    @ViewModelScoped
+    fun provideSaveMasterKeyValidator(
+        messagesResolver: ISaveMasterKeyValidationMessagesResolver
+    ): IBusinessEntityValidator<SaveMasterKeyBO> = SaveMasterKeyValidatorImpl(messagesResolver)
 }

@@ -110,4 +110,13 @@
     <string name="delete_card_dialog_description">Are you sure you want to delete this Card?</string>
     <string name="delete_card_dialog_cancel">Cancel</string>
     <string name="delete_card_dialog_accept">Delete</string>
+
+    <string name="create_master_key_label">Enter Master key</string>
+    <string name="create_master_key_placeholder">Enter Master key</string>
+    <string name="create_master_confirm_key_label">Confirm Master key</string>
+    <string name="create_master_confirm_key_placeholder">Confirm Master key</string>
+
+    <string name="master_key_empty_error">Please enter a Master Key</string>
+    <string name="master_key_mismatch_error">Please enter correct Master Key</string>
+    <string name="masterkey_incorrect_length_error">A Master Key should at least have 6 characters</string>
 </resources>

@@ -21,7 +21,8 @@ fun CreateMasterKeyScreen(
         }
     ) { uiState ->
         CreateMasterKeyScreenContent(
-            uiState = uiState
+            uiState = uiState,
+            actionListener = viewModel
         )
     }
 }
