@@ -28,8 +28,8 @@ import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.vaultkeeper.ui.theme.LightGray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
-import com.dreamsoftware.vaultkeeper.utils.formatCardNumber
-import com.dreamsoftware.vaultkeeper.utils.formatExpiryDate
+import com.dreamsoftware.vaultkeeper.ui.utils.formatCardNumber
+import com.dreamsoftware.vaultkeeper.ui.utils.formatExpiryDate
 import com.dreamsoftware.vaultkeeper.utils.randomGradient
 
 @Composable
@@ -40,8 +40,8 @@ fun CardUi(
     cardCVV: String,
     cardIcon: Int
 ) {
-    val formattedCardNumber = formatCardNumber(cardNumber)
-    val formattedExpiryDate = formatExpiryDate(cardExpiryDate)
+    val formattedCardNumber = cardNumber.formatCardNumber()
+    val formattedExpiryDate = cardExpiryDate.formatExpiryDate()
     Box(
         modifier = Modifier
             .fillMaxWidth(),

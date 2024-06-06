@@ -45,64 +45,9 @@ class MaskVisualTransformation(private val mask: String) : VisualTransformation 
     }
 }
 
-// Making XXXX-XXXX-XXXX-XXXX string.
-val visualTransformation = object : VisualTransformation {
-    override fun filter(text: AnnotatedString): TransformedText {
-        val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
-        var out = ""
 
-        for (i in trimmed.indices) {
-            out += trimmed[i]
-            if (i % 4 == 3 && i != 15) out += " "
-        }
-        return TransformedText(
-            AnnotatedString(out),
-            creditCardOffsetMapping
-        )
-    }
-}
 
-val creditCardOffsetMapping = object : OffsetMapping {
-    override fun originalToTransformed(offset: Int): Int {
-        if (offset <= 3) return offset
-        if (offset <= 7) return offset + 1
-        if (offset <= 11) return offset + 2
-        if (offset <= 16) return offset + 3
-        return 19
-    }
 
-    override fun transformedToOriginal(offset: Int): Int {
-        if (offset <= 4) return offset
-        if (offset <= 9) return offset - 1
-        if (offset <= 14) return offset - 2
-        if (offset <= 19) return offset - 3
-        return 16
-    }
-}
-
-fun formatCardNumber(cardNumber: String): String {
-    val trimmed = if (cardNumber.length >= 16) cardNumber.substring(0..15) else cardNumber
-    var out = ""
-
-    for (i in trimmed.indices) {
-        out += trimmed[i]
-        if (i % 4 == 3 && i != 15) out += " "
-    }
-
-    return out
-}
-
-fun formatExpiryDate(expiryDate: String): String {
-    val trimmed = if (expiryDate.length >= 4) expiryDate.substring(0..3) else expiryDate
-    var out = ""
-
-    for (i in trimmed.indices) {
-        out += trimmed[i]
-        if (i == 1) out += "/" // Add a slash after the first two characters
-    }
-
-    return out
-}
 
 private val gradientOptions = listOf(
     listOf(Color(0xFF6C72CB), Color(0xFF0078FF)), // Blue Gradient

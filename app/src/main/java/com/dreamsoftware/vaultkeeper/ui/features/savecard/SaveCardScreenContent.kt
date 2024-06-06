@@ -28,8 +28,12 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.PopupProperties
@@ -49,7 +53,6 @@ import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.utils.MaskVisualTransformation
 import com.dreamsoftware.vaultkeeper.utils.cardSuggestions
 import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
-import com.dreamsoftware.vaultkeeper.utils.visualTransformation
 import kotlinx.coroutines.delay
 
 @Composable
@@ -306,4 +309,37 @@ fun TextFieldDropDown(
             }
         }
     }
+}
+
+val creditCardOffsetMapping = object : OffsetMapping {
+    override fun originalToTransformed(offset: Int): Int {
+        if (offset <= 3) return offset
+        if (offset <= 7) return offset + 1
+        if (offset <= 11) return offset + 2
+        if (offset <= 16) return offset + 3
+        return 19
+    }
+
+    override fun transformedToOriginal(offset: Int): Int {
+        if (offset <= 4) return offset
+        if (offset <= 9) return offset - 1
+        if (offset <= 14) return offset - 2
+        if (offset <= 19) return offset - 3
+        return 16
+    }
+}
+
+// Making XXXX-XXXX-XXXX-XXXX string.
+private val visualTransformation = VisualTransformation { text ->
+    val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
+    var out = ""
+
+    for (i in trimmed.indices) {
+        out += trimmed[i]
+        if (i % 4 == 3 && i != 15) out += " "
+    }
+    TransformedText(
+        AnnotatedString(out),
+        creditCardOffsetMapping
+    )
 }

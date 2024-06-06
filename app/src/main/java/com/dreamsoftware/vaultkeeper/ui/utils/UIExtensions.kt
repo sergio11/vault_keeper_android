@@ -41,3 +41,24 @@ fun Context.isBiometricSupported(): Boolean {
         }
     }
 }
+
+
+fun String.formatCardNumber(): String {
+    val trimmed = if (length >= 16) substring(0..15) else this
+    var out = ""
+    for (i in trimmed.indices) {
+        out += trimmed[i]
+        if (i % 4 == 3 && i != 15) out += " "
+    }
+    return out
+}
+
+fun String.formatExpiryDate(): String {
+    val trimmed = if (length >= 4) substring(0..3) else this
+    var out = ""
+    for (i in trimmed.indices) {
+        out += trimmed[i]
+        if (i == 1) out += "/" // Add a slash after the first two characters
+    }
+    return out
+}
