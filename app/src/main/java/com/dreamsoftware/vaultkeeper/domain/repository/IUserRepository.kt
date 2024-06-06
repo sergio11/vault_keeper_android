@@ -11,7 +11,7 @@ import com.dreamsoftware.vaultkeeper.domain.model.SignUpBO
 interface IUserRepository {
 
     @Throws(CheckAuthenticatedException::class)
-    suspend fun isAuthenticated(): Boolean
+    suspend fun getCurrentAuthenticatedUser(): AuthUserBO
 
     @Throws(CheckAuthenticatedException::class)
     suspend fun getUserAuthenticatedUid(): String

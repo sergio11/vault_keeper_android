@@ -18,15 +18,11 @@ internal class AuthRemoteDataSourceImpl(
     private val firebaseAuth: FirebaseAuth // Firebase Authentication instance
 ) : IAuthRemoteDataSource {
 
-    /**
-     * Checks if the user is authenticated.
-     * @return true if a user is currently authenticated, false otherwise.
-     * @throws AuthException if an error occurs while checking the authentication state.
-     */
+
     @Throws(AuthException::class)
-    override suspend fun isAuthenticated(): Boolean = withContext(Dispatchers.IO) {
+    override suspend fun getCurrentAuthenticatedUser(): AuthUserDTO = withContext(Dispatchers.IO) {
         try {
-            firebaseAuth.currentUser != null // Return true if there is a current authenticated user
+            firebaseAuth.currentUser?.let { userAuthenticatedMapper.mapInToOut(it) } ?: throw IllegalStateException("Auth user cannot be null") // Return true if there is a current authenticated user
         } catch (ex: Exception) {
             throw AuthException("An error occurred when trying to check auth state", ex) // Throw AuthException if an error occurs
         }

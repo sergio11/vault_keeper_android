@@ -31,6 +31,9 @@ fun RootNavigationGraph(
                     },
                     onGoToHome = {
                         navigate(Screens.Main.route)
+                    },
+                    onGoToCreateMasterKey = {
+                        navigate(Screens.CreateMasterKey.route)
                     }
                 )
             }

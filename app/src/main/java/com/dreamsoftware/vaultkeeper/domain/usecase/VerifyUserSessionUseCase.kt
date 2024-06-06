@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.domain.usecase
 
 import com.dreamsoftware.brownie.core.BrownieUseCase
+import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
 
 /**
@@ -9,9 +10,7 @@ import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
  */
 class VerifyUserSessionUseCase(
     private val userRepository: IUserRepository,
-) : BrownieUseCase<Boolean>() {
+) : BrownieUseCase<AuthUserBO>() {
 
-    override suspend fun onExecuted(): Boolean = runCatching {
-        userRepository.isAuthenticated()
-    }.getOrDefault(false)
+    override suspend fun onExecuted(): AuthUserBO = userRepository.getCurrentAuthenticatedUser()
 }

@@ -21,9 +21,11 @@ internal class UserRepositoryImpl(
 ): SupportRepositoryImpl(), IUserRepository {
 
     @Throws(CheckAuthenticatedException::class)
-    override suspend fun isAuthenticated(): Boolean = safeExecute {
+    override suspend fun getCurrentAuthenticatedUser(): AuthUserBO = safeExecute {
         try {
-            authDataSource.isAuthenticated()
+            val authUser = authDataSource.getCurrentAuthenticatedUser()
+            val hasMasterKey = secretsRepository.hasSecret(authUser.uid)
+            authUserMapper.mapInToOut(AuthUserInfo(authUser, hasMasterKey))
         } catch (ex: Exception) {
             throw CheckAuthenticatedException(
                 "An error occurred when trying to check if user is already authenticated",

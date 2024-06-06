@@ -11,13 +11,9 @@ import com.dreamsoftware.vaultkeeper.data.remote.exception.SignUpException
  */
 interface IAuthRemoteDataSource {
 
-    /**
-     * Checks if the user is authenticated.
-     * @return true if a user is currently authenticated, false otherwise.
-     * @throws AuthException if an error occurs while checking the authentication state.
-     */
+
     @Throws(AuthException::class)
-    suspend fun isAuthenticated(): Boolean
+    suspend fun getCurrentAuthenticatedUser(): AuthUserDTO
 
     /**
      * Gets the UID of the authenticated user.

@@ -8,6 +8,7 @@ import com.dreamsoftware.brownie.component.screen.BrownieScreen
 fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel(),
     onGoToOnboarding: () -> Unit,
+    onGoToCreateMasterKey: () -> Unit,
     onGoToHome: () -> Unit
 ) {
     BrownieScreen(
@@ -15,8 +16,9 @@ fun SplashScreen(
         onInitialUiState = { SplashUiState() },
         onSideEffect = {
             when(it) {
-                SplashSideEffects.UserAlreadyAuthenticated -> onGoToHome()
-                SplashSideEffects.UserNotAuthenticated -> onGoToOnboarding()
+                SplashSideEffects.UserAlreadyAuthenticatedSideEffect -> onGoToHome()
+                SplashSideEffects.UserNotAuthenticatedSideEffect -> onGoToOnboarding()
+                SplashSideEffects.RequireMasterKeySideEffect -> onGoToCreateMasterKey()
             }
         },
         onInit = {

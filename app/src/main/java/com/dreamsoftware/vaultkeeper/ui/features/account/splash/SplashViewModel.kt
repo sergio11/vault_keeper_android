@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
+import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserSessionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -27,16 +28,16 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private fun onVerifyUserSessionCompleted(hasActiveSession: Boolean) {
-        launchSideEffect(if(hasActiveSession) {
-            SplashSideEffects.UserAlreadyAuthenticated
+    private fun onVerifyUserSessionCompleted(authUserBO: AuthUserBO) {
+        launchSideEffect(if(authUserBO.hasMasterKey) {
+            SplashSideEffects.UserAlreadyAuthenticatedSideEffect
         } else {
-            SplashSideEffects.UserNotAuthenticated
+            SplashSideEffects.RequireMasterKeySideEffect
         })
     }
 
     private fun onVerifyUserSessionFailed() {
-        launchSideEffect(SplashSideEffects.UserNotAuthenticated)
+        launchSideEffect(SplashSideEffects.UserNotAuthenticatedSideEffect)
     }
 }
 
@@ -50,6 +51,7 @@ data class SplashUiState(
 }
 
 sealed interface SplashSideEffects: SideEffect {
-    data object UserAlreadyAuthenticated: SplashSideEffects
-    data object UserNotAuthenticated: SplashSideEffects
+    data object UserAlreadyAuthenticatedSideEffect: SplashSideEffects
+    data object UserNotAuthenticatedSideEffect: SplashSideEffects
+    data object RequireMasterKeySideEffect: SplashSideEffects
 }
