@@ -91,8 +91,7 @@ fun RootNavigationGraph(
                 CreateMasterKeyScreen(
                     onMasterKeyCreated = {
                         navigate(Screens.Main.route)
-                    },
-                    onBackPressed = {}
+                    }
                 )
             }
         }

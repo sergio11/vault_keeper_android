@@ -10,6 +10,7 @@ class SignUpException(message: String? = null, cause: Throwable? = null): Fireba
 // Secret Data Source
 class SecretNotFoundException(message: String? = null, cause: Throwable? = null): FirebaseException(message, cause)
 class SaveSecretException(message: String? = null, cause: Throwable? = null): FirebaseException(message, cause)
+class VerifySecretsException(message: String? = null, cause: Throwable? = null): FirebaseException(message, cause)
 
 
 abstract class SecureCardException(message: String? = null, cause: Throwable? = null): FirebaseException(message, cause)

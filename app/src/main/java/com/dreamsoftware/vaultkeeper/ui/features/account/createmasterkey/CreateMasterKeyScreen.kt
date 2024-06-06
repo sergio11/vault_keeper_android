@@ -7,12 +7,10 @@ import com.dreamsoftware.brownie.component.screen.BrownieScreen
 @Composable
 fun CreateMasterKeyScreen(
     viewModel: CreateMasterKeyViewModel = hiltViewModel(),
-    onMasterKeyCreated: () -> Unit,
-    onBackPressed: () -> Unit
+    onMasterKeyCreated: () -> Unit
 ) {
     BrownieScreen(
         viewModel = viewModel,
-        onBackPressed = onBackPressed,
         onInitialUiState = { CreateMasterKeyUiState() },
         onSideEffect = {
             when(it) {

@@ -13,21 +13,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
-import com.dreamsoftware.vaultkeeper.ui.theme.LightGray
-import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.ui.utils.formatCardNumber
 import com.dreamsoftware.vaultkeeper.ui.utils.formatExpiryDate
 import com.dreamsoftware.vaultkeeper.utils.randomGradient
@@ -93,23 +87,14 @@ fun CardUi(
                         modifier = Modifier
                             .padding(end = 16.dp)
                     ) {
-                        Text(
-                            text = "VALID",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                fontFamily = poppinsFamily,
-                                color = LightGray
-                            )
+                        BrownieText(
+                            type = BrownieTextTypeEnum.TITLE_MEDIUM,
+                            titleText = "VALID",
                         )
-                        Text(
-                            text = formattedExpiryDate,
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                fontFamily = poppinsFamily,
-                                color = Color.White
-                            )
+                        BrownieText(
+                            type = BrownieTextTypeEnum.TITLE_MEDIUM,
+                            titleText = formattedExpiryDate,
+                            textColor = Color.White
                         )
                     }
 
@@ -117,23 +102,14 @@ fun CardUi(
                         modifier = Modifier
                             .padding(end = 16.dp)
                     ) {
-                        Text(
-                            text = "CVV",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                fontFamily = poppinsFamily,
-                                color = LightGray
-                            )
+                        BrownieText(
+                            type = BrownieTextTypeEnum.TITLE_MEDIUM,
+                            titleText = "CVV",
                         )
-                        Text(
-                            text = cardCVV,
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                fontFamily = poppinsFamily,
-                                color = Color.White
-                            )
+                        BrownieText(
+                            type = BrownieTextTypeEnum.TITLE_MEDIUM,
+                            titleText = cardCVV,
+                            textColor = Color.White
                         )
                     }
                 }

@@ -6,6 +6,7 @@ import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
 import com.dreamsoftware.vaultkeeper.data.remote.exception.FirebaseException
 import com.dreamsoftware.vaultkeeper.data.remote.exception.SaveSecretException
 import com.dreamsoftware.vaultkeeper.data.remote.exception.SecretNotFoundException
+import com.dreamsoftware.vaultkeeper.data.remote.exception.VerifySecretsException
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -50,4 +51,14 @@ internal class SecretRemoteDataSourceImpl(
             throw SecretNotFoundException("An error occurred when trying to get secret information", ex)
         }
     }
+
+    @Throws(VerifySecretsException::class)
+    override suspend fun hasSecretByUserUid(uid: String): Boolean =
+        try {
+            val documentSnapshot = firebaseStore.collection(COLLECTION_NAME)
+                .document(uid).get().await()
+            documentSnapshot.exists()
+        } catch (ex: Exception) {
+            throw VerifySecretsException("An error occurred when trying to verify secret existence", ex)
+        }
 }

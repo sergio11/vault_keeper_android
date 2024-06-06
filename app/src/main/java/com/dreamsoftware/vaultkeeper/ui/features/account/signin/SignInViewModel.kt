@@ -57,7 +57,11 @@ class SignInViewModel @Inject constructor(
                 && password.length > MIN_PASSWORD_LENGTH
 
     private fun onSignInSuccessfully(authUserBO: AuthUserBO) {
-        launchSideEffect(SignInSideEffects.UserAuthenticatedSuccessfully)
+        launchSideEffect(if(authUserBO.hasMasterKey) {
+            SignInSideEffects.UserAuthenticatedSuccessfully
+        } else {
+            SignInSideEffects.RequireMasterKey
+        })
     }
 
     private fun onMapExceptionToState(ex: Exception, uiState: SignInUiState) =
@@ -80,5 +84,5 @@ data class SignInUiState(
 
 sealed interface SignInSideEffects: SideEffect {
     data object UserAuthenticatedSuccessfully: SignInSideEffects
-    data object NoMasterKeyCreated: SignInSideEffects
+    data object RequireMasterKey: SignInSideEffects
 }

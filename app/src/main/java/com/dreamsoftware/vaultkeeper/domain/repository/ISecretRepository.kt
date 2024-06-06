@@ -12,4 +12,7 @@ interface ISecretRepository {
 
     @Throws(GetSecretException::class)
     suspend fun getSecretForUser(userUid: String): PBEDataBO
+
+    @Throws(GetSecretException::class)
+    suspend fun hasSecret(userUid: String): Boolean
 }

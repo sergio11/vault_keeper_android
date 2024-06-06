@@ -56,6 +56,13 @@ internal class SecretRepositoryImpl(
         throw GetSecretException("An error occurred when trying to get secret information", ex)
     }
 
+    @Throws(GetSecretException::class)
+    override suspend fun hasSecret(userUid: String): Boolean = try {
+        secretDataSource.hasSecretByUserUid(userUid)
+    } catch (ex: Exception) {
+        throw GetSecretException("An error occurred when trying to verify secrets", ex)
+    }
+
     private fun mapAndDecrypt(secret: SecretDTO): PBEDataBO = pbeDataMapper.mapInToOut(secret).let {
         it.copy(
             secret = cryptoService.decodeAndDecrypt(password = rootPBEData.secret, salt = rootPBEData.salt, data = it.secret),

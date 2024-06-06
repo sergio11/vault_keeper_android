@@ -2,19 +2,21 @@ package com.dreamsoftware.vaultkeeper.data.repository.impl
 
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
-import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
 import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepositoryImpl
+import com.dreamsoftware.vaultkeeper.data.repository.mapper.AuthUserInfo
 import com.dreamsoftware.vaultkeeper.domain.exception.CheckAuthenticatedException
 import com.dreamsoftware.vaultkeeper.domain.exception.CloseSessionException
 import com.dreamsoftware.vaultkeeper.domain.exception.SignInException
 import com.dreamsoftware.vaultkeeper.domain.exception.SignUpException
 import com.dreamsoftware.vaultkeeper.domain.model.AuthRequestBO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
+import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
 
 internal class UserRepositoryImpl(
     private val authDataSource: IAuthRemoteDataSource,
-    private val authUserMapper: IBrownieOneSideMapper<AuthUserDTO, AuthUserBO>
+    private val secretsRepository: ISecretRepository,
+    private val authUserMapper: IBrownieOneSideMapper<AuthUserInfo, AuthUserBO>
 ): SupportRepositoryImpl(), IUserRepository {
 
     @Throws(CheckAuthenticatedException::class)
@@ -46,7 +48,8 @@ internal class UserRepositoryImpl(
         try {
             with(authRequest) {
                 val authUser = authDataSource.signIn(email, password)
-                authUserMapper.mapInToOut(authUser)
+                val hasMasterKey = secretsRepository.hasSecret(authUser.uid)
+                authUserMapper.mapInToOut(AuthUserInfo(authUser, hasMasterKey))
             }
         } catch (ex: Exception) {
             throw SignInException("An error occurred when trying to sign in user", ex)
@@ -57,7 +60,7 @@ internal class UserRepositoryImpl(
     override suspend fun signUp(email: String, password: String): AuthUserBO = safeExecute {
         try {
             val authUser = authDataSource.signUp(email, password)
-            authUserMapper.mapInToOut(authUser)
+            authUserMapper.mapInToOut(AuthUserInfo(authUser, false))
         } catch (ex: Exception) {
             ex.printStackTrace()
             throw SignUpException("An error occurred when trying to sign up user", ex)

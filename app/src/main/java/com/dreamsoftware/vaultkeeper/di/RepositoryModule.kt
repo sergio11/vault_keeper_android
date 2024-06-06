@@ -12,7 +12,6 @@ import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSourc
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecureCardsRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.dto.AccountDTO
-import com.dreamsoftware.vaultkeeper.data.remote.dto.AuthUserDTO
 import com.dreamsoftware.vaultkeeper.data.remote.dto.SecretDTO
 import com.dreamsoftware.vaultkeeper.data.remote.dto.SecureCardDTO
 import com.dreamsoftware.vaultkeeper.data.repository.impl.AccountRepositoryImpl
@@ -22,6 +21,7 @@ import com.dreamsoftware.vaultkeeper.data.repository.impl.SecureCardRepositoryIm
 import com.dreamsoftware.vaultkeeper.data.repository.impl.UserRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.AccountLocalMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.AccountRemoteMapper
+import com.dreamsoftware.vaultkeeper.data.repository.mapper.AuthUserInfo
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.AuthUserMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.PBEDataMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.SecureCardLocalMapper
@@ -53,7 +53,7 @@ class RepositoryModule {
      */
     @Provides
     @Singleton
-    fun provideAuthUserMapper(): IBrownieOneSideMapper<AuthUserDTO, AuthUserBO> = AuthUserMapper()
+    fun provideAuthUserMapper(): IBrownieOneSideMapper<AuthUserInfo, AuthUserBO> = AuthUserMapper()
 
     @Provides
     @Singleton
@@ -79,10 +79,12 @@ class RepositoryModule {
     @Singleton
     fun provideUserRepository(
         authDataSource: IAuthRemoteDataSource,
-        authUserMapper: IBrownieOneSideMapper<AuthUserDTO, AuthUserBO>
+        secretRepository: ISecretRepository,
+        authUserMapper: IBrownieOneSideMapper<AuthUserInfo, AuthUserBO>
     ): IUserRepository =
         UserRepositoryImpl(
             authDataSource,
+            secretRepository,
             authUserMapper
         )
 
