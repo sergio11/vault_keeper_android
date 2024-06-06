@@ -2,9 +2,11 @@ package com.dreamsoftware.vaultkeeper.ui.features.savecard
 
 import androidx.annotation.DrawableRes
 import com.dreamsoftware.brownie.core.BrownieViewModel
+import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
+import com.dreamsoftware.vaultkeeper.di.SaveSecureCardErrorMapper
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveCardUseCase
@@ -15,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SaveCardViewModel @Inject constructor(
     private val getCardByIdUseCase: GetCardByIdUseCase,
-    private val saveCardUseCase: SaveCardUseCase
+    private val saveCardUseCase: SaveCardUseCase,
+    @SaveSecureCardErrorMapper private val errorMapper: IBrownieErrorMapper
 ) : BrownieViewModel<SaveCardUiState, SaveCardUiSideEffects>(), SaveCardScreenActionListener {
 
     fun getCardById(cardUid: String) {
@@ -110,7 +113,8 @@ class SaveCardViewModel @Inject constructor(
 
     private fun onMapExceptionToState(ex: Exception, uiState: SaveCardUiState) =
         uiState.copy(
-            error = null
+            isLoading = false,
+            error = errorMapper.mapToMessage(ex)
         )
 }
 

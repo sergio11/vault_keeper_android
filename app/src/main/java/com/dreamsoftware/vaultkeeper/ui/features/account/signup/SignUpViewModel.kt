@@ -2,8 +2,10 @@ package com.dreamsoftware.vaultkeeper.ui.features.account.signup
 
 import android.util.Patterns
 import com.dreamsoftware.brownie.core.BrownieViewModel
+import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
+import com.dreamsoftware.vaultkeeper.di.SignUpScreenErrorMapper
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -11,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
-    private val signUpScreenSimpleErrorMapper: SignUpScreenSimpleErrorMapper,
+    @SignUpScreenErrorMapper private val errorMapper: IBrownieErrorMapper,
 ): BrownieViewModel<SignUpUiState, SignUpSideEffects>(), SignUpScreenActionListener {
 
     private companion object {
@@ -66,7 +68,7 @@ class SignUpViewModel @Inject constructor(
     private fun onMapExceptionToState(ex: Exception, uiState: SignUpUiState) =
         uiState.copy(
             isLoading = false,
-            error = signUpScreenSimpleErrorMapper.mapToMessage(ex)
+            error = errorMapper.mapToMessage(ex)
         )
 }
 

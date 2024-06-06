@@ -2,9 +2,11 @@ package com.dreamsoftware.vaultkeeper.ui.features.savepassword
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.dreamsoftware.brownie.core.BrownieViewModel
+import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
+import com.dreamsoftware.vaultkeeper.di.SavePasswordErrorMapper
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
@@ -18,7 +20,8 @@ import javax.inject.Inject
 class SavePasswordViewModel @Inject constructor(
     private val saveAccountUseCase: SaveAccountUseCase,
     private val getAccountByIdUseCase: GetAccountByIdUseCase,
-    private val passwordGeneratorService: IPasswordGeneratorService
+    private val passwordGeneratorService: IPasswordGeneratorService,
+    @SavePasswordErrorMapper private val errorMapper: IBrownieErrorMapper
 ) : BrownieViewModel<SavePasswordUiState, SavePasswordUiSideEffects>(), SavePasswordScreenActionListener {
 
     fun getAccountById(accountUid: String) {
@@ -140,7 +143,8 @@ class SavePasswordViewModel @Inject constructor(
 
     private fun onMapExceptionToState(ex: Exception, uiState: SavePasswordUiState) =
         uiState.copy(
-            error = null
+            isLoading = false,
+            error = errorMapper.mapToMessage(ex)
         )
 }
 

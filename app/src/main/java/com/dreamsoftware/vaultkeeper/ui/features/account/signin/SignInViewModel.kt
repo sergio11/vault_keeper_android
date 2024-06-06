@@ -2,9 +2,11 @@ package com.dreamsoftware.vaultkeeper.ui.features.account.signin
 
 import android.util.Patterns
 import com.dreamsoftware.brownie.core.BrownieViewModel
+import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
+import com.dreamsoftware.vaultkeeper.di.SignInScreenErrorMapper
 import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
-    private val signInScreenSimpleErrorMapper: SignInScreenSimpleErrorMapper
+    @SignInScreenErrorMapper private val errorMapper: IBrownieErrorMapper
 ): BrownieViewModel<SignInUiState, SignInSideEffects>(), SignInScreenActionListener {
 
     private companion object {
@@ -60,7 +62,8 @@ class SignInViewModel @Inject constructor(
 
     private fun onMapExceptionToState(ex: Exception, uiState: SignInUiState) =
         uiState.copy(
-            error = signInScreenSimpleErrorMapper.mapToMessage(ex)
+            isLoading = false,
+            error = errorMapper.mapToMessage(ex)
         )
 }
 
