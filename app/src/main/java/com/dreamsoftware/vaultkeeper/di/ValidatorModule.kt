@@ -4,16 +4,20 @@ import android.content.Context
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.SaveMasterKeyBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
+import com.dreamsoftware.vaultkeeper.domain.model.SignUpBO
 import com.dreamsoftware.vaultkeeper.domain.validation.IAccountValidationMessagesResolver
 import com.dreamsoftware.vaultkeeper.domain.validation.IBusinessEntityValidator
 import com.dreamsoftware.vaultkeeper.domain.validation.ISaveMasterKeyValidationMessagesResolver
 import com.dreamsoftware.vaultkeeper.domain.validation.ISecureCardValidationMessagesResolver
+import com.dreamsoftware.vaultkeeper.domain.validation.ISignUpValidationMessagesResolver
 import com.dreamsoftware.vaultkeeper.domain.validation.impl.AccountValidatorImpl
 import com.dreamsoftware.vaultkeeper.domain.validation.impl.SaveMasterKeyValidatorImpl
 import com.dreamsoftware.vaultkeeper.domain.validation.impl.SecureCardValidatorImpl
+import com.dreamsoftware.vaultkeeper.domain.validation.impl.SignUpValidatorImpl
 import com.dreamsoftware.vaultkeeper.ui.validation.AccountValidationMessagesResolverImpl
 import com.dreamsoftware.vaultkeeper.ui.validation.SaveMasterKeyValidationMessagesResolverImpl
 import com.dreamsoftware.vaultkeeper.ui.validation.SecureCardValidationMessagesResolverImpl
+import com.dreamsoftware.vaultkeeper.ui.validation.SignUpValidationMessagesResolverImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,6 +46,12 @@ class ValidatorModule {
     fun provideSaveMasterKeyValidationMessagesResolver(
         @ApplicationContext context: Context
     ): ISaveMasterKeyValidationMessagesResolver = SaveMasterKeyValidationMessagesResolverImpl(context)
+
+    @Provides
+    @ViewModelScoped
+    fun provideSignUpValidationMessagesResolver(
+        @ApplicationContext context: Context
+    ): ISignUpValidationMessagesResolver = SignUpValidationMessagesResolverImpl(context)
     
     @Provides
     @ViewModelScoped
@@ -60,4 +70,10 @@ class ValidatorModule {
     fun provideSaveMasterKeyValidator(
         messagesResolver: ISaveMasterKeyValidationMessagesResolver
     ): IBusinessEntityValidator<SaveMasterKeyBO> = SaveMasterKeyValidatorImpl(messagesResolver)
+
+    @Provides
+    @ViewModelScoped
+    fun provideSignUpValidator(
+        messagesResolver: ISignUpValidationMessagesResolver
+    ): IBusinessEntityValidator<SignUpBO> = SignUpValidatorImpl(messagesResolver)
 }

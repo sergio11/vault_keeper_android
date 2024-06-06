@@ -17,8 +17,8 @@ fun SignInScreen(
         onInitialUiState = { SignInUiState() },
         onSideEffect = {
             when(it) {
-                SignInSideEffects.UserAuthenticatedSuccessfully -> onAuthenticated()
-                SignInSideEffects.RequireMasterKey -> onMasterKeyNeeded()
+                SignInSideEffects.UserAuthenticatedSuccessfullySideEffect -> onAuthenticated()
+                SignInSideEffects.RequireMasterKeySideEffect -> onMasterKeyNeeded()
             }
         }
     ) { uiState ->

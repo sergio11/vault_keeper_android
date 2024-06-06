@@ -77,6 +77,9 @@ fun RootNavigationGraph(
                     onGoToSignIn = {
                         navigate(Screens.SignIn.route)
                     },
+                    onGoToCreateMasterKey = {
+                        navigate(Screens.CreateMasterKey.route)
+                    },
                     onBackPressed = {
                         popBackStack()
                     }

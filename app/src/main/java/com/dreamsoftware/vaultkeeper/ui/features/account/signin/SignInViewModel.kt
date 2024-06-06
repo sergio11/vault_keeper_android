@@ -58,9 +58,9 @@ class SignInViewModel @Inject constructor(
 
     private fun onSignInSuccessfully(authUserBO: AuthUserBO) {
         launchSideEffect(if(authUserBO.hasMasterKey) {
-            SignInSideEffects.UserAuthenticatedSuccessfully
+            SignInSideEffects.UserAuthenticatedSuccessfullySideEffect
         } else {
-            SignInSideEffects.RequireMasterKey
+            SignInSideEffects.RequireMasterKeySideEffect
         })
     }
 
@@ -83,6 +83,6 @@ data class SignInUiState(
 }
 
 sealed interface SignInSideEffects: SideEffect {
-    data object UserAuthenticatedSuccessfully: SignInSideEffects
-    data object RequireMasterKey: SignInSideEffects
+    data object UserAuthenticatedSuccessfullySideEffect: SignInSideEffects
+    data object RequireMasterKeySideEffect: SignInSideEffects
 }

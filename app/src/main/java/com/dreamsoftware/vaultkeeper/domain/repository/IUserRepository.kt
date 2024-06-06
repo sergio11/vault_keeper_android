@@ -6,6 +6,7 @@ import com.dreamsoftware.vaultkeeper.domain.exception.SignInException
 import com.dreamsoftware.vaultkeeper.domain.exception.SignUpException
 import com.dreamsoftware.vaultkeeper.domain.model.AuthRequestBO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
+import com.dreamsoftware.vaultkeeper.domain.model.SignUpBO
 
 interface IUserRepository {
 
@@ -19,7 +20,7 @@ interface IUserRepository {
     suspend fun signIn(authRequest: AuthRequestBO): AuthUserBO
 
     @Throws(SignUpException::class)
-    suspend fun signUp(email: String, password: String): AuthUserBO
+    suspend fun signUp(data: SignUpBO): AuthUserBO
 
     @Throws(CloseSessionException::class)
     suspend fun closeSession()

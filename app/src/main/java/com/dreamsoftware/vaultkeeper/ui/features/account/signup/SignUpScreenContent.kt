@@ -56,10 +56,15 @@ fun SignUpScreenContent(
                 value = password,
                 onValueChanged = actionListener::onPasswordChanged
             )
+            BrownieTextFieldPassword(
+                labelRes = R.string.signup_input_confirm_password_label,
+                placeHolderRes = R.string.signup_input_confirm_password_placeholder,
+                value = confirmPassword,
+                onValueChanged = actionListener::onConfirmPasswordChanged
+            )
             Spacer(modifier = Modifier.padding(bottom = 20.dp))
             BrownieButton(
                 modifier = Modifier.fillMaxWidth(0.8f),
-                enabled = isSignUpButtonEnabled,
                 textRes = R.string.signup_signup_button_text,
                 type = BrownieButtonTypeEnum.LARGE,
                 onClick = actionListener::onSignUp

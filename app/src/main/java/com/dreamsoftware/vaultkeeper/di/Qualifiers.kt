@@ -37,3 +37,7 @@ annotation class SignUpScreenErrorMapper
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class SignInScreenErrorMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CreateMasterKeyErrorMapper

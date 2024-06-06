@@ -11,15 +11,14 @@ class SaveMasterKeyUseCase(
     private val preferencesRepository: IPreferenceRepository,
     private val secretRepository: ISecretRepository,
     private val masterKeyValidator: IBusinessEntityValidator<SaveMasterKeyBO>
-): BrownieUseCaseWithParams<SaveMasterKeyUseCase.Params, Boolean>() {
+): BrownieUseCaseWithParams<SaveMasterKeyUseCase.Params, Unit>() {
 
-    override suspend fun onExecuted(params: Params): Boolean =
+    override suspend fun onExecuted(params: Params): Unit =
         params.toSaveSecretBO(userUid = preferencesRepository.getAuthUserUid()).let { saveSecretBO ->
             masterKeyValidator.validate(saveSecretBO).takeIf { it.isNotEmpty() }?.let { errors ->
                 throw InvalidDataException(errors, "Invalid data provided")
             } ?: run {
                 secretRepository.save(saveSecretBO)
-                true
             }
         }
 

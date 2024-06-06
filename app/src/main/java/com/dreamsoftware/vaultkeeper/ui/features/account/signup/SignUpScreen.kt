@@ -8,6 +8,7 @@ import com.dreamsoftware.brownie.component.screen.BrownieScreen
 fun SignUpScreen(
     viewModel: SignUpViewModel = hiltViewModel(),
     onGoToSignIn: () -> Unit,
+    onGoToCreateMasterKey: () -> Unit,
     onBackPressed: () -> Unit,
 ) {
     BrownieScreen(
@@ -17,7 +18,7 @@ fun SignUpScreen(
         onSideEffect = {
             when(it) {
                 SignUpSideEffects.NavigateToSignIn -> onGoToSignIn()
-                SignUpSideEffects.RegisteredSuccessfully -> onBackPressed()
+                SignUpSideEffects.RegisteredSuccessfully -> onGoToCreateMasterKey()
             }
         }
     ) { uiState ->

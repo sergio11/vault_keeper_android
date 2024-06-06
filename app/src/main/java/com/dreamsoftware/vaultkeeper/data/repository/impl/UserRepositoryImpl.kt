@@ -10,6 +10,7 @@ import com.dreamsoftware.vaultkeeper.domain.exception.SignInException
 import com.dreamsoftware.vaultkeeper.domain.exception.SignUpException
 import com.dreamsoftware.vaultkeeper.domain.model.AuthRequestBO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
+import com.dreamsoftware.vaultkeeper.domain.model.SignUpBO
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
 
@@ -57,10 +58,15 @@ internal class UserRepositoryImpl(
     }
 
     @Throws(SignUpException::class)
-    override suspend fun signUp(email: String, password: String): AuthUserBO = safeExecute {
+    override suspend fun signUp(data: SignUpBO): AuthUserBO = safeExecute {
         try {
-            val authUser = authDataSource.signUp(email, password)
-            authUserMapper.mapInToOut(AuthUserInfo(authUser, false))
+            with(data) {
+                val authUser = authDataSource.signUp(
+                    email = email,
+                    password = password
+                )
+                authUserMapper.mapInToOut(AuthUserInfo(authUser, false))
+            }
         } catch (ex: Exception) {
             ex.printStackTrace()
             throw SignUpException("An error occurred when trying to sign up user", ex)

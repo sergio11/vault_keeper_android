@@ -2,6 +2,7 @@ package com.dreamsoftware.vaultkeeper.di
 
 import android.content.Context
 import com.dreamsoftware.brownie.core.IBrownieErrorMapper
+import com.dreamsoftware.vaultkeeper.ui.features.account.createmasterkey.CreateMasterKeySimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.account.signin.SignInScreenSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.account.signup.SignUpScreenSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.savecard.SaveSecureCardSimpleErrorMapper
@@ -48,4 +49,13 @@ class UiModule {
         @ApplicationContext context: Context
     ): IBrownieErrorMapper =
         SavePasswordSimpleErrorMapper(context = context)
+
+
+    @Provides
+    @ViewModelScoped
+    @CreateMasterKeyErrorMapper
+    fun provideCreateMasterKeyErrorMapper(
+        @ApplicationContext context: Context
+    ): IBrownieErrorMapper =
+        CreateMasterKeySimpleErrorMapper(context = context)
 }

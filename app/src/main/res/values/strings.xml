@@ -45,6 +45,8 @@
     <string name="signup_input_email_placeholder">Enter your email address</string>
     <string name="signup_input_password_label">Create Password</string>
     <string name="signup_input_password_placeholder">Choose a secure password</string>
+    <string name="signup_input_confirm_password_label">Create Password</string>
+    <string name="signup_input_confirm_password_placeholder">Choose a secure password</string>
     <string name="signup_signup_button_text">Sign Up Now!</string>
     <string name="signup_already_has_account_text">Already have an account?</string>
 
@@ -119,4 +121,8 @@
     <string name="master_key_empty_error">Please enter a Master Key</string>
     <string name="master_key_mismatch_error">Please enter correct Master Key</string>
     <string name="masterkey_incorrect_length_error">A Master Key should at least have 6 characters</string>
+
+    <string name="invalid_email_message">Invalid email format.</string>
+    <string name="short_password_message">Password must be at least %1$d characters long.</string>
+    <string name="passwords_do_not_match_message">Passwords do not match.</string>
 </resources>
