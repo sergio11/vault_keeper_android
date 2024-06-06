@@ -74,10 +74,12 @@ class UseCasesModule {
     @Provides
     @ViewModelScoped
     fun provideSaveCardUseCase(
+        preferencesRepository: IPreferenceRepository,
         secureCardRepository: ISecureCardRepository,
         secureCardValidator: IBusinessEntityValidator<SecureCardBO>
     ): SaveCardUseCase =
         SaveCardUseCase(
+            preferencesRepository = preferencesRepository,
             secureCardRepository = secureCardRepository,
             secureCardValidator = secureCardValidator
         )
@@ -129,10 +131,12 @@ class UseCasesModule {
     @Provides
     @ViewModelScoped
     fun provideSaveAccountUseCase(
+        preferencesRepository: IPreferenceRepository,
         accountRepository: IAccountRepository,
         accountValidator: IBusinessEntityValidator<AccountBO>
     ): SaveAccountUseCase =
         SaveAccountUseCase(
+            preferencesRepository = preferencesRepository,
             accountRepository = accountRepository,
             accountValidator = accountValidator
         )

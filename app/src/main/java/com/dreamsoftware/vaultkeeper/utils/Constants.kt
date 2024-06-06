@@ -64,8 +64,3 @@ val cardSuggestions = listOf(
     "Diners Club" to R.drawable.icon_diners_club,
     "Other" to R.drawable.icon_card
 )
-
-fun getRandomNumber(): Int {
-    val random = kotlin.random.Random
-    return random.nextInt(6, 21)
-}
