@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.di
 
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AuthRequestBO
 import com.dreamsoftware.vaultkeeper.domain.model.SaveMasterKeyBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.model.SignUpBO
@@ -40,11 +41,13 @@ class UseCasesModule {
     @ViewModelScoped
     fun provideSignInUseCase(
         userRepository: IUserRepository,
-        preferenceRepository: IPreferenceRepository
+        preferenceRepository: IPreferenceRepository,
+        validator: IBusinessEntityValidator<AuthRequestBO>
     ): SignInUseCase =
         SignInUseCase(
             userRepository = userRepository,
-            preferenceRepository = preferenceRepository
+            preferenceRepository = preferenceRepository,
+            validator = validator
         )
 
     @Provides

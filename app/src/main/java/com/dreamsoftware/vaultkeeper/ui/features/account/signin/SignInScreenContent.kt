@@ -57,7 +57,6 @@ fun SignInScreenContent(
             Spacer(modifier = Modifier.padding(bottom = 20.dp))
             BrownieButton(
                 modifier = Modifier.fillMaxWidth(0.8f),
-                enabled = isLoginButtonEnabled,
                 textRes = R.string.signin_login_button_text,
                 type = BrownieButtonTypeEnum.LARGE,
                 onClick = actionsListener::onSignIn

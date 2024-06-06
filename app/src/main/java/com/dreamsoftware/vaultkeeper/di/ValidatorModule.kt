@@ -2,6 +2,7 @@ package com.dreamsoftware.vaultkeeper.di
 
 import android.content.Context
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AuthRequestBO
 import com.dreamsoftware.vaultkeeper.domain.model.SaveMasterKeyBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.model.SignUpBO
@@ -9,14 +10,17 @@ import com.dreamsoftware.vaultkeeper.domain.validation.IAccountValidationMessage
 import com.dreamsoftware.vaultkeeper.domain.validation.IBusinessEntityValidator
 import com.dreamsoftware.vaultkeeper.domain.validation.ISaveMasterKeyValidationMessagesResolver
 import com.dreamsoftware.vaultkeeper.domain.validation.ISecureCardValidationMessagesResolver
+import com.dreamsoftware.vaultkeeper.domain.validation.ISignInValidationMessagesResolver
 import com.dreamsoftware.vaultkeeper.domain.validation.ISignUpValidationMessagesResolver
 import com.dreamsoftware.vaultkeeper.domain.validation.impl.AccountValidatorImpl
 import com.dreamsoftware.vaultkeeper.domain.validation.impl.SaveMasterKeyValidatorImpl
 import com.dreamsoftware.vaultkeeper.domain.validation.impl.SecureCardValidatorImpl
+import com.dreamsoftware.vaultkeeper.domain.validation.impl.SignInValidatorImpl
 import com.dreamsoftware.vaultkeeper.domain.validation.impl.SignUpValidatorImpl
 import com.dreamsoftware.vaultkeeper.ui.validation.AccountValidationMessagesResolverImpl
 import com.dreamsoftware.vaultkeeper.ui.validation.SaveMasterKeyValidationMessagesResolverImpl
 import com.dreamsoftware.vaultkeeper.ui.validation.SecureCardValidationMessagesResolverImpl
+import com.dreamsoftware.vaultkeeper.ui.validation.SignInValidationMessagesResolverImpl
 import com.dreamsoftware.vaultkeeper.ui.validation.SignUpValidationMessagesResolverImpl
 import dagger.Module
 import dagger.Provides
@@ -52,6 +56,13 @@ class ValidatorModule {
     fun provideSignUpValidationMessagesResolver(
         @ApplicationContext context: Context
     ): ISignUpValidationMessagesResolver = SignUpValidationMessagesResolverImpl(context)
+
+    @Provides
+    @ViewModelScoped
+    fun provideSignInValidationMessagesResolver(
+        @ApplicationContext context: Context
+    ): ISignInValidationMessagesResolver = SignInValidationMessagesResolverImpl(context)
+
     
     @Provides
     @ViewModelScoped
@@ -76,4 +87,10 @@ class ValidatorModule {
     fun provideSignUpValidator(
         messagesResolver: ISignUpValidationMessagesResolver
     ): IBusinessEntityValidator<SignUpBO> = SignUpValidatorImpl(messagesResolver)
+
+    @Provides
+    @ViewModelScoped
+    fun provideSignInValidator(
+        messagesResolver: ISignInValidationMessagesResolver
+    ): IBusinessEntityValidator<AuthRequestBO> = SignInValidatorImpl(messagesResolver)
 }

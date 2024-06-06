@@ -1,6 +1,5 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.signin
 
-import android.util.Patterns
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.brownie.core.SideEffect
@@ -18,27 +17,14 @@ class SignInViewModel @Inject constructor(
     @SignInScreenErrorMapper private val errorMapper: IBrownieErrorMapper
 ): BrownieViewModel<SignInUiState, SignInSideEffects>(), SignInScreenActionListener {
 
-    private companion object {
-        const val MIN_PASSWORD_LENGTH = 6
-    }
 
     override fun onGetDefaultState(): SignInUiState = SignInUiState()
     override fun onEmailChanged(newEmail: String) {
-        updateState {
-            it.copy(
-                email = newEmail,
-                isLoginButtonEnabled = loginButtonShouldBeEnabled(newEmail, it.password)
-            )
-        }
+        updateState { it.copy(email = newEmail) }
     }
 
     override fun onPasswordChanged(newPassword: String) {
-        updateState {
-            it.copy(
-                password = newPassword,
-                isLoginButtonEnabled = loginButtonShouldBeEnabled(it.email, newPassword)
-            )
-        }
+        updateState { it.copy(password = newPassword) }
     }
 
     override fun onSignIn() {
@@ -51,10 +37,6 @@ class SignInViewModel @Inject constructor(
             )
         }
     }
-
-    private fun loginButtonShouldBeEnabled(email: String, password: String) =
-        Patterns.EMAIL_ADDRESS.matcher(email).matches()
-                && password.length > MIN_PASSWORD_LENGTH
 
     private fun onSignInSuccessfully(authUserBO: AuthUserBO) {
         launchSideEffect(if(authUserBO.hasMasterKey) {
@@ -75,8 +57,7 @@ data class SignInUiState(
     override val isLoading: Boolean = false,
     override val error: String? = null,
     val email: String = String.EMPTY,
-    val password: String = String.EMPTY,
-    val isLoginButtonEnabled: Boolean = false
+    val password: String = String.EMPTY
 ): UiState<SignInUiState>(isLoading, error) {
     override fun copyState(isLoading: Boolean, error: String?): SignInUiState =
         copy(isLoading = isLoading, error = error)
