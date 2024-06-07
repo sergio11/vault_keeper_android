@@ -15,13 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.dreamsoftware.brownie.component.BrownieBottomSheet
 import com.dreamsoftware.brownie.component.BrownieDialog
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.core.components.BottomSheet
 import com.dreamsoftware.vaultkeeper.ui.features.settings.components.SettingsItemRow
 import com.dreamsoftware.vaultkeeper.ui.features.settings.components.UserProfileRow
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
@@ -83,7 +83,7 @@ fun SettingsScreenContent(
                 }
             }
             if (showSheet) {
-                BottomSheet(
+                BrownieBottomSheet(
                     onDismiss = {
                         actionListener.onUpdateSheetVisibility(isVisible = false)
                     },

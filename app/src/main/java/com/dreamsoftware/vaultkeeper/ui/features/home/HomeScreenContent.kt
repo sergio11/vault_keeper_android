@@ -35,6 +35,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.dreamsoftware.brownie.component.BrownieBottomSheet
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
 import com.dreamsoftware.brownie.component.BrownieDialog
 import com.dreamsoftware.brownie.component.BrownieImageIcon
@@ -48,7 +49,6 @@ import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
-import com.dreamsoftware.vaultkeeper.ui.core.components.BottomSheet
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.AccountPasswordRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.CardRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.ColumnProgressIndicator
@@ -187,7 +187,7 @@ fun HomeScreenContent(
                     }
 
                     if (showSheet) {
-                        BottomSheet(
+                        BrownieBottomSheet(
                             onDismiss = {
                                 actionListener.onFilterBottomSheetVisibilityUpdated(
                                     isVisible = false
