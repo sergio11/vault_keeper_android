@@ -10,5 +10,5 @@ class GetAllCardsUseCase(
     private val secureCardRepository: ISecureCardRepository
 ): BrownieUseCase<List<SecureCardBO>>() {
     override suspend fun onExecuted(): List<SecureCardBO> =
-        secureCardRepository.findAllByUser(userUid = preferencesRepository.getAuthUserUid())
+        secureCardRepository.findAllByUserId(userUid = preferencesRepository.getAuthUserUid())
 }

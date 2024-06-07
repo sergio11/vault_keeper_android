@@ -5,6 +5,7 @@ import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.account.createmasterkey.CreateMasterKeySimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.account.signin.SignInScreenSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.account.signup.SignUpScreenSimpleErrorMapper
+import com.dreamsoftware.vaultkeeper.ui.features.home.HomeSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.savecard.SaveSecureCardSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.savepassword.SavePasswordSimpleErrorMapper
 import dagger.Module
@@ -58,4 +59,12 @@ class UiModule {
         @ApplicationContext context: Context
     ): IBrownieErrorMapper =
         CreateMasterKeySimpleErrorMapper(context = context)
+
+    @Provides
+    @ViewModelScoped
+    @HomeErrorMapper
+    fun provideHomeSimpleErrorMapper(
+        @ApplicationContext context: Context
+    ): IBrownieErrorMapper =
+        HomeSimpleErrorMapper(context = context)
 }

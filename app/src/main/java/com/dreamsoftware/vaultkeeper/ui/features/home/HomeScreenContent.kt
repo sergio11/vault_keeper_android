@@ -22,11 +22,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,12 +50,11 @@ import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.core.components.BottomSheet
 import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
-import com.dreamsoftware.vaultkeeper.ui.features.home.components.AccountRow
+import com.dreamsoftware.vaultkeeper.ui.features.home.components.AccountPasswordRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.CardRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.ColumnProgressIndicator
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.EmptyListPlaceholder
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
-import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 
 @Composable
 fun HomeScreenContent(
@@ -85,8 +82,6 @@ fun HomeScreenContent(
                     }
                 }
             }
-
-            var showSheet by remember { mutableStateOf(false) }
 
             BrownieDialog(
                 isVisible = showCardDeleteDialog,
@@ -172,6 +167,7 @@ fun HomeScreenContent(
                                 isSingleLine = true,
                             )
 
+
                             Box(
                                 modifier = Modifier
                                     .padding(
@@ -179,11 +175,9 @@ fun HomeScreenContent(
                                         top = 16.dp, bottom = 8.dp
                                     )
                                     .size(54.dp)
-                                    .background(Blue, shape = RoundedCornerShape(16.dp))
+                                    .background(primary, shape = RoundedCornerShape(16.dp))
                                     .clip(RoundedCornerShape(16.dp))
-                                    .clickable {
-                                        showSheet = true
-                                    },
+                                    .clickable { actionListener.onFilterBottomSheetVisibilityUpdated(isVisible = true) },
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
@@ -197,7 +191,7 @@ fun HomeScreenContent(
 
                         if (showSheet) {
                             BottomSheet(
-                                onDismiss = { showSheet = false },
+                                onDismiss = { actionListener.onFilterBottomSheetVisibilityUpdated(isVisible = false) },
                                 content = {
                                     LazyColumn {
                                         items(filterOptions.size) { option ->
@@ -254,7 +248,7 @@ fun HomeScreenContent(
                                     when (val credential = credentials[idx]) {
                                         is AccountBO -> {
                                             if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.PASSWORDS) {
-                                                AccountRow(account = credential, actionListener = actionListener)
+                                                AccountPasswordRow(account = credential, actionListener = actionListener)
                                             }
                                         }
 

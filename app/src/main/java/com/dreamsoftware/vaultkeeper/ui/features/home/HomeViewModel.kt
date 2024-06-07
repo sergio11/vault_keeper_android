@@ -3,27 +3,36 @@ package com.dreamsoftware.vaultkeeper.ui.features.home
 import com.dreamsoftware.brownie.component.fab.BrownieFabButtonItem
 import com.dreamsoftware.brownie.component.fab.BrownieFabButtonMain
 import com.dreamsoftware.brownie.core.BrownieViewModel
+import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.data.database.dao.AccountDao
-import com.dreamsoftware.vaultkeeper.data.database.dao.SecureCardDao
+import com.dreamsoftware.vaultkeeper.di.HomeErrorMapper
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.ICredentialBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllAccountsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCredentialsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val dbAccount: AccountDao,
-    private val dbCard: SecureCardDao
+    private val getAllAccountsUseCase: GetAllAccountsUseCase,
+    private val getAllCardsUseCase: GetAllCardsUseCase,
+    private val getAllCredentialsUseCase: GetAllCredentialsUseCase,
+    @HomeErrorMapper private val errorMapper: IBrownieErrorMapper
 ) : BrownieViewModel<HomeUiState, HomeSideEffects>(), HomeScreenActionListener {
 
     private companion object {
         const val ADD_CARD_BUTTON_ID = 1
         const val ADD_PASSWORD_BUTTON_ID = 2
+    }
+
+    fun loadData() {
+        onLoadData()
     }
 
     override fun onGetDefaultState(): HomeUiState = HomeUiState(
@@ -32,50 +41,6 @@ class HomeViewModel @Inject constructor(
             BrownieFabButtonItem(id = ADD_PASSWORD_BUTTON_ID, iconRes = R.drawable.icon_pass, label = "Add Password")
         )
     )
-
-    /*val combinedData: Flow<List<AccountOrCard>> = combine(
-        dbAccount.getAllAccounts(),
-        dbCard.getAllCards(),
-        searchQuery
-    ) { accounts, cards, query ->
-
-        val itemsWithTimestamp = mutableStateListOf<Pair<AccountOrCard, Long>>()
-
-        accounts.forEach { item -> itemsWithTimestamp.add(AccountOrCard.AccountItem(item) to item.createdAt) }
-        cards.forEach { item -> itemsWithTimestamp.add(AccountOrCard.CardItem(item) to item.createdAt) }
-
-        val sortedItems = itemsWithTimestamp.sortedByDescending { it.second }
-
-        val filteredItems = if (query.isNotBlank()) {
-            sortedItems.filter { (item, _) ->
-                when (selectedOption) {
-                    "All" -> true
-                    "Passwords" -> item is AccountOrCard.AccountItem
-                    "Cards" -> item is AccountOrCard.CardItem
-                    else -> true
-                } &&
-                when (item) {
-                    is AccountOrCard.AccountItem -> {
-                        val account = item.account
-                        account.accountName.contains(query, ignoreCase = true) ||
-                                decryptInput(account.userName).contains(query, ignoreCase = true) ||
-                                decryptInput(account.email).contains(query, ignoreCase = true) ||
-                                decryptInput(account.mobileNumber).contains(query, ignoreCase = true)
-                    }
-
-                    is AccountOrCard.CardItem -> {
-                        val card = item.card
-                        decryptInput(card.cardHolderName).contains(query, ignoreCase = true) ||
-                                decryptInput(card.cardNumber).contains(query, ignoreCase = true) ||
-                                card.cardProvider.contains(query, ignoreCase = true)
-                    }
-                }
-            }
-        } else {
-            sortedItems
-        }
-        filteredItems.map { it.first }
-    }*/
 
     override fun onDeleteAccount(account: AccountBO) {
        updateState {
@@ -141,6 +106,11 @@ class HomeViewModel @Inject constructor(
             searchQuery = String.EMPTY,
             showSheet = false
         ) }
+        onLoadData()
+    }
+
+    override fun onFilterBottomSheetVisibilityUpdated(isVisible: Boolean) {
+        updateState { it.copy(showSheet = isVisible) }
     }
 
     override fun onFabItemClicked(fabButtonItem: BrownieFabButtonItem) {
@@ -152,6 +122,50 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    private fun onLoadData() {
+        with(uiState.value) {
+            when(selectedOption) {
+                FilterOptionsEnum.ALL -> onLoadAllCredentials()
+                FilterOptionsEnum.PASSWORDS -> onLoadAllAccounts()
+                FilterOptionsEnum.CARDS -> onLoadAllSecureCards()
+            }
+        }
+    }
+
+    private fun onLoadAllAccounts() {
+        executeUseCase(
+            useCase = getAllAccountsUseCase,
+            onSuccess = ::onLoadCredentialsSuccessfully,
+            onMapExceptionToState = ::onMapExceptionToState
+        )
+    }
+
+    private fun onLoadAllSecureCards() {
+        executeUseCase(
+            useCase = getAllCardsUseCase,
+            onSuccess = ::onLoadCredentialsSuccessfully,
+            onMapExceptionToState = ::onMapExceptionToState
+        )
+    }
+
+    private fun onLoadAllCredentials() {
+        executeUseCase(
+            useCase = getAllCredentialsUseCase,
+            onSuccess = ::onLoadCredentialsSuccessfully,
+            onMapExceptionToState = ::onMapExceptionToState
+        )
+    }
+
+    private fun onLoadCredentialsSuccessfully(credentials: List<ICredentialBO>) {
+        updateState { it.copy(credentials = credentials) }
+    }
+
+    private fun onMapExceptionToState(ex: Exception, uiState: HomeUiState) =
+        uiState.copy(
+            isLoading = false,
+            error = errorMapper.mapToMessage(ex)
+        )
 }
 
 data class HomeUiState(

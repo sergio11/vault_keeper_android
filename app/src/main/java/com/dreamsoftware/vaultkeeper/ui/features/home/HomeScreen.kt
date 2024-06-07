@@ -21,7 +21,8 @@ fun HomeScreen(
                 HomeSideEffects.AddNewAccountPassword -> onGoToAddNewAccount()
                 HomeSideEffects.AddNewSecureCard -> onGoToAddNewSecureCard()
             }
-        }
+        },
+        onInit = { loadData() }
     ) { uiState ->
         HomeScreenContent(
             uiState = uiState,

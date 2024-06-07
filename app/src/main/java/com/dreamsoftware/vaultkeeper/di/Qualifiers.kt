@@ -41,3 +41,7 @@ annotation class SignInScreenErrorMapper
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class CreateMasterKeyErrorMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class HomeErrorMapper

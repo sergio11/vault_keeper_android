@@ -13,6 +13,7 @@ import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCredentialsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllAccountsUseCase
@@ -217,5 +218,17 @@ class UseCasesModule {
         preferencesRepository = preferencesRepository,
         secretRepository = secretRepository,
         masterKeyValidator = masterKeyValidator
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetAllCredentialsUseCase(
+        preferenceRepository: IPreferenceRepository,
+        accountRepository: IAccountRepository,
+        secureCardRepository: ISecureCardRepository
+    ): GetAllCredentialsUseCase = GetAllCredentialsUseCase(
+        preferenceRepository = preferenceRepository,
+        accountRepository = accountRepository,
+        secureCardRepository = secureCardRepository
     )
 }

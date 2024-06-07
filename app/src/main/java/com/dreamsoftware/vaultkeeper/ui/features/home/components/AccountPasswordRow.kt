@@ -41,7 +41,7 @@ import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.utils.suggestionsWithImages
 
 @Composable
-fun AccountRow(
+fun AccountPasswordRow(
     account: AccountBO,
     actionListener: HomeScreenActionListener
 ) {

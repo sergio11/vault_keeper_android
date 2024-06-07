@@ -41,7 +41,7 @@ internal class SecureCardRepositoryImpl(
         localDataSource.delete(cardUid)
     }
 
-    override suspend fun findAllByUser(userUid: String): List<SecureCardBO> = safeExecute {
+    override suspend fun findAllByUserId(userUid: String): List<SecureCardBO> = safeExecute {
         try {
             localDataSource
                 .findAll()

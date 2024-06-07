@@ -13,5 +13,6 @@ interface HomeScreenActionListener {
     fun onDeleteSecureCardCancelled()
     fun onSearchQueryUpdated(newSearchQuery: String)
     fun onFilterOptionUpdated(newFilterOption: FilterOptionsEnum)
+    fun onFilterBottomSheetVisibilityUpdated(isVisible: Boolean)
     fun onFabItemClicked(fabButtonItem: BrownieFabButtonItem)
 }
