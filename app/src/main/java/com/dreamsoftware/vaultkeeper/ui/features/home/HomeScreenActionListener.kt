@@ -1,8 +1,8 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home
 
+import com.dreamsoftware.brownie.component.fab.BrownieFabButtonItem
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
-import com.dreamsoftware.vaultkeeper.ui.core.components.fab.FabButtonItem
 
 interface HomeScreenActionListener {
     fun onDeleteAccount(account: AccountBO)
@@ -13,5 +13,5 @@ interface HomeScreenActionListener {
     fun onDeleteSecureCardCancelled()
     fun onSearchQueryUpdated(newSearchQuery: String)
     fun onFilterOptionUpdated(newFilterOption: FilterOptionsEnum)
-    fun onFabItemClicked(fabButtonItem: FabButtonItem)
+    fun onFabItemClicked(fabButtonItem: BrownieFabButtonItem)
 }

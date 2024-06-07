@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
+import com.dreamsoftware.brownie.component.BrownieLoadingDialog
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextFieldPassword
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
@@ -35,6 +36,12 @@ fun CreateMasterKeyScreenContent(
     actionListener: CreateMasterKeyScreenActionListener
 ) {
     with(uiState) {
+        BrownieLoadingDialog(
+            isShowingDialog = isLoading,
+            mainLogoRes = R.drawable.icon_home,
+            titleRes = R.string.loading_dialog_title_text,
+            descriptionRes = R.string.loading_dialog_description_text
+        )
         BrownieScreenContent(
             enableVerticalScroll = false,
             hasTopBar = false,
@@ -61,6 +68,14 @@ fun CreateMasterKeyScreenContent(
                     textColor = MaterialTheme.colorScheme.onPrimary,
                     type = BrownieTextTypeEnum.HEADLINE_MEDIUM,
                     titleRes = R.string.setup_key_tagline_1
+                )
+                BrownieText(
+                    modifier = Modifier
+                        .padding(top = 6.dp, start = 16.dp, end = 16.dp)
+                        .fillMaxWidth(),
+                    type = BrownieTextTypeEnum.BODY_LARGE,
+                    titleRes = R.string.setup_key_tagline_2,
+                    textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 CreateMasterKeySheetContent(
@@ -107,15 +122,6 @@ private fun CreateMasterKeySheetContent(
                                 .fillMaxWidth(),
                             type = BrownieTextTypeEnum.TITLE_MEDIUM,
                             titleRes = R.string.setup_master_key,
-                            textAlign = TextAlign.Center
-                        )
-
-                        BrownieText(
-                            modifier = Modifier
-                                .padding(top = 6.dp, start = 16.dp, end = 16.dp)
-                                .fillMaxWidth(),
-                            type = BrownieTextTypeEnum.BODY_LARGE,
-                            titleRes = R.string.setup_key_tagline_2,
                             textAlign = TextAlign.Center
                         )
 

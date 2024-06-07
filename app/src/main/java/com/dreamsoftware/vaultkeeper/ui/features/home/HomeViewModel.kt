@@ -1,5 +1,7 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home
 
+import com.dreamsoftware.brownie.component.fab.BrownieFabButtonItem
+import com.dreamsoftware.brownie.component.fab.BrownieFabButtonMain
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
@@ -10,8 +12,6 @@ import com.dreamsoftware.vaultkeeper.data.database.dao.SecureCardDao
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.ICredentialBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
-import com.dreamsoftware.vaultkeeper.ui.core.components.fab.FabButtonItem
-import com.dreamsoftware.vaultkeeper.ui.core.components.fab.FabButtonMain
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -28,8 +28,8 @@ class HomeViewModel @Inject constructor(
 
     override fun onGetDefaultState(): HomeUiState = HomeUiState(
         fabButtonItemList = listOf(
-            FabButtonItem(id = ADD_CARD_BUTTON_ID, iconRes = R.drawable.icon_card, label = "Add Card"),
-            FabButtonItem(id = ADD_PASSWORD_BUTTON_ID, iconRes = R.drawable.icon_pass, label = "Add Password")
+            BrownieFabButtonItem(id = ADD_CARD_BUTTON_ID, iconRes = R.drawable.icon_card, label = "Add Card"),
+            BrownieFabButtonItem(id = ADD_PASSWORD_BUTTON_ID, iconRes = R.drawable.icon_pass, label = "Add Password")
         )
     )
 
@@ -143,7 +143,7 @@ class HomeViewModel @Inject constructor(
         ) }
     }
 
-    override fun onFabItemClicked(fabButtonItem: FabButtonItem) {
+    override fun onFabItemClicked(fabButtonItem: BrownieFabButtonItem) {
         when (fabButtonItem.id) {
             ADD_CARD_BUTTON_ID -> launchSideEffect(HomeSideEffects.AddNewSecureCard)
             ADD_PASSWORD_BUTTON_ID -> launchSideEffect(HomeSideEffects.AddNewAccountPassword)
@@ -165,8 +165,8 @@ data class HomeUiState(
     val showCardDeleteDialog: Boolean = false,
     val showSheet: Boolean = false,
     val searchQuery: String = String.EMPTY,
-    val fabButtonItemList: List<FabButtonItem> = emptyList(),
-    val fabButtonMain: FabButtonMain = FabButtonMain(R.drawable.icon_add),
+    val fabButtonItemList: List<BrownieFabButtonItem> = emptyList(),
+    val fabButtonMain: BrownieFabButtonMain = BrownieFabButtonMain(R.drawable.icon_add),
     val credentials: List<ICredentialBO> = emptyList()
 ): UiState<HomeUiState>(isLoading, error) {
     override fun copyState(isLoading: Boolean, error: String?): HomeUiState =
