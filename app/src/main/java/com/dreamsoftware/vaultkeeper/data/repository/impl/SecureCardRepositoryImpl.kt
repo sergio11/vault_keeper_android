@@ -10,14 +10,16 @@ import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepository
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
+import kotlinx.coroutines.CoroutineDispatcher
 
 internal class SecureCardRepositoryImpl(
     private val localDataSource: ISecureCardsLocalDataSource,
     private val remoteDataSource: ISecureCardsRemoteDataSource,
     private val secureCardLocalUserMapper: IBrownieMapper<SecureCardEntity, SecureCardBO>,
     private val secureCardRemoteUserMapper: IBrownieMapper<SecureCardDTO, SecureCardBO>,
-    private val dataProtectionService: IDataProtectionService
-) : SupportRepositoryImpl(), ISecureCardRepository {
+    private val dataProtectionService: IDataProtectionService,
+    dispatcher: CoroutineDispatcher
+) : SupportRepositoryImpl(dispatcher), ISecureCardRepository {
 
     override suspend fun insert(card: SecureCardBO): SecureCardBO = safeExecute {
         val secureCardProtected = dataProtectionService.wrap(card)

@@ -117,7 +117,7 @@ fun HomeScreenContent(
                         BrownieMultiFloatingActionButton(
                             items = fabButtonItemList,
                             fabIcon = fabButtonMain,
-                            fabOption = BrownieFabButtonSub(backgroundTint = primary),
+                            fabOption = BrownieFabButtonSub(backgroundTint = primaryContainer),
                             onFabItemClicked = actionListener::onFabItemClicked
                         )
                     }
@@ -175,7 +175,7 @@ fun HomeScreenContent(
                                         top = 16.dp, bottom = 8.dp
                                     )
                                     .size(54.dp)
-                                    .background(primary, shape = RoundedCornerShape(16.dp))
+                                    .background(primaryContainer, shape = RoundedCornerShape(16.dp))
                                     .clip(RoundedCornerShape(16.dp))
                                     .clickable { actionListener.onFilterBottomSheetVisibilityUpdated(isVisible = true) },
                                 contentAlignment = Alignment.Center

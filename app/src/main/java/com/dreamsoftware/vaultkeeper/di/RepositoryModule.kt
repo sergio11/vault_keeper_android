@@ -42,6 +42,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module(includes = [FirebaseModule::class, DatabaseModule::class])
@@ -80,12 +81,14 @@ class RepositoryModule {
     fun provideUserRepository(
         authDataSource: IAuthRemoteDataSource,
         secretRepository: ISecretRepository,
-        authUserMapper: IBrownieOneSideMapper<AuthUserInfo, AuthUserBO>
+        authUserMapper: IBrownieOneSideMapper<AuthUserInfo, AuthUserBO>,
+        @IoDispatcher dispatcher: CoroutineDispatcher
     ): IUserRepository =
         UserRepositoryImpl(
             authDataSource,
             secretRepository,
-            authUserMapper
+            authUserMapper,
+            dispatcher
         )
 
     @Provides
@@ -95,14 +98,16 @@ class RepositoryModule {
         remoteDataSource: ISecureCardsRemoteDataSource,
         secureCardLocalUserMapper: IBrownieMapper<SecureCardEntity, SecureCardBO>,
         secureCardRemoteUserMapper: IBrownieMapper<SecureCardDTO, SecureCardBO>,
-        dataProtectionService: IDataProtectionService
+        dataProtectionService: IDataProtectionService,
+        @IoDispatcher dispatcher: CoroutineDispatcher
     ): ISecureCardRepository =
         SecureCardRepositoryImpl(
             localDataSource,
             remoteDataSource,
             secureCardLocalUserMapper,
             secureCardRemoteUserMapper,
-            dataProtectionService
+            dataProtectionService,
+            dispatcher
         )
 
     @Provides
@@ -112,14 +117,16 @@ class RepositoryModule {
         remoteDataSource: IAccountRemoteDataSource,
         accountLocalMapper: IBrownieMapper<AccountEntity, AccountBO>,
         accountRemoteMapper: IBrownieMapper<AccountDTO, AccountBO>,
-        dataProtectionService: IDataProtectionService
+        dataProtectionService: IDataProtectionService,
+        @IoDispatcher dispatcher: CoroutineDispatcher
     ): IAccountRepository =
         AccountRepositoryImpl(
             localDataSource,
             remoteDataSource,
             accountLocalMapper,
             accountRemoteMapper,
-            dataProtectionService
+            dataProtectionService,
+            dispatcher
         )
 
     @Provides

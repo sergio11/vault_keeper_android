@@ -13,12 +13,14 @@ import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.model.SignUpBO
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
+import kotlinx.coroutines.CoroutineDispatcher
 
 internal class UserRepositoryImpl(
     private val authDataSource: IAuthRemoteDataSource,
     private val secretsRepository: ISecretRepository,
-    private val authUserMapper: IBrownieOneSideMapper<AuthUserInfo, AuthUserBO>
-): SupportRepositoryImpl(), IUserRepository {
+    private val authUserMapper: IBrownieOneSideMapper<AuthUserInfo, AuthUserBO>,
+    dispatcher: CoroutineDispatcher
+): SupportRepositoryImpl(dispatcher), IUserRepository {
 
     @Throws(CheckAuthenticatedException::class)
     override suspend fun getCurrentAuthenticatedUser(): AuthUserBO = safeExecute {

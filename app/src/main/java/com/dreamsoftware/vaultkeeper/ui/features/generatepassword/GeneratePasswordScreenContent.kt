@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
+import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
 import com.dreamsoftware.vaultkeeper.ui.features.generatepassword.components.CustomSlider
@@ -48,151 +49,142 @@ fun GeneratePasswordScreenContent(
     actionListener: GeneratePasswordScreenActionListener
 ) {
     with(uiState) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = BgBlack),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            BrownieText(
-                modifier = Modifier.padding(
-                    top = 18.dp, bottom = 12.dp
-                ),
-                titleText = "Password Generator",
-                type = BrownieTextTypeEnum.TITLE_LARGE,
-                textColor = MaterialTheme.colorScheme.onPrimary
-            )
-
-            Surface(
-                modifier = Modifier
-                    .padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp
-                    )
-                    .height(140.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(10.dp),
-                contentColor = MaterialTheme.colorScheme.surfaceContainer
-
+        with(MaterialTheme.colorScheme) {
+            BrownieScreenContent(
+                hasTopBar = false,
+                screenContainerColor = primary
             ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    BrownieText(
-                        type = BrownieTextTypeEnum.HEADLINE_MEDIUM,
-                        titleText = password
-                    )
-                }
-            }
-            SheetSurface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-            ) {
-                Column(
+                BrownieText(
+                    modifier = Modifier.padding(top = 18.dp, bottom = 12.dp)
+                        .align(Alignment.CenterHorizontally),
+                    titleText = "Password Generator",
+                    type = BrownieTextTypeEnum.TITLE_LARGE,
+                    textColor = onPrimary
+                )
+
+                Surface(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = Color.White),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                        .height(140.dp)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(10.dp),
+                    contentColor = surfaceContainer
                 ) {
-                    Spacer(modifier = Modifier.height(20.dp))
-                    BrownieText(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        type = BrownieTextTypeEnum.TITLE_SMALL,
-                        textAlign = TextAlign.Center,
-                        titleText = "Options",
-                    )
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize()
                     ) {
                         BrownieText(
-                            type = BrownieTextTypeEnum.LABEL_LARGE,
-                            titleText = "Length",
-                        )
-                        CustomSlider(
-                            value = passwordLength.toFloat(),
-                            onValueChange = { actionListener.onPasswordLength(newLength = it.toInt())},
-                            valueRange = 6f..15f
+                            type = BrownieTextTypeEnum.HEADLINE_MEDIUM,
+                            titleText = password
                         )
                     }
+                }
 
-                    SelectionRow(
-                        text = "Lower case",
-                        checked = lowerCase,
-                        onCheckedChange = actionListener::onLowerCaseChanged
-                    )
-
-                    SelectionRow(
-                        text = "Upper case",
-                        checked = upperCase,
-                        onCheckedChange = actionListener::onUpperCaseChanged
-                    )
-
-                    SelectionRow(
-                        text = "Digits",
-                        checked = digits,
-                        onCheckedChange = actionListener::onDigitsChanged
-                    )
-
-                    SelectionRow(
-                        text = "Special characters",
-                        checked = specialCharacters,
-                        onCheckedChange = actionListener::onSpecialCharactersChanged
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Row(
+                SheetSurface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                ) {
+                    Column(
                         modifier = Modifier
-                            .padding(
-                                start = 22.dp,
-                                end = 22.dp,
-                                bottom = 32.dp
-                            )
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                            .fillMaxSize()
+                            .background(color = Color.White),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-
-                        Box(
-                            modifier = Modifier
-                                .size(52.dp)
-                                .clip(CircleShape)
-                                .shadow(10.dp)
-                                .background(color = BgBlack)
-                                .clickWithRipple {
-                                    actionListener.onValidateAndSave()
-                                },
+                        Spacer(modifier = Modifier.height(20.dp))
+                        BrownieText(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            type = BrownieTextTypeEnum.TITLE_SMALL,
+                            textAlign = TextAlign.Center,
+                            titleText = "Options",
+                        )
+                        Row(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(
-                                modifier = Modifier
-                                    .padding(all = 8.dp)
-                                    .size(40.dp),
-                                painter = painterResource(R.drawable.icon_regenerate),
-                                contentDescription = null,
-                                tint = Color.White
+                            BrownieText(
+                                type = BrownieTextTypeEnum.LABEL_LARGE,
+                                titleText = "Length",
+                            )
+                            CustomSlider(
+                                value = passwordLength.toFloat(),
+                                onValueChange = { actionListener.onPasswordLength(newLength = it.toInt())},
+                                valueRange = 6f..15f
                             )
                         }
 
-                        BrownieButton(
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(52.dp)
-                                .padding(
-                                    start = 16.dp
-                                ),
-                            text = "Copy Password",
-                            onClick = {
-                                clipboardManager.setText(
-                                    AnnotatedString((password))
-                                )
-                                actionListener.onPasswordCopied()
-                            }
+                        SelectionRow(
+                            text = "Lower case",
+                            checked = lowerCase,
+                            onCheckedChange = actionListener::onLowerCaseChanged
                         )
+
+                        SelectionRow(
+                            text = "Upper case",
+                            checked = upperCase,
+                            onCheckedChange = actionListener::onUpperCaseChanged
+                        )
+
+                        SelectionRow(
+                            text = "Digits",
+                            checked = digits,
+                            onCheckedChange = actionListener::onDigitsChanged
+                        )
+
+                        SelectionRow(
+                            text = "Special characters",
+                            checked = specialCharacters,
+                            onCheckedChange = actionListener::onSpecialCharactersChanged
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Row(
+                            modifier = Modifier
+                                .padding(
+                                    start = 22.dp,
+                                    end = 22.dp,
+                                    bottom = 32.dp
+                                )
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            Box(
+                                modifier = Modifier
+                                    .size(52.dp)
+                                    .clip(CircleShape)
+                                    .shadow(10.dp)
+                                    .background(color = BgBlack)
+                                    .clickWithRipple {
+                                        actionListener.onValidateAndSave()
+                                    },
+                            ) {
+                                Icon(
+                                    modifier = Modifier
+                                        .padding(all = 8.dp)
+                                        .size(40.dp),
+                                    painter = painterResource(R.drawable.icon_regenerate),
+                                    contentDescription = null,
+                                    tint = Color.White
+                                )
+                            }
+
+                            BrownieButton(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(52.dp)
+                                    .padding(start = 16.dp),
+                                text = "Copy Password",
+                                onClick = {
+                                    clipboardManager.setText(
+                                        AnnotatedString((password))
+                                    )
+                                    actionListener.onPasswordCopied()
+                                }
+                            )
+                        }
                     }
                 }
             }

@@ -10,14 +10,16 @@ import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepository
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
 import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
+import kotlinx.coroutines.CoroutineDispatcher
 
 internal class AccountRepositoryImpl(
     private val localDataSource: IAccountLocalDataSource,
     private val remoteDataSource: IAccountRemoteDataSource,
     private val accountLocalMapper: IBrownieMapper<AccountEntity, AccountBO>,
     private val accountRemoteMapper: IBrownieMapper<AccountDTO, AccountBO>,
-    private val dataProtectionService: IDataProtectionService
-): SupportRepositoryImpl(), IAccountRepository {
+    private val dataProtectionService: IDataProtectionService,
+    dispatcher: CoroutineDispatcher
+): SupportRepositoryImpl(dispatcher), IAccountRepository {
 
     override suspend fun insert(account: AccountBO): AccountBO = safeExecute {
         val accountProtected = dataProtectionService.wrap(account)
