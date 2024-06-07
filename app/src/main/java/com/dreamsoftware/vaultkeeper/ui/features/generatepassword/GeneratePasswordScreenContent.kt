@@ -3,10 +3,8 @@ package com.dreamsoftware.vaultkeeper.ui.features.generatepassword
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,11 +29,11 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
+import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
 import com.dreamsoftware.vaultkeeper.ui.features.generatepassword.components.CustomSlider
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.ui.theme.Blue
@@ -55,7 +53,8 @@ fun GeneratePasswordScreenContent(
                 screenContainerColor = primary
             ) {
                 BrownieText(
-                    modifier = Modifier.padding(top = 18.dp, bottom = 12.dp)
+                    modifier = Modifier
+                        .padding(top = 18.dp, bottom = 12.dp)
                         .align(Alignment.CenterHorizontally),
                     titleText = "Password Generator",
                     type = BrownieTextTypeEnum.TITLE_LARGE,
@@ -81,111 +80,102 @@ fun GeneratePasswordScreenContent(
                     }
                 }
 
-                SheetSurface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
+                BrownieSheetSurface(
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color.White),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                    Spacer(modifier = Modifier.height(20.dp))
+                    BrownieText(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        type = BrownieTextTypeEnum.TITLE_SMALL,
+                        textAlign = TextAlign.Center,
+                        titleText = "Options",
+                    )
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Spacer(modifier = Modifier.height(20.dp))
                         BrownieText(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            type = BrownieTextTypeEnum.TITLE_SMALL,
-                            textAlign = TextAlign.Center,
-                            titleText = "Options",
+                            type = BrownieTextTypeEnum.LABEL_LARGE,
+                            titleText = "Length",
                         )
-                        Row(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            BrownieText(
-                                type = BrownieTextTypeEnum.LABEL_LARGE,
-                                titleText = "Length",
-                            )
-                            CustomSlider(
-                                value = passwordLength.toFloat(),
-                                onValueChange = { actionListener.onPasswordLength(newLength = it.toInt())},
-                                valueRange = 6f..15f
-                            )
-                        }
-
-                        SelectionRow(
-                            text = "Lower case",
-                            checked = lowerCase,
-                            onCheckedChange = actionListener::onLowerCaseChanged
+                        CustomSlider(
+                            value = passwordLength.toFloat(),
+                            onValueChange = { actionListener.onPasswordLength(newLength = it.toInt()) },
+                            valueRange = 6f..15f
                         )
-
-                        SelectionRow(
-                            text = "Upper case",
-                            checked = upperCase,
-                            onCheckedChange = actionListener::onUpperCaseChanged
-                        )
-
-                        SelectionRow(
-                            text = "Digits",
-                            checked = digits,
-                            onCheckedChange = actionListener::onDigitsChanged
-                        )
-
-                        SelectionRow(
-                            text = "Special characters",
-                            checked = specialCharacters,
-                            onCheckedChange = actionListener::onSpecialCharactersChanged
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Row(
-                            modifier = Modifier
-                                .padding(
-                                    start = 22.dp,
-                                    end = 22.dp,
-                                    bottom = 32.dp
-                                )
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-
-                            Box(
-                                modifier = Modifier
-                                    .size(52.dp)
-                                    .clip(CircleShape)
-                                    .shadow(10.dp)
-                                    .background(color = BgBlack)
-                                    .clickWithRipple {
-                                        actionListener.onValidateAndSave()
-                                    },
-                            ) {
-                                Icon(
-                                    modifier = Modifier
-                                        .padding(all = 8.dp)
-                                        .size(40.dp),
-                                    painter = painterResource(R.drawable.icon_regenerate),
-                                    contentDescription = null,
-                                    tint = Color.White
-                                )
-                            }
-
-                            BrownieButton(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(52.dp)
-                                    .padding(start = 16.dp),
-                                text = "Copy Password",
-                                onClick = {
-                                    clipboardManager.setText(
-                                        AnnotatedString((password))
-                                    )
-                                    actionListener.onPasswordCopied()
-                                }
-                            )
-                        }
                     }
+
+                    SelectionRow(
+                        text = "Lower case",
+                        checked = lowerCase,
+                        onCheckedChange = actionListener::onLowerCaseChanged
+                    )
+
+                    SelectionRow(
+                        text = "Upper case",
+                        checked = upperCase,
+                        onCheckedChange = actionListener::onUpperCaseChanged
+                    )
+
+                    SelectionRow(
+                        text = "Digits",
+                        checked = digits,
+                        onCheckedChange = actionListener::onDigitsChanged
+                    )
+
+                    SelectionRow(
+                        text = "Special characters",
+                        checked = specialCharacters,
+                        onCheckedChange = actionListener::onSpecialCharactersChanged
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Row(
+                        modifier = Modifier
+                            .padding(
+                                start = 22.dp,
+                                end = 22.dp,
+                                bottom = 32.dp
+                            )
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Box(
+                            modifier = Modifier
+                                .size(52.dp)
+                                .clip(CircleShape)
+                                .shadow(10.dp)
+                                .background(color = BgBlack)
+                                .clickWithRipple {
+                                    actionListener.onValidateAndSave()
+                                },
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .padding(all = 8.dp)
+                                    .size(40.dp),
+                                painter = painterResource(R.drawable.icon_regenerate),
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                        }
+
+                        BrownieButton(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(52.dp)
+                                .padding(start = 16.dp),
+                            text = "Copy Password",
+                            onClick = {
+                                clipboardManager.setText(
+                                    AnnotatedString((password))
+                                )
+                                actionListener.onPasswordCopied()
+                            }
+                        )
+                    }
+
                 }
             }
         }

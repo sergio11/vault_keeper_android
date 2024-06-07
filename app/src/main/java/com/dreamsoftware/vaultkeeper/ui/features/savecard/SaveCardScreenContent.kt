@@ -2,17 +2,12 @@ package com.dreamsoftware.vaultkeeper.ui.features.savecard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,12 +37,12 @@ import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
 import com.dreamsoftware.brownie.component.BrownieImageIcon
 import com.dreamsoftware.brownie.component.BrownieImageSize
+import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.BrownieType
+import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
-import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.utils.MaskVisualTransformation
@@ -61,51 +56,39 @@ fun SaveCardScreenContent(
     actionListener: SaveCardScreenActionListener
 ) {
     with(uiState) {
-        Column(
-            modifier = Modifier
-                .background(color = BgBlack)
-        ) {
-            val focusManager = LocalFocusManager.current
-            val keyboardController = LocalSoftwareKeyboardController.current
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+        with(MaterialTheme.colorScheme) {
+            BrownieScreenContent(
+                hasTopBar = false,
+                screenContainerColor = primary
             ) {
-                Spacer(Modifier.width(16.dp))
-
-                BrownieImageIcon(
-                    modifier = Modifier.clickWithRipple {
-                        actionListener.onCancel()
-                    },
-                    type = BrownieType.ICON,
-                    size = BrownieImageSize.LARGE,
-                    iconRes = R.drawable.icon_arrow_left,
-                    tintColor = Color.White
-                )
-
-                BrownieText(
-                    modifier = Modifier.padding(
-                        top = 18.dp, bottom = 12.dp,
-                        start = 16.dp, end = 16.dp
-                    ),
-                    type = BrownieTextTypeEnum.TITLE_LARGE,
-                    titleText = if (isEditScreen) "Edit Card" else "Add New Card",
-                    textColor = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-
-            SheetSurface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-            ) {
-
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                        .fillMaxSize()
-                        .background(color = Color.White)
+                val focusManager = LocalFocusManager.current
+                val keyboardController = LocalSoftwareKeyboardController.current
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
+                    Spacer(Modifier.width(16.dp))
+                    BrownieImageIcon(
+                        modifier = Modifier.clickWithRipple {
+                            actionListener.onCancel()
+                        },
+                        type = BrownieType.ICON,
+                        size = BrownieImageSize.LARGE,
+                        iconRes = R.drawable.icon_arrow_left,
+                        tintColor = Color.White
+                    )
+                    BrownieText(
+                        modifier = Modifier.padding(
+                            top = 30.dp, bottom = 30.dp,
+                            start = 16.dp, end = 16.dp
+                        ),
+                        type = BrownieTextTypeEnum.TITLE_LARGE,
+                        titleText = if (isEditScreen) "Edit Card" else "Add New Card",
+                        textColor = onPrimary
+                    )
+                }
+
+                BrownieSheetSurface {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -231,7 +214,7 @@ fun SaveCardScreenContent(
                             .fillMaxWidth(),
                         type = BrownieButtonTypeEnum.LARGE,
                         onClick = actionListener::onSaveSecureCard,
-                        text =  if (isEditScreen) "Update Card" else "Save Card"
+                        text = if (isEditScreen) "Update Card" else "Save Card"
                     )
                 }
             }

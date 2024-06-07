@@ -5,11 +5,10 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
 import com.dreamsoftware.brownie.component.BrownieDialog
 import com.dreamsoftware.brownie.component.BrownieImageIcon
+import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.BrownieType
@@ -49,7 +49,6 @@ import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.core.components.BottomSheet
-import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.AccountPasswordRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.CardRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.ColumnProgressIndicator
@@ -67,7 +66,10 @@ fun HomeScreenContent(
             val isVisible = rememberSaveable { mutableStateOf(true) }
             val nestedScrollConnection = remember {
                 object : NestedScrollConnection {
-                    override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                    override fun onPreScroll(
+                        available: Offset,
+                        source: NestedScrollSource
+                    ): Offset {
                         // Hide FAB
                         if (available.y < -1) {
                             isVisible.value = false
@@ -131,131 +133,141 @@ fun HomeScreenContent(
                     titleText = "My Vault",
                     textColor = onPrimary
                 )
-                SheetSurface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
+                BrownieSheetSurface(
+                   verticalArrangement = Arrangement.Top
                 ) {
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color.White)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
+                        BrownieDefaultTextField(
+                            modifier = Modifier
+                                .padding(
+                                    start = 16.dp, end = 6.dp,
+                                    top = 16.dp, bottom = 8.dp
+                                )
+                                .weight(1f),
+                            labelRes = R.string.home_search_text_input_label,
+                            placeHolderRes = R.string.home_search_text_input_placeholder,
+                            value = searchQuery,
+                            onValueChanged = {
+                                if (it.length <= 25) {
+                                    actionListener.onSearchQueryUpdated(newSearchQuery = it)
+                                }
+                            },
+                            leadingIconRes = R.drawable.icon_search,
+                            isSingleLine = true,
+                        )
 
-                            BrownieDefaultTextField(
-                                modifier = Modifier
-                                    .padding(
-                                        start = 16.dp, end = 6.dp,
-                                        top = 16.dp, bottom = 8.dp
+
+                        Box(
+                            modifier = Modifier
+                                .padding(
+                                    start = 6.dp, end = 16.dp,
+                                    top = 16.dp, bottom = 8.dp
+                                )
+                                .size(54.dp)
+                                .background(primaryContainer, shape = RoundedCornerShape(16.dp))
+                                .clip(RoundedCornerShape(16.dp))
+                                .clickable {
+                                    actionListener.onFilterBottomSheetVisibilityUpdated(
+                                        isVisible = true
                                     )
-                                    .weight(1f),
-                                labelRes = R.string.home_search_text_input_label,
-                                placeHolderRes = R.string.home_search_text_input_placeholder,
-                                value = searchQuery,
-                                onValueChanged = {
-                                    if (it.length <= 25) {
-                                        actionListener.onSearchQueryUpdated(newSearchQuery = it)
-                                    }
                                 },
-                                leadingIconRes = R.drawable.icon_search,
-                                isSingleLine = true,
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(28.dp),
+                                painter = painterResource(R.drawable.icon_filter),
+                                contentDescription = "Filter Icon",
+                                tint = Color.White
                             )
+                        }
+                    }
 
-
-                            Box(
-                                modifier = Modifier
-                                    .padding(
-                                        start = 6.dp, end = 16.dp,
-                                        top = 16.dp, bottom = 8.dp
-                                    )
-                                    .size(54.dp)
-                                    .background(primaryContainer, shape = RoundedCornerShape(16.dp))
-                                    .clip(RoundedCornerShape(16.dp))
-                                    .clickable { actionListener.onFilterBottomSheetVisibilityUpdated(isVisible = true) },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(28.dp),
-                                    painter = painterResource(R.drawable.icon_filter),
-                                    contentDescription = "Filter Icon",
-                                    tint = Color.White
+                    if (showSheet) {
+                        BottomSheet(
+                            onDismiss = {
+                                actionListener.onFilterBottomSheetVisibilityUpdated(
+                                    isVisible = false
+                                )
+                            },
+                            content = {
+                                LazyColumn {
+                                    items(filterOptions.size) { option ->
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clickable {
+                                                    actionListener.onFilterOptionUpdated(
+                                                        newFilterOption = filterOptions[option]
+                                                    )
+                                                }
+                                                .padding(16.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            val isSelected = selectedOption == filterOptions[option]
+                                            val icon =
+                                                if (isSelected) R.drawable.icon_selected else R.drawable.icon_unselected
+                                            BrownieImageIcon(
+                                                type = BrownieType.ICON,
+                                                iconRes = icon
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            BrownieText(
+                                                type = BrownieTextTypeEnum.LABEL_MEDIUM,
+                                                titleText = filterOptions[option].name,
+                                                textColor = Color.Black
+                                            )
+                                        }
+                                    }
+                                }
+                                Spacer(modifier = Modifier.navigationBarsPadding())
+                                Spacer(
+                                    modifier = Modifier
+                                        .height(50.dp)
+                                        .fillMaxWidth()
+                                        .background(color = BgBlack)
                                 )
                             }
-                        }
+                        )
+                    }
+                    if (isLoading) {
+                        ColumnProgressIndicator()
+                    } else if (credentials.isEmpty()) {
+                        EmptyListPlaceholder(
+                            isSearch = searchQuery.isNotEmpty(),
+                            selectedOption = selectedOption
+                        )
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(
+                                    start = 8.dp, end = 8.dp,
+                                    top = 8.dp, bottom = 0.dp
+                                )
+                                .nestedScroll(nestedScrollConnection),
+                        ) {
 
-                        if (showSheet) {
-                            BottomSheet(
-                                onDismiss = { actionListener.onFilterBottomSheetVisibilityUpdated(isVisible = false) },
-                                content = {
-                                    LazyColumn {
-                                        items(filterOptions.size) { option ->
-                                            Row(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .clickable {
-                                                        actionListener.onFilterOptionUpdated(
-                                                            newFilterOption = filterOptions[option]
-                                                        )
-                                                    }
-                                                    .padding(16.dp),
-                                                verticalAlignment = Alignment.CenterVertically
-                                            ) {
-                                                val isSelected = selectedOption == filterOptions[option]
-                                                val icon =
-                                                    if (isSelected) R.drawable.icon_selected else R.drawable.icon_unselected
-                                                BrownieImageIcon(type = BrownieType.ICON, iconRes = icon)
-                                                Spacer(modifier = Modifier.width(8.dp))
-                                                BrownieText(
-                                                    type = BrownieTextTypeEnum.LABEL_MEDIUM,
-                                                    titleText = filterOptions[option].name,
-                                                    textColor = Color.Black
-                                                )
-                                            }
+                            items(credentials.size) { idx ->
+                                when (val credential = credentials[idx]) {
+                                    is AccountBO -> {
+                                        if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.PASSWORDS) {
+                                            AccountPasswordRow(
+                                                account = credential,
+                                                actionListener = actionListener
+                                            )
                                         }
                                     }
-                                    Spacer(modifier = Modifier.navigationBarsPadding())
-                                    Spacer(
-                                        modifier = Modifier
-                                            .height(50.dp)
-                                            .fillMaxWidth()
-                                            .background(color = BgBlack)
-                                    )
-                                }
-                            )
-                        }
-                        if (isLoading) {
-                            ColumnProgressIndicator()
-                        } else if (credentials.isEmpty()) {
-                            EmptyListPlaceholder(isSearch = searchQuery.isNotEmpty(), selectedOption = selectedOption)
-                        } else {
-                            LazyColumn(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(
-                                        start = 8.dp, end = 8.dp,
-                                        top = 8.dp, bottom = 0.dp
-                                    )
-                                    .nestedScroll(nestedScrollConnection),
-                            ) {
 
-                                items(credentials.size) { idx ->
-                                    when (val credential = credentials[idx]) {
-                                        is AccountBO -> {
-                                            if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.PASSWORDS) {
-                                                AccountPasswordRow(account = credential, actionListener = actionListener)
-                                            }
-                                        }
-
-                                        is SecureCardBO -> {
-                                            if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.CARDS) {
-                                                CardRow(card = credential, actionListener = actionListener)
-                                            }
+                                    is SecureCardBO -> {
+                                        if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.CARDS) {
+                                            CardRow(
+                                                card = credential,
+                                                actionListener = actionListener
+                                            )
                                         }
                                     }
                                 }

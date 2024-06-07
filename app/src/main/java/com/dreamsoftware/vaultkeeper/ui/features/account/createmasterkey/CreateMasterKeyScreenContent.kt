@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,12 +20,12 @@ import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieLoadingDialog
+import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextFieldPassword
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.core.components.SheetSurface
 
 @Composable
 fun CreateMasterKeyScreenContent(
@@ -103,79 +100,68 @@ private fun CreateMasterKeySheetContent(
                     .align(Alignment.BottomCenter)
             ) {
 
-                SheetSurface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
-                ) {
-                    Column(
+                BrownieSheetSurface {
+                    val keyboard = LocalSoftwareKeyboardController.current
+
+                    BrownieText(
                         modifier = Modifier
-                            .verticalScroll(rememberScrollState()),
-                        verticalArrangement = Arrangement.Center
-                    ) {
+                            .padding(top = 16.dp, bottom = 6.dp)
+                            .fillMaxWidth(),
+                        type = BrownieTextTypeEnum.TITLE_MEDIUM,
+                        titleRes = R.string.setup_master_key,
+                        textAlign = TextAlign.Center
+                    )
 
-                        val keyboard = LocalSoftwareKeyboardController.current
-
-                        BrownieText(
-                            modifier = Modifier
-                                .padding(top = 16.dp, bottom = 6.dp)
-                                .fillMaxWidth(),
-                            type = BrownieTextTypeEnum.TITLE_MEDIUM,
-                            titleRes = R.string.setup_master_key,
-                            textAlign = TextAlign.Center
-                        )
-
-                        BrownieTextFieldPassword(
-                            modifier = Modifier
-                                .padding(top = 6.dp, start = 16.dp, end = 16.dp)
-                                .fillMaxWidth(),
-                            labelRes = R.string.create_master_key_label,
-                            placeHolderRes = R.string.create_master_key_placeholder,
-                            value = masterKey,
-                            onValueChanged = {
-                                if (it.length <= 8) {
-                                    actionListener.onMaterKeyUpdated(newMasterKey = it)
-                                }
-                            },
-                            leadingIconRes = R.drawable.icon_lock,
-                            supportingText = {
-                                "${masterKey.length}/8"
+                    BrownieTextFieldPassword(
+                        modifier = Modifier
+                            .padding(top = 6.dp, start = 16.dp, end = 16.dp)
+                            .fillMaxWidth(),
+                        labelRes = R.string.create_master_key_label,
+                        placeHolderRes = R.string.create_master_key_placeholder,
+                        value = masterKey,
+                        onValueChanged = {
+                            if (it.length <= 8) {
+                                actionListener.onMaterKeyUpdated(newMasterKey = it)
                             }
-                        )
+                        },
+                        leadingIconRes = R.drawable.icon_lock,
+                        supportingText = {
+                            "${masterKey.length}/8"
+                        }
+                    )
 
-                        Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
-                        BrownieTextFieldPassword(
-                            modifier = Modifier
-                                .padding(top = 6.dp, start = 16.dp, end = 16.dp)
-                                .fillMaxWidth(),
-                            labelRes = R.string.create_master_confirm_key_label,
-                            placeHolderRes = R.string.create_master_confirm_key_placeholder,
-                            value = confirmMasterKey,
-                            onValueChanged = {
-                                if (it.length <= 8) {
-                                    actionListener.onRepeatMasterKeyUpdated(newRepeatMasterKey = it)
-                                }
-                            },
-                            leadingIconRes = R.drawable.icon_lock,
-                            supportingText = {
-                                "${confirmMasterKey.length}/8"
-                            },
-                            onDone = {
-                                keyboard?.hide()
-                                actionListener.onSave()
+                    BrownieTextFieldPassword(
+                        modifier = Modifier
+                            .padding(top = 6.dp, start = 16.dp, end = 16.dp)
+                            .fillMaxWidth(),
+                        labelRes = R.string.create_master_confirm_key_label,
+                        placeHolderRes = R.string.create_master_confirm_key_placeholder,
+                        value = confirmMasterKey,
+                        onValueChanged = {
+                            if (it.length <= 8) {
+                                actionListener.onRepeatMasterKeyUpdated(newRepeatMasterKey = it)
                             }
-                        )
-
-                        BrownieButton(
-                            modifier = Modifier
-                                .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
-                                .fillMaxWidth(),
-                            type = BrownieButtonTypeEnum.LARGE,
-                            text = "Save Master Key"
-                        ) {
+                        },
+                        leadingIconRes = R.drawable.icon_lock,
+                        supportingText = {
+                            "${confirmMasterKey.length}/8"
+                        },
+                        onDone = {
+                            keyboard?.hide()
                             actionListener.onSave()
                         }
+                    )
+
+                    BrownieButton(
+                        modifier = Modifier
+                            .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .fillMaxWidth(),
+                        type = BrownieButtonTypeEnum.LARGE,
+                        text = "Save Master Key"
+                    ) {
+                        actionListener.onSave()
                     }
                 }
             }
