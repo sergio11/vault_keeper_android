@@ -1,7 +1,5 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.signin
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -30,50 +28,56 @@ fun SignInScreenContent(
             errorMessage = error,
             screenBackgroundRes = R.drawable.main_background) {
             BrownieText(
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp),
+                modifier = Modifier
+                    .padding(top = 16.dp, bottom = 6.dp)
+                    .fillMaxWidth(),
                 type = BrownieTextTypeEnum.TITLE_LARGE,
                 titleRes = R.string.onboarding_subtitle_text,
                 textAlign = TextAlign.Center,
                 textBold = true
             )
             BrownieText(
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp),
+                modifier = Modifier
+                    .padding(top = 16.dp, bottom = 6.dp)
+                    .fillMaxWidth(),
                 type = BrownieTextTypeEnum.TITLE_MEDIUM,
                 titleRes = R.string.signin_secondary_title_text,
                 textAlign = TextAlign.Center
             )
-            Column(
-                modifier = Modifier.padding(horizontal = 20.dp)
-            ) {
-                BrownieDefaultTextField(
-                    labelRes = R.string.signin_input_email_label,
-                    placeHolderRes = R.string.signin_input_email_placeholder,
-                    keyboardType = KeyboardType.Email,
-                    value = email,
-                    isSingleLine = true,
-                    enableTextFieldSeparator = true,
-                    errorMessage = emailError,
-                    leadingIconRes = R.drawable.icon_username,
-                    onValueChanged = actionsListener::onEmailChanged
-                )
-                BrownieTextFieldPassword(
-                    labelRes = R.string.signin_input_password_label,
-                    placeHolderRes = R.string.signin_input_password_placeholder,
-                    value = password,
-                    errorMessage = passwordError,
-                    enableTextFieldSeparator = true,
-                    leadingIconRes = R.drawable.icon_secret,
-                    onValueChanged = actionsListener::onPasswordChanged
-                )
-            }
-            Spacer(modifier = Modifier.padding(bottom = 20.dp))
+            BrownieDefaultTextField(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 10.dp)
+                    .fillMaxWidth(),
+                labelRes = R.string.signin_input_email_label,
+                placeHolderRes = R.string.signin_input_email_placeholder,
+                keyboardType = KeyboardType.Email,
+                value = email,
+                isSingleLine = true,
+                enableTextFieldSeparator = true,
+                errorMessage = emailError,
+                leadingIconRes = R.drawable.icon_username,
+                onValueChanged = actionsListener::onEmailChanged
+            )
+            BrownieTextFieldPassword(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 10.dp)
+                    .fillMaxWidth(),
+                labelRes = R.string.signin_input_password_label,
+                placeHolderRes = R.string.signin_input_password_placeholder,
+                value = password,
+                errorMessage = passwordError,
+                enableTextFieldSeparator = true,
+                leadingIconRes = R.drawable.icon_secret,
+                onValueChanged = actionsListener::onPasswordChanged
+            )
             BrownieButton(
-                modifier = Modifier.fillMaxWidth(0.8f),
+                modifier  = Modifier
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .fillMaxWidth(),
                 textRes = R.string.signin_login_button_text,
                 type = BrownieButtonTypeEnum.LARGE,
                 onClick = actionsListener::onSignIn
             )
-            Spacer(modifier = Modifier.padding(bottom = 10.dp))
         }
     }
 }

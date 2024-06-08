@@ -38,7 +38,7 @@ fun OnboardingScreenContent(
             titleRes = R.string.onboarding_description_text,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.padding(bottom = 10.dp))
         BrownieButton(
             modifier = Modifier.fillMaxWidth(0.8f),
             textRes = R.string.onboarding_login_button_text,
@@ -53,5 +53,6 @@ fun OnboardingScreenContent(
             style = BrownieButtonStyleTypeEnum.INVERSE,
             onClick = actionListener::onNavigateToSignUp
         )
+        Spacer(modifier = Modifier.padding(bottom = 20.dp))
     }
 }

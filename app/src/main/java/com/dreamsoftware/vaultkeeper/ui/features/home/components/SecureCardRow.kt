@@ -1,26 +1,19 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home.components
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,9 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
@@ -40,6 +31,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dreamsoftware.brownie.component.BrownieCardRow
 import com.dreamsoftware.brownie.component.BrownieImageIcon
 import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieText
@@ -184,49 +176,6 @@ fun SecureCardRow(
                     }
                 }
             }
-        }
-    }
-}
-
-
-@Composable
-fun BrownieCardRow(
-    modifier: Modifier = Modifier,
-    contentBrush: Brush? = null,
-    contentColor: Color? = null,
-    shape: Shape = RoundedCornerShape(27.dp),
-    border: BorderStroke = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-    content: @Composable RowScope.() -> Unit
-) {
-    OutlinedCard(
-        modifier = Modifier
-            .padding(8.dp)
-            .then(modifier),
-        colors = CardDefaults.outlinedCardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-        ),
-        shape = shape,
-        border = border
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .let { modifier ->
-                    contentBrush?.let {
-                        modifier.then(Modifier.background(it))
-                    } ?: contentColor?.let {
-                        modifier.then(Modifier.background(it))
-                    } ?: modifier
-                }
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(vertical = 10.dp, horizontal = 10.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                content = content
-            )
         }
     }
 }

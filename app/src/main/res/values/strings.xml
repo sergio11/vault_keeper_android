@@ -30,7 +30,7 @@
     <string name="onboarding_signup_button_text">Join Us!</string>
 
     <!-- Sign in screen -->
-    <string name="signin_main_title_text">Welcome Back!</string>
+    <string name="signin_main_title_text">Welcome Back!&#10;Secure Your Digital Life with Ease</string>
     <string name="signin_secondary_title_text">Glad to see you again!</string>
     <string name="signin_input_email_label">Email Address</string>
     <string name="signin_input_email_placeholder">Enter your email here</string>
@@ -39,7 +39,7 @@
     <string name="signin_login_button_text">Sign In</string>
 
     <!-- Sign up screen -->
-    <string name="signup_main_title_text">Let\'s Get Started!</string>
+    <string name="signup_main_title_text">Create Your Account Now!&#10;Join VaultKeeper Today!</string>
     <string name="signup_secondary_title_text">Join the VaultKeeper community</string>
     <string name="signup_input_email_label">Your Email</string>
     <string name="signup_input_email_placeholder">Enter your email address</string>
