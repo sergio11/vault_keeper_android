@@ -50,6 +50,7 @@ fun GeneratePasswordScreenContent(
         with(MaterialTheme.colorScheme) {
             BrownieScreenContent(
                 hasTopBar = false,
+                enableVerticalScroll = true,
                 screenContainerColor = primary
             ) {
                 BrownieText(
@@ -81,6 +82,7 @@ fun GeneratePasswordScreenContent(
                 }
 
                 BrownieSheetSurface(
+                    enableVerticalScroll = false,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Spacer(modifier = Modifier.height(20.dp))

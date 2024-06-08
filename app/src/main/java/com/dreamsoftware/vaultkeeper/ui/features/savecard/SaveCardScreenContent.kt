@@ -59,6 +59,7 @@ fun SaveCardScreenContent(
         with(MaterialTheme.colorScheme) {
             BrownieScreenContent(
                 hasTopBar = false,
+                enableVerticalScroll = true,
                 screenContainerColor = primary
             ) {
                 val focusManager = LocalFocusManager.current
@@ -88,7 +89,7 @@ fun SaveCardScreenContent(
                     )
                 }
 
-                BrownieSheetSurface {
+                BrownieSheetSurface(enableVerticalScroll = false) {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -192,7 +193,7 @@ fun SaveCardScreenContent(
                                 "${cardCVV.length}/3"
                             },
                             isSingleLine = true,
-                            leadingIconRes = R.drawable.icon_cvv,
+                            leadingIconRes = R.drawable.icon_secret,
                             keyboardType = KeyboardType.Number,
                             onValueChanged = {
                                 if (it.length <= 3) {

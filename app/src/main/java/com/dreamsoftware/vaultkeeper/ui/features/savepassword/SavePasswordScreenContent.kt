@@ -42,6 +42,7 @@ fun SavePasswordScreenContent(
         with(MaterialTheme.colorScheme) {
             BrownieScreenContent(
                 hasTopBar = false,
+                enableVerticalScroll = true,
                 screenContainerColor = primary
             ) {
                 Row(
@@ -70,7 +71,7 @@ fun SavePasswordScreenContent(
                     )
                 }
 
-                BrownieSheetSurface {
+                BrownieSheetSurface(enableVerticalScroll = false) {
                     SearchOutlinedTextFieldWithDropdown(
                         uiState = uiState,
                         actionListener = actionListener

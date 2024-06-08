@@ -57,7 +57,9 @@ data class SignInUiState(
     override val isLoading: Boolean = false,
     override val error: String? = null,
     val email: String = String.EMPTY,
-    val password: String = String.EMPTY
+    val emailError: String? = null,
+    val password: String = String.EMPTY,
+    val passwordError: String? = null,
 ): UiState<SignInUiState>(isLoading, error) {
     override fun copyState(isLoading: Boolean, error: String?): SignInUiState =
         copy(isLoading = isLoading, error = error)

@@ -1,5 +1,6 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.signin
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -41,19 +42,30 @@ fun SignInScreenContent(
                 titleRes = R.string.signin_secondary_title_text,
                 textAlign = TextAlign.Center
             )
-            BrownieDefaultTextField(
-                labelRes = R.string.signin_input_email_label,
-                placeHolderRes = R.string.signin_input_email_placeholder,
-                keyboardType = KeyboardType.Email,
-                value = email,
-                onValueChanged = actionsListener::onEmailChanged
-            )
-            BrownieTextFieldPassword(
-                labelRes = R.string.signin_input_password_label,
-                placeHolderRes = R.string.signin_input_password_placeholder,
-                value = password,
-                onValueChanged = actionsListener::onPasswordChanged
-            )
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp)
+            ) {
+                BrownieDefaultTextField(
+                    labelRes = R.string.signin_input_email_label,
+                    placeHolderRes = R.string.signin_input_email_placeholder,
+                    keyboardType = KeyboardType.Email,
+                    value = email,
+                    isSingleLine = true,
+                    enableTextFieldSeparator = true,
+                    errorMessage = emailError,
+                    leadingIconRes = R.drawable.icon_username,
+                    onValueChanged = actionsListener::onEmailChanged
+                )
+                BrownieTextFieldPassword(
+                    labelRes = R.string.signin_input_password_label,
+                    placeHolderRes = R.string.signin_input_password_placeholder,
+                    value = password,
+                    errorMessage = passwordError,
+                    enableTextFieldSeparator = true,
+                    leadingIconRes = R.drawable.icon_secret,
+                    onValueChanged = actionsListener::onPasswordChanged
+                )
+            }
             Spacer(modifier = Modifier.padding(bottom = 20.dp))
             BrownieButton(
                 modifier = Modifier.fillMaxWidth(0.8f),

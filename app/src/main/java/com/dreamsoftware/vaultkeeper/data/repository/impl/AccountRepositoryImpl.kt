@@ -55,7 +55,9 @@ internal class AccountRepositoryImpl(
                     localDataSource
                         .insert(accountLocalMapper.mapOutToIn(it))
                 }
-        }.map { dataProtectionService.unwrap(it) }
+        }.map {
+            dataProtectionService.unwrap(it)
+        }
     }
 
     override suspend fun findById(userUid: String, accountUid: String): AccountBO = safeExecute {

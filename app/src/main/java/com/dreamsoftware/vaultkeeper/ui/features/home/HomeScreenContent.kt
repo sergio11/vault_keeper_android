@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -53,7 +54,6 @@ import com.dreamsoftware.vaultkeeper.ui.features.home.components.AccountPassword
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.CardRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.ColumnProgressIndicator
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.EmptyListPlaceholder
-import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 
 @Composable
 fun HomeScreenContent(
@@ -134,20 +134,22 @@ fun HomeScreenContent(
                     textColor = onPrimary
                 )
                 BrownieSheetSurface(
-                   verticalArrangement = Arrangement.Top
+                    enableVerticalScroll = false,
+                    verticalArrangement = Arrangement.Top
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
                         BrownieDefaultTextField(
                             modifier = Modifier
                                 .padding(
                                     start = 16.dp, end = 6.dp,
                                     top = 16.dp, bottom = 8.dp
                                 )
-                                .weight(1f),
+                                .fillMaxWidth(0.8f),
                             labelRes = R.string.home_search_text_input_label,
                             placeHolderRes = R.string.home_search_text_input_placeholder,
                             value = searchQuery,
@@ -228,7 +230,7 @@ fun HomeScreenContent(
                                     modifier = Modifier
                                         .height(50.dp)
                                         .fillMaxWidth()
-                                        .background(color = BgBlack)
+                                        .background(color = Color.White)
                                 )
                             }
                         )
