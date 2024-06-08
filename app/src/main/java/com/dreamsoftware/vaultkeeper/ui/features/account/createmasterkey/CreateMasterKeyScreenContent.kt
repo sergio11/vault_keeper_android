@@ -40,7 +40,7 @@ fun CreateMasterKeyScreenContent(
             descriptionRes = R.string.loading_dialog_description_text
         )
         BrownieScreenContent(
-            enableVerticalScroll = false,
+            enableVerticalScroll = true,
             hasTopBar = false,
             errorMessage = error,
             backgroundRes = R.drawable.main_background
@@ -60,19 +60,12 @@ fun CreateMasterKeyScreenContent(
                         .padding(horizontal = 32.dp, vertical = 10.dp)
                 )
                 BrownieText(
-                    modifier = Modifier
-                        .padding(start = 16.dp, end = 32.dp),
-                    textColor = MaterialTheme.colorScheme.onPrimary,
-                    type = BrownieTextTypeEnum.HEADLINE_MEDIUM,
-                    titleRes = R.string.setup_key_tagline_1
-                )
-                BrownieText(
-                    modifier = Modifier
-                        .padding(top = 6.dp, start = 16.dp, end = 16.dp)
+                    modifier  = Modifier
+                        .padding(start = 16.dp, end = 32.dp)
                         .fillMaxWidth(),
-                    type = BrownieTextTypeEnum.BODY_LARGE,
+                    type = BrownieTextTypeEnum.HEADLINE_SMALL,
+                    textColor = MaterialTheme.colorScheme.onPrimary,
                     titleRes = R.string.setup_key_tagline_2,
-                    textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 CreateMasterKeySheetContent(
@@ -100,7 +93,9 @@ private fun CreateMasterKeySheetContent(
                     .align(Alignment.BottomCenter)
             ) {
 
-                BrownieSheetSurface {
+                BrownieSheetSurface(
+                    enableVerticalScroll = false
+                ) {
                     val keyboard = LocalSoftwareKeyboardController.current
 
                     BrownieText(

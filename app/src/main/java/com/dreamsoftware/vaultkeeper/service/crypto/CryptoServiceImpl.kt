@@ -12,13 +12,13 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 
-internal class CryptoServiceImpl: ICryptoService {
+internal class CryptoServiceImpl : ICryptoService {
 
     private companion object {
         const val SECRET_KEY_ALGORITHM = "PBKDF2WithHmacSHA256"
         const val TRANSFORMATION = "AES/CFB/PKCS5Padding"
         const val ALGORITHM = "AES"
-        const val ITERATION_COUNT = 65536
+        const val ITERATION_COUNT = 10000 // Reduce iteration count for performance
         const val KEY_LENGTH = 256
         const val IV_SIZE = 16
     }
@@ -26,6 +26,9 @@ internal class CryptoServiceImpl: ICryptoService {
     private val charset by lazy {
         charset("UTF-8")
     }
+
+    // Cache for derived keys to improve performance
+    private val keyCache = mutableMapOf<Pair<String, String>, SecretKey>()
 
     /**
      * Encrypt And Encode as Base64
@@ -51,11 +54,15 @@ internal class CryptoServiceImpl: ICryptoService {
 
     @Throws(NoSuchAlgorithmException::class, InvalidKeySpecException::class)
     private fun getKeyFromPassword(password: String, salt: String): SecretKey {
-        val factory = SecretKeyFactory.getInstance(SECRET_KEY_ALGORITHM)
-        val spec = PBEKeySpec(password.toCharArray(), salt.toByteArray(), ITERATION_COUNT, KEY_LENGTH)
-        return SecretKeySpec(factory.generateSecret(spec).encoded, ALGORITHM)
+        val cacheKey = password to salt
+        return keyCache[cacheKey] ?: run {
+            val factory = SecretKeyFactory.getInstance(SECRET_KEY_ALGORITHM)
+            val spec = PBEKeySpec(password.toCharArray(), salt.toByteArray(), ITERATION_COUNT, KEY_LENGTH)
+            val secretKey = SecretKeySpec(factory.generateSecret(spec).encoded, ALGORITHM)
+            keyCache[cacheKey] = secretKey
+            secretKey
+        }
     }
-
 
     /**
      * Encrypt data
@@ -65,8 +72,9 @@ internal class CryptoServiceImpl: ICryptoService {
      */
     private fun encrypt(password: String, salt: String, data: ByteArray): ByteArray {
         val cipher = getCipher(Cipher.ENCRYPT_MODE, password, salt)
+        val iv = cipher.iv
         val encrypted = cipher.doFinal(data)
-        return encrypted + cipher.iv
+        return iv + encrypted // Prepend IV to encrypted data
     }
 
     /**
@@ -76,8 +84,8 @@ internal class CryptoServiceImpl: ICryptoService {
      * @param data
      */
     private fun decrypt(password: String, salt: String, data: ByteArray): ByteArray {
-        val encryptedData = data.sliceArray(0 until data.count()-IV_SIZE)
-        val iv = data.sliceArray((data.count()-IV_SIZE) until data.count())
+        val iv = data.sliceArray(0 until IV_SIZE)
+        val encryptedData = data.sliceArray(IV_SIZE until data.size)
         val cipher = getCipher(Cipher.DECRYPT_MODE, password, salt, IvParameterSpec(iv))
         return cipher.doFinal(encryptedData)
     }
@@ -89,7 +97,7 @@ internal class CryptoServiceImpl: ICryptoService {
      * @param salt
      * @param params
      */
-    private fun getCipher(mode: Int, password: String, salt: String, params: AlgorithmParameterSpec? = null): Cipher=
+    private fun getCipher(mode: Int, password: String, salt: String, params: AlgorithmParameterSpec? = null): Cipher =
         Cipher.getInstance(TRANSFORMATION).also {
             it.init(mode, getKeyFromPassword(password, salt), params)
         }

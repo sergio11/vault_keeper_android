@@ -22,7 +22,7 @@ internal class AccountsRemoteDataSourceImpl(
 ) : IAccountRemoteDataSource {
 
     private companion object {
-        const val COLLECTION_NAME = "users"
+        const val COLLECTION_NAME = "vault"
         const val SUB_COLLECTION_NAME = "accounts"
     }
 

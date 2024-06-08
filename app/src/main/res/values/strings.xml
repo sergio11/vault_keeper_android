@@ -43,9 +43,9 @@
     <string name="signup_secondary_title_text">Join the VaultKeeper community</string>
     <string name="signup_input_email_label">Your Email</string>
     <string name="signup_input_email_placeholder">Enter your email address</string>
-    <string name="signup_input_password_label">Create Password</string>
+    <string name="signup_input_password_label">Password</string>
     <string name="signup_input_password_placeholder">Choose a secure password</string>
-    <string name="signup_input_confirm_password_label">Create Password</string>
+    <string name="signup_input_confirm_password_label">Confirm Password</string>
     <string name="signup_input_confirm_password_placeholder">Choose a secure password</string>
     <string name="signup_signup_button_text">Sign Up Now!</string>
     <string name="signup_already_has_account_text">Already have an account?</string>

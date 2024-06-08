@@ -72,7 +72,7 @@ internal class SecureCardValidatorImpl(
     private fun validateExpiryDate(cardExpiryDate: String): Boolean {
         val currentDate = YearMonth.now()
         val expiryDate: YearMonth = try {
-            YearMonth.parse(cardExpiryDate, DateTimeFormatter.ofPattern("MM/yy"))
+            YearMonth.parse(cardExpiryDate, DateTimeFormatter.ofPattern("MMyy"))
         } catch (e: DateTimeParseException) {
             return false
         }
