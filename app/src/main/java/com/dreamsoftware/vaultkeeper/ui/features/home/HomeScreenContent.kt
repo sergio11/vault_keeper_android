@@ -51,7 +51,7 @@ import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.AccountPasswordRow
-import com.dreamsoftware.vaultkeeper.ui.features.home.components.CardRow
+import com.dreamsoftware.vaultkeeper.ui.features.home.components.SecureCardRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.ColumnProgressIndicator
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.EmptyListPlaceholder
 
@@ -266,7 +266,7 @@ fun HomeScreenContent(
 
                                     is SecureCardBO -> {
                                         if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.CARDS) {
-                                            CardRow(
+                                            SecureCardRow(
                                                 card = credential,
                                                 actionListener = actionListener
                                             )

@@ -62,3 +62,5 @@ fun String.formatExpiryDate(): String {
     }
     return out
 }
+
+fun String.obfuscateSecret(takeLast: Int) = takeLast(takeLast).padStart(length, '*')

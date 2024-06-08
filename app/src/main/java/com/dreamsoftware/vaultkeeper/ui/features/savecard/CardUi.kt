@@ -16,7 +16,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -24,7 +23,7 @@ import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.vaultkeeper.ui.utils.formatCardNumber
 import com.dreamsoftware.vaultkeeper.ui.utils.formatExpiryDate
-import com.dreamsoftware.vaultkeeper.utils.randomGradient
+import com.dreamsoftware.vaultkeeper.utils.generateRandomBrush
 
 @Composable
 fun CardUi(
@@ -52,9 +51,7 @@ fun CardUi(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(randomGradient)
-                    )
+                    .background(generateRandomBrush())
             ) {
                 BrownieText(
                     modifier = Modifier

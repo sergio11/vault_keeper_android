@@ -1,18 +1,26 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home.components
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Card
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,41 +29,40 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dreamsoftware.brownie.component.BrownieImageIcon
+import com.dreamsoftware.brownie.component.BrownieImageSize
+import com.dreamsoftware.brownie.component.BrownieText
+import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreenActionListener
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
+import com.dreamsoftware.vaultkeeper.ui.utils.obfuscateSecret
 import com.dreamsoftware.vaultkeeper.utils.cardSuggestions
+import com.dreamsoftware.vaultkeeper.utils.generateRandomBrush
 
 @Composable
-fun CardRow(
+fun SecureCardRow(
     card: SecureCardBO,
     actionListener: HomeScreenActionListener
 ) {
-    Card(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
 
+    with(MaterialTheme.colorScheme) {
         var expanded by remember { mutableStateOf(false) }
+
+        val contentBrush by remember { mutableStateOf(generateRandomBrush()) }
 
         val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
@@ -70,91 +77,54 @@ fun CardRow(
             Color.Unspecified
         }
 
-        val cardNumber = card.cardNumber.takeLast(4).padStart(card.cardNumber.length, '*')
+        BrownieCardRow(contentBrush = contentBrush) {
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = 16.dp, end = 12.dp,
-                    top = 12.dp, bottom = 12.dp
-                )
-        ) {
-
-            Icon(
-                painter = painterResource(painter),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(32.dp),
-                tint = tint
+            BrownieImageIcon(
+                iconRes = painter,
+                size = BrownieImageSize.LARGE,
+                tintColor = tint
             )
 
             Column(
                 modifier = Modifier
-                    .padding(start = 14.dp)
-                    .weight(1f)
+                    .padding(horizontal = 10.dp)
+                    .weight(1f),
+                verticalArrangement = Arrangement.Center
             ) {
 
-                Text(
-                    text = card.cardHolderName,
-                    color = Color.Black,
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = poppinsFamily,
-                        fontWeight = FontWeight.Bold
-                    )
+                BrownieText(
+                    type = BrownieTextTypeEnum.TITLE_MEDIUM,
+                    titleText = card.cardHolderName,
+                    textBold = true,
+                    textColor = onPrimary
                 )
 
-                Text(
-                    text = cardNumber,
-                    color = Color.Gray,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = poppinsFamily,
-                        fontWeight = FontWeight.Normal
-                    )
+                BrownieText(
+                    type = BrownieTextTypeEnum.BODY_LARGE,
+                    titleText = card.cardNumber.obfuscateSecret(4),
+                    singleLine = true,
+                    textColor = onPrimary
                 )
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                IconButton(
-                    onClick = {
-                        clipboardManager.setText(
-                            AnnotatedString(card.cardNumber)
-                        )
-                        //viewModel.showCopyMsg(stringType = "Card Number")
-                    },
-                    modifier = Modifier.size(32.dp)
+                BrownieIconButton(
+                    iconRes = R.drawable.icon_copy,
+                    containerColor = Color.Transparent
                 ) {
-                    Icon(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .padding(end = 6.dp),
-                        painter = painterResource(R.drawable.icon_copy),
-                        contentDescription = "Copy Icon"
-                    )
+                    clipboardManager.setText(AnnotatedString(card.cardNumber))
+                    //viewModel.showCopyMsg(stringType = "Card Number")
                 }
 
                 Box {
-                    IconButton(
-                        modifier = Modifier
-                            .size(26.dp)
-                            .padding(end = 4.dp),
-                        onClick = {
-                            expanded = true
-                        }
+
+                    BrownieIconButton(
+                        iconRes = R.drawable.icon_more,
+                        containerColor = Color.Transparent
                     ) {
-                        Icon(
-                            modifier = Modifier
-                                .size(26.dp),
-                            painter = painterResource(R.drawable.icon_more),
-                            contentDescription = "Options Icon"
-                        )
+                        expanded = true
                     }
 
                     DropdownMenu(
@@ -215,5 +185,76 @@ fun CardRow(
                 }
             }
         }
+    }
+}
+
+
+@Composable
+fun BrownieCardRow(
+    modifier: Modifier = Modifier,
+    contentBrush: Brush? = null,
+    contentColor: Color? = null,
+    shape: Shape = RoundedCornerShape(27.dp),
+    border: BorderStroke = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+    content: @Composable RowScope.() -> Unit
+) {
+    OutlinedCard(
+        modifier = Modifier
+            .padding(8.dp)
+            .then(modifier),
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        ),
+        shape = shape,
+        border = border
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .let { modifier ->
+                    contentBrush?.let {
+                        modifier.then(Modifier.background(it))
+                    } ?: contentColor?.let {
+                        modifier.then(Modifier.background(it))
+                    } ?: modifier
+                }
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(vertical = 20.dp, horizontal = 10.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                content = content
+            )
+        }
+    }
+}
+
+
+@Composable
+fun BrownieIconButton(
+    @DrawableRes iconRes: Int,
+    isEnabled: Boolean = true,
+    iconTintColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+    containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
+    onClicked: () -> Unit = {}
+) {
+    IconButton(
+        modifier = Modifier
+            .size(28.dp),
+        enabled = isEnabled,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = containerColor
+        ),
+        onClick = onClicked
+    ) {
+        Icon(
+            modifier = Modifier
+                .size(28.dp),
+            painter = painterResource(iconRes),
+            contentDescription = "Copy Icon",
+            tint = iconTintColor
+        )
     }
 }
