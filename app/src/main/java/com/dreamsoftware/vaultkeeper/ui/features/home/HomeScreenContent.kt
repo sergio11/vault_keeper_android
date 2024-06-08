@@ -3,6 +3,7 @@ package com.dreamsoftware.vaultkeeper.ui.features.home
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -51,9 +52,9 @@ import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.AccountPasswordRow
-import com.dreamsoftware.vaultkeeper.ui.features.home.components.SecureCardRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.ColumnProgressIndicator
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.EmptyListPlaceholder
+import com.dreamsoftware.vaultkeeper.ui.features.home.components.SecureCardRow
 
 @Composable
 fun HomeScreenContent(
@@ -93,7 +94,7 @@ fun HomeScreenContent(
                 cancelRes = R.string.delete_card_dialog_cancel,
                 acceptRes = R.string.delete_card_dialog_accept,
                 onCancelClicked = actionListener::onDeleteSecureCardCancelled,
-                onAcceptClicked = actionListener::onDeleteAccountConfirmed
+                onAcceptClicked = actionListener::onDeleteSecureCardConfirmed
             )
 
             BrownieDialog(
@@ -125,13 +126,14 @@ fun HomeScreenContent(
                     }
                 }
             ) {
-                BrownieText(
+
+                Image(
+                    painter = painterResource(id = R.drawable.main_logo),
+                    contentDescription = "",
                     modifier = Modifier
-                        .padding(top = 18.dp, bottom = 12.dp)
-                        .align(Alignment.CenterHorizontally),
-                    type = BrownieTextTypeEnum.TITLE_LARGE,
-                    titleText = "My Vault",
-                    textColor = onPrimary
+                        .padding(vertical = 10.dp)
+                        .height(60.dp)
+                        .align(Alignment.CenterHorizontally)
                 )
                 BrownieSheetSurface(
                     enableVerticalScroll = false,

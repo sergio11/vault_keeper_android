@@ -222,7 +222,7 @@ fun BrownieCardRow(
         ) {
             Row(
                 modifier = Modifier
-                    .padding(vertical = 20.dp, horizontal = 10.dp)
+                    .padding(vertical = 10.dp, horizontal = 10.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 content = content
@@ -251,7 +251,7 @@ fun BrownieIconButton(
     ) {
         Icon(
             modifier = Modifier
-                .size(28.dp),
+                .size(24.dp),
             painter = painterResource(iconRes),
             contentDescription = "Copy Icon",
             tint = iconTintColor

@@ -52,14 +52,14 @@ fun SettingsScreenContent(
                 hasTopBar = false,
                 screenContainerColor = primary
             ) {
+
                 BrownieText(
                     modifier = Modifier
                         .padding(top = 18.dp, bottom = 12.dp)
                         .align(Alignment.CenterHorizontally),
+                    type = BrownieTextTypeEnum.TITLE_LARGE,
                     titleText = "Settings",
-                    textColor = onPrimary,
-                    type = BrownieTextTypeEnum.TITLE_MEDIUM,
-                    textBold = true
+                    textColor = onPrimary
                 )
                 BrownieSheetSurface(
                     verticalArrangement = Arrangement.Top

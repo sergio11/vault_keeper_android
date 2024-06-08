@@ -15,11 +15,11 @@ import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCredentialsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
-import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAccountUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemovePasswordAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCredentialsUseCase
-import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveCardUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveSecureCardUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveCardUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveMasterKeyUseCase
@@ -122,8 +122,8 @@ class UseCasesModule {
     fun provideRemoveCardUseCase(
         preferenceRepository: IPreferenceRepository,
         secureCardRepository: ISecureCardRepository
-    ): RemoveCardUseCase =
-        RemoveCardUseCase(
+    ): RemoveSecureCardUseCase =
+        RemoveSecureCardUseCase(
             preferenceRepository = preferenceRepository,
             secureCardRepository = secureCardRepository
         )
@@ -179,8 +179,8 @@ class UseCasesModule {
     fun provideRemoveAccountUseCase(
         accountRepository: IAccountRepository,
         preferenceRepository: IPreferenceRepository
-    ): RemoveAccountUseCase =
-        RemoveAccountUseCase(
+    ): RemovePasswordAccountUseCase =
+        RemovePasswordAccountUseCase(
             accountRepository = accountRepository,
             preferenceRepository = preferenceRepository
         )

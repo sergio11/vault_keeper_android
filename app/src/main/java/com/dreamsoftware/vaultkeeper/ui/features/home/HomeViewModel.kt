@@ -15,6 +15,8 @@ import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCredentialsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemovePasswordAccountUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveSecureCardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -23,6 +25,8 @@ class HomeViewModel @Inject constructor(
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllCardsUseCase: GetAllCardsUseCase,
     private val getAllCredentialsUseCase: GetAllCredentialsUseCase,
+    private val removeSecureCardUseCase: RemoveSecureCardUseCase,
+    private val removePasswordAccountUseCase: RemovePasswordAccountUseCase,
     @HomeErrorMapper private val errorMapper: IBrownieErrorMapper
 ) : BrownieViewModel<HomeUiState, HomeSideEffects>(), HomeScreenActionListener {
 
@@ -52,6 +56,16 @@ class HomeViewModel @Inject constructor(
     }
 
     override fun onDeleteAccountConfirmed() {
+        uiState.value.accountToDelete?.let { passwordAccount ->
+            executeUseCaseWithParams(
+                useCase = removePasswordAccountUseCase,
+                params = RemovePasswordAccountUseCase.Params(uid = passwordAccount.uid),
+                onSuccess = {
+                    onCredentialsDeletedSuccessfully(passwordAccount.uid)
+                },
+                onMapExceptionToState = ::onMapExceptionToState
+            )
+        }
         updateState {
             it.copy(
                 showAccountDeleteDialog = false,
@@ -79,6 +93,16 @@ class HomeViewModel @Inject constructor(
     }
 
     override fun onDeleteSecureCardConfirmed() {
+        uiState.value.secureCardToDelete?.let { secureCard ->
+            executeUseCaseWithParams(
+                useCase = removeSecureCardUseCase,
+                params = RemoveSecureCardUseCase.Params(uid = secureCard.uid),
+                onSuccess = {
+                    onCredentialsDeletedSuccessfully(secureCard.uid)
+                },
+                onMapExceptionToState = ::onMapExceptionToState
+            )
+        }
         updateState {
             it.copy(
                 showCardDeleteDialog = false,
@@ -155,6 +179,10 @@ class HomeViewModel @Inject constructor(
             onSuccess = ::onLoadCredentialsSuccessfully,
             onMapExceptionToState = ::onMapExceptionToState
         )
+    }
+
+    private fun onCredentialsDeletedSuccessfully(credentialUid: String) {
+        updateState { it.copy(credentials = it.credentials.filter { card -> card.uid != credentialUid }) }
     }
 
     private fun onLoadCredentialsSuccessfully(credentials: List<ICredentialBO>) {
