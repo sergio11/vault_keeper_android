@@ -128,4 +128,11 @@
 
     <string name="home_search_text_input_label">Search in Vault</string>
     <string name="home_search_text_input_placeholder">Search in Vault</string>
+
+    <string name="visa">Visa</string>
+    <string name="mastercard">Mastercard</string>
+    <string name="american_express">American Express</string>
+    <string name="rupay">Rupay</string>
+    <string name="diners_club">Diners Club</string>
+    <string name="other">Other</string>
 </resources>

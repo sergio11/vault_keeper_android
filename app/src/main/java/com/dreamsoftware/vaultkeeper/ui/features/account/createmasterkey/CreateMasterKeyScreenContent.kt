@@ -42,7 +42,7 @@ fun CreateMasterKeyScreenContent(
         BrownieScreenContent(
             enableVerticalScroll = true,
             hasTopBar = false,
-            errorMessage = error,
+            errorMessage = errorMessage,
             backgroundRes = R.drawable.main_background
         ) {
             Column(

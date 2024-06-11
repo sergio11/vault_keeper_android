@@ -12,17 +12,10 @@ internal class SecureCardValidatorImpl(
     private val messagesResolver: ISecureCardValidationMessagesResolver
 ): IBusinessEntityValidator<SecureCardBO> {
     override fun validate(entity: SecureCardBO): Map<String, String> = buildMap {
-        validateCardProvider(entity)
         validateCardNumber(entity)
         validateCardHolderName(entity)
         validateCardCvv(entity)
         validateCardExpiryDate(entity)
-    }
-
-    private fun MutableMap<String, String>.validateCardProvider(entity: SecureCardBO) {
-        if (entity.cardProvider == "Select Card Provider") {
-            put(SecureCardBO.FIELD_CARD_PROVIDER, messagesResolver.getCardProviderError())
-        }
     }
 
     private fun MutableMap<String, String>.validateCardNumber(entity: SecureCardBO) {

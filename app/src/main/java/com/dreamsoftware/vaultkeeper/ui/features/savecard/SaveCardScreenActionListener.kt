@@ -1,5 +1,7 @@
 package com.dreamsoftware.vaultkeeper.ui.features.savecard
 
+import com.dreamsoftware.brownie.component.BrownieDropdownMenuItem
+
 interface SaveCardScreenActionListener {
     fun onSaveSecureCard()
     fun onCancel()
@@ -7,6 +9,5 @@ interface SaveCardScreenActionListener {
     fun onCardHolderNameUpdated(newCardHolderName: String)
     fun onCardExpiryDateUpdated(newCardExpiryDate: String)
     fun onCardCvvUpdated(newCardCvv: String)
-    fun onExpandedProviderFieldUpdated(isExpanded: Boolean)
-    fun onCardProviderUpdated(cardProviderName: String, selectedCardImage: Int)
+    fun onCardProviderUpdated(cardProvider: BrownieDropdownMenuItem)
 }

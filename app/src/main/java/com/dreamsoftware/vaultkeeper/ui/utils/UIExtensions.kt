@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.biometric.BiometricManager
 import com.dreamsoftware.vaultkeeper.R
+import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 
 fun ConnectivityManager.isNetworkConnected(): Boolean {
     val capabilities = getNetworkCapabilities(activeNetwork)
@@ -64,3 +65,19 @@ fun String.formatExpiryDate(): String {
 }
 
 fun String.obfuscateSecret(takeLast: Int) = takeLast(takeLast).padStart(length, '*')
+
+
+fun CardProviderEnum?.toCardProviderImage() = this?.let {
+    when(it) {
+        CardProviderEnum.VISA -> R.drawable.icon_visa
+        CardProviderEnum.MASTERCARD -> R.drawable.icon_mastercard
+        CardProviderEnum.AMERICAN_EXPRESS -> R.drawable.icon_american_express
+        CardProviderEnum.RUPAY -> R.drawable.icon_rupay
+        CardProviderEnum.DINERS_CLUB -> R.drawable.icon_diners_club
+        CardProviderEnum.OTHER -> R.drawable.icon_card
+    }
+} ?: R.drawable.icon_card
+
+fun String?.toCardProviderImage() = this?.takeIf { CardProviderEnum.entries.map(CardProviderEnum::name).contains(it) }?.let {
+    CardProviderEnum.valueOf(this).toCardProviderImage()
+} ?: R.drawable.icon_card

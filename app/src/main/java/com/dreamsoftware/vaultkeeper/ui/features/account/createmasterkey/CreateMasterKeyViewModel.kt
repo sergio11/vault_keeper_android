@@ -48,18 +48,18 @@ class CreateMasterKeyViewModel @Inject constructor(
     private fun onMapExceptionToState(ex: Exception, uiState: CreateMasterKeyUiState) =
         uiState.copy(
             isLoading = false,
-            error = errorMapper.mapToMessage(ex)
+            errorMessage = errorMapper.mapToMessage(ex)
         )
 }
 
 data class CreateMasterKeyUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null,
+    override val errorMessage: String? = null,
     val masterKey: String = String.EMPTY,
     val confirmMasterKey: String = String.EMPTY
-) : UiState<CreateMasterKeyUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): CreateMasterKeyUiState =
-        copy(isLoading = isLoading, error = error)
+) : UiState<CreateMasterKeyUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): CreateMasterKeyUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 sealed interface CreateMasterKeySideEffects : SideEffect {

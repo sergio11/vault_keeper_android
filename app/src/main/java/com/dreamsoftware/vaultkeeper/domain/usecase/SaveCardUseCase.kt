@@ -2,6 +2,7 @@ package com.dreamsoftware.vaultkeeper.domain.usecase
 
 import com.dreamsoftware.brownie.core.BrownieUseCaseWithParams
 import com.dreamsoftware.vaultkeeper.domain.exception.InvalidDataException
+import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IPreferenceRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
@@ -40,6 +41,6 @@ class SaveCardUseCase(
         val cardNumber: String,
         val cardExpiryDate: String,
         val cardCvv: String,
-        val cardProvider: String
+        val cardProvider: CardProviderEnum
     )
 }

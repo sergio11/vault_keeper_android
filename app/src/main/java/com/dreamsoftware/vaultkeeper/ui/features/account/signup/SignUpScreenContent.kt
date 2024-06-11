@@ -26,7 +26,7 @@ fun SignUpScreenContent(
         AccountScreen(
             mainTitleRes = R.string.signup_main_title_text,
             isLoading = isLoading,
-            errorMessage = error,
+            errorMessage = errorMessage,
             screenBackgroundRes = R.drawable.main_background
         ) {
             BrownieText(

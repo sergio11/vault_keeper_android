@@ -144,13 +144,13 @@ class SavePasswordViewModel @Inject constructor(
     private fun onMapExceptionToState(ex: Exception, uiState: SavePasswordUiState) =
         uiState.copy(
             isLoading = false,
-            error = errorMapper.mapToMessage(ex)
+            errorMessage = errorMapper.mapToMessage(ex)
         )
 }
 
 data class SavePasswordUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null,
+    override val errorMessage: String? = null,
     val isEditScreen: Boolean = false,
     val expanded: Boolean = false,
     val accountUid: String? = null,
@@ -161,9 +161,9 @@ data class SavePasswordUiState(
     val mobileNumber: String = String.EMPTY,
     val password: String = String.EMPTY,
     val suggestions: SnapshotStateList<String> = SnapshotStateList(),
-): UiState<SavePasswordUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): SavePasswordUiState =
-        copy(isLoading = isLoading, error = error)
+): UiState<SavePasswordUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): SavePasswordUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 sealed interface SavePasswordUiSideEffects: SideEffect {

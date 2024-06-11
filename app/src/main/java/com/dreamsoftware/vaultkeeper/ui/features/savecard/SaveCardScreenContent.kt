@@ -1,40 +1,27 @@
 package com.dreamsoftware.vaultkeeper.ui.features.savecard
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.PopupProperties
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
+import com.dreamsoftware.brownie.component.BrownieFieldDropdown
 import com.dreamsoftware.brownie.component.BrownieImageIcon
 import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
@@ -43,12 +30,10 @@ import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.BrownieType
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.theme.Gray
-import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
+import com.dreamsoftware.vaultkeeper.ui.core.components.LoadingDialog
+import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderImage
 import com.dreamsoftware.vaultkeeper.utils.MaskVisualTransformation
-import com.dreamsoftware.vaultkeeper.utils.cardSuggestions
 import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
-import kotlinx.coroutines.delay
 
 @Composable
 fun SaveCardScreenContent(
@@ -57,12 +42,13 @@ fun SaveCardScreenContent(
 ) {
     with(uiState) {
         with(MaterialTheme.colorScheme) {
+            LoadingDialog(isShowingDialog = isLoading)
             BrownieScreenContent(
                 hasTopBar = false,
+                errorMessage = errorMessage,
                 enableVerticalScroll = true,
                 screenContainerColor = primary
             ) {
-                val focusManager = LocalFocusManager.current
                 val keyboardController = LocalSoftwareKeyboardController.current
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -93,24 +79,24 @@ fun SaveCardScreenContent(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    val matchingImage =
-                        cardSuggestions.firstOrNull { it.first == cardProviderName }?.second
-
-                    val painter = matchingImage ?: R.drawable.icon_card
-
                     CardUi(
                         cardHolderName = cardHolderName,
                         cardNumber = cardNumber,
                         cardExpiryDate = cardExpiryDate,
                         cardCVV = cardCVV,
-                        cardIcon = painter
+                        cardIcon = cardProviderMenuItemSelected?.id.toCardProviderImage()
                     )
 
                     Spacer(modifier = Modifier.height(22.dp))
 
-                    TextFieldDropDown(
-                        uiState = uiState,
-                        actionListener = actionListener
+                    BrownieFieldDropdown(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        labelRes = R.string.card_provider,
+                        placeHolderRes = R.string.card_provider_placeholder,
+                        value = cardProviderMenuItemSelected,
+                        menuItems = cardProviderMenuItems,
+                        leadingIconRes = R.drawable.icon_card_number,
+                        onMenuItemClicked = actionListener::onCardProviderUpdated
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -152,60 +138,52 @@ fun SaveCardScreenContent(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    Row(
+                    BrownieDefaultTextField(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
+                            .padding(horizontal = 16.dp),
+                        labelRes = R.string.card_expiry_date,
+                        placeHolderRes = R.string.card_expiry_date_placeholder,
+                        value = cardExpiryDate,
+                        onValueChanged = {
+                            if (it.length <= 4) {
+                                actionListener.onCardExpiryDateUpdated(it)
+                            }
+                        },
+                        supportingText = {
+                            "mm/yy"
+                        },
+                        visualTransformation = MaskVisualTransformation("##/##"),
+                        isSingleLine = true,
+                        leadingIconRes = R.drawable.icon_date,
+                        keyboardType = KeyboardType.Number
+                    )
 
-                        BrownieDefaultTextField(
-                            modifier = Modifier
-                                .weight(1.4f)
-                                .padding(end = 6.dp),
-                            labelRes = R.string.card_expiry_date,
-                            placeHolderRes = R.string.card_expiry_date_placeholder,
-                            value = cardExpiryDate,
-                            onValueChanged = {
-                                if (it.length <= 4) {
-                                    actionListener.onCardExpiryDateUpdated(it)
-                                }
-                            },
-                            supportingText = {
-                                "mm/yy"
-                            },
-                            visualTransformation = MaskVisualTransformation("##/##"),
-                            isSingleLine = true,
-                            leadingIconRes = R.drawable.icon_date,
-                            keyboardType = KeyboardType.Number,
-                            onDone = {
-                                focusManager.moveFocus(FocusDirection.Right)
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    BrownieDefaultTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        value = cardCVV,
+                        labelRes = R.string.card_cvv,
+                        placeHolderRes = R.string.card_cvv_placeholder,
+                        supportingText = {
+                            "${cardCVV.length}/3"
+                        },
+                        isSingleLine = true,
+                        leadingIconRes = R.drawable.icon_secret,
+                        keyboardType = KeyboardType.Number,
+                        onValueChanged = {
+                            if (it.length <= 3) {
+                                actionListener.onCardCvvUpdated(it)
                             }
-                        )
-                        BrownieDefaultTextField(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 6.dp),
-                            value = cardCVV,
-                            labelRes = R.string.card_cvv,
-                            placeHolderRes = R.string.card_cvv_placeholder,
-                            supportingText = {
-                                "${cardCVV.length}/3"
-                            },
-                            isSingleLine = true,
-                            leadingIconRes = R.drawable.icon_secret,
-                            keyboardType = KeyboardType.Number,
-                            onValueChanged = {
-                                if (it.length <= 3) {
-                                    actionListener.onCardCvvUpdated(it)
-                                }
-                            },
-                            onDone = {
-                                keyboardController?.hide()
-                                actionListener.onSaveSecureCard()
-                            }
-                        )
-                    }
+                        },
+                        onDone = {
+                            keyboardController?.hide()
+                            actionListener.onSaveSecureCard()
+                        }
+                    )
 
                     Spacer(modifier = Modifier.weight(1f))
 
@@ -218,78 +196,6 @@ fun SaveCardScreenContent(
                         text = if (isEditScreen) "Update Card" else "Save Card"
                     )
                 }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TextFieldDropDown(
-    uiState: SaveCardUiState,
-    actionListener: SaveCardScreenActionListener
-) {
-    with(uiState) {
-        val keyboardController = LocalSoftwareKeyboardController.current
-        ExposedDropdownMenuBox(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            expanded = expandedProviderField,
-            onExpandedChange = {
-                actionListener.onExpandedProviderFieldUpdated(!expandedProviderField)
-            },
-        ) {
-            BrownieDefaultTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(),
-                isReadOnly = true,
-                isSingleLine = true,
-                value = cardProviderName,
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(
-                        expanded = expandedProviderField
-                    )
-                },
-                labelRes = R.string.card_provider,
-                placeHolderRes = R.string.card_provider_placeholder
-            )
-
-            DropdownMenu(
-                modifier = Modifier
-                    .background(Color.White)
-                    .exposedDropdownSize(true),
-                properties = PopupProperties(focusable = false),
-                expanded = expandedProviderField,
-                onDismissRequest = {
-                    actionListener.onExpandedProviderFieldUpdated(false)
-                },
-            ) {
-                cardSuggestions.forEach { cardInfo ->
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                text = cardInfo.first,
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    fontFamily = poppinsFamily,
-                                    color = Gray
-                                )
-                            )
-                        },
-                        onClick = {
-                            actionListener.onCardProviderUpdated(
-                                cardProviderName = cardInfo.first,
-                                selectedCardImage = cardInfo.second
-                            )
-                        },
-                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                    )
-                }
-            }
-
-            LaunchedEffect(hideKeyboard) {
-                delay(100)
-                keyboardController?.hide()
             }
         }
     }

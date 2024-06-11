@@ -21,10 +21,10 @@ class OnboardingViewModel @Inject constructor() :
 
 data class OnboardingUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null
-) : UiState<OnboardingUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): OnboardingUiState =
-        copy(isLoading = isLoading, error = error)
+    override val errorMessage: String? = null
+) : UiState<OnboardingUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): OnboardingUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 sealed interface OnboardingSideEffects : SideEffect {

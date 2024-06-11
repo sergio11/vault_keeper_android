@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +38,7 @@ fun CardUi(
 ) {
     val formattedCardNumber = cardNumber.formatCardNumber()
     val formattedExpiryDate = cardExpiryDate.formatExpiryDate()
+    val randomBrush by remember { mutableStateOf(generateRandomBrush()) }
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -51,7 +55,7 @@ fun CardUi(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(generateRandomBrush())
+                    .background(randomBrush)
             ) {
                 BrownieText(
                     modifier = Modifier
@@ -59,6 +63,7 @@ fun CardUi(
                         .padding(all = 16.dp),
                     type = BrownieTextTypeEnum.LABEL_LARGE,
                     titleText = cardHolderName,
+                    textColor = Color.White
                 )
                 Image(
                     modifier = Modifier
@@ -74,6 +79,7 @@ fun CardUi(
                         .padding(horizontal = 16.dp),
                     type = BrownieTextTypeEnum.TITLE_SMALL,
                     titleText = formattedCardNumber,
+                    textColor = Color.White
                 )
                 Row(
                     modifier = Modifier
@@ -87,6 +93,7 @@ fun CardUi(
                         BrownieText(
                             type = BrownieTextTypeEnum.TITLE_MEDIUM,
                             titleText = "VALID",
+                            textColor = Color.Black
                         )
                         BrownieText(
                             type = BrownieTextTypeEnum.TITLE_MEDIUM,
@@ -102,6 +109,7 @@ fun CardUi(
                         BrownieText(
                             type = BrownieTextTypeEnum.TITLE_MEDIUM,
                             titleText = "CVV",
+                            textColor = Color.Black
                         )
                         BrownieText(
                             type = BrownieTextTypeEnum.TITLE_MEDIUM,

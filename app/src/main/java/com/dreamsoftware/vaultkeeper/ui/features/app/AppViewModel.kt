@@ -13,10 +13,10 @@ class AppViewModel @Inject constructor(): BrownieViewModel<AppUiState, AppSideEf
 
 data class AppUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null
-): UiState<AppUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): AppUiState =
-        copy(isLoading = isLoading, error = error)
+    override val errorMessage: String? = null
+): UiState<AppUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): AppUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 sealed interface AppSideEffects: SideEffect

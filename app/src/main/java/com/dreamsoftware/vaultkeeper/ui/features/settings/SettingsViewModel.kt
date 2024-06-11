@@ -79,13 +79,13 @@ class SettingsViewModel @Inject constructor(
 
 data class SettingsUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null,
+    override val errorMessage: String? = null,
     val showSheet: Boolean = false,
     val showCloseSessionDialog: Boolean = false,
     val items: List<SettingsItem> = emptyList()
-): UiState<SettingsUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): SettingsUiState =
-        copy(isLoading = isLoading, error = error)
+): UiState<SettingsUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): SettingsUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 sealed class SettingsItem(

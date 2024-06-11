@@ -25,7 +25,7 @@ fun SignInScreenContent(
         AccountScreen(
             mainTitleRes = R.string.signin_main_title_text,
             isLoading = isLoading,
-            errorMessage = error,
+            errorMessage = errorMessage,
             screenBackgroundRes = R.drawable.main_background) {
             BrownieText(
                 modifier = Modifier

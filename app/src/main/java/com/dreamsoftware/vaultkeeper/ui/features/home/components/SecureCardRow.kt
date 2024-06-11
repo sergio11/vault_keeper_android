@@ -37,12 +37,13 @@ import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.vaultkeeper.R
+import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreenActionListener
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.ui.utils.obfuscateSecret
-import com.dreamsoftware.vaultkeeper.utils.cardSuggestions
+import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderImage
 import com.dreamsoftware.vaultkeeper.utils.generateRandomBrush
 
 @Composable
@@ -58,23 +59,16 @@ fun SecureCardRow(
 
         val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
-        val matchingImage =
-            cardSuggestions.firstOrNull { it.first == card.cardProvider }?.second
-
-        val painter = matchingImage ?: R.drawable.icon_card
-
-        val tint = if (painter == R.drawable.icon_card) {
-            Gray
-        } else {
-            Color.Unspecified
-        }
-
         BrownieCardRow(contentBrush = contentBrush) {
 
             BrownieImageIcon(
-                iconRes = painter,
+                iconRes = card.cardProvider.toCardProviderImage(),
                 size = BrownieImageSize.LARGE,
-                tintColor = tint
+                tintColor = if(card.cardProvider == CardProviderEnum.OTHER) {
+                    Gray
+                } else {
+                    Color.Unspecified
+                }
             )
 
             Column(

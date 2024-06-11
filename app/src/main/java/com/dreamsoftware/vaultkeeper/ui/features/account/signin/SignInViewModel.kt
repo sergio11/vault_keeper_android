@@ -49,20 +49,20 @@ class SignInViewModel @Inject constructor(
     private fun onMapExceptionToState(ex: Exception, uiState: SignInUiState) =
         uiState.copy(
             isLoading = false,
-            error = errorMapper.mapToMessage(ex)
+            errorMessage = errorMapper.mapToMessage(ex)
         )
 }
 
 data class SignInUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null,
+    override val errorMessage: String? = null,
     val email: String = String.EMPTY,
     val emailError: String? = null,
     val password: String = String.EMPTY,
     val passwordError: String? = null,
-): UiState<SignInUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): SignInUiState =
-        copy(isLoading = isLoading, error = error)
+): UiState<SignInUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): SignInUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 sealed interface SignInSideEffects: SideEffect {

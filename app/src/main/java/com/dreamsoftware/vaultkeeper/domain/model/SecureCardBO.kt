@@ -7,7 +7,7 @@ data class SecureCardBO(
     val cardNumber: String,
     val cardExpiryDate: String,
     val cardCvv: String,
-    val cardProvider: String,
+    val cardProvider: CardProviderEnum,
     val userUid: String
 ): ICredentialBO, ICryptable<SecureCardBO> {
     companion object {
@@ -27,7 +27,6 @@ data class SecureCardBO(
             cardNumber = visit(FIELD_CARD_NUMBER, cardNumber),
             cardExpiryDate = visit(FIELD_CARD_EXPIRY_DATE, cardExpiryDate),
             cardCvv = visit(FIELD_CARD_CVV, cardCvv),
-            cardProvider = visit(FIELD_CARD_PROVIDER, cardProvider)
         )
     }
 }

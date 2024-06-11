@@ -43,13 +43,13 @@ class MainViewModel @Inject constructor(): BrownieViewModel<MainUiState, MainSid
 
 data class MainUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null,
+    override val errorMessage: String? = null,
     val shouldShowBottomNav: Boolean = false,
     val hasSession: Boolean = true,
     val mainDestinationList: List<BottomNavBarItem> = emptyList()
-): UiState<MainUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): MainUiState =
-        copy(isLoading = isLoading, error = error)
+): UiState<MainUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): MainUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 sealed interface MainSideEffects: SideEffect

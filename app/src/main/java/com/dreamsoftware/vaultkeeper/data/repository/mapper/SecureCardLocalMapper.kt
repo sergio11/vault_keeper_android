@@ -2,6 +2,7 @@ package com.dreamsoftware.vaultkeeper.data.repository.mapper
 
 import com.dreamsoftware.brownie.utils.IBrownieMapper
 import com.dreamsoftware.vaultkeeper.data.database.entity.SecureCardEntity
+import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 
 internal class SecureCardLocalMapper: IBrownieMapper<SecureCardEntity, SecureCardBO> {
@@ -12,7 +13,7 @@ internal class SecureCardLocalMapper: IBrownieMapper<SecureCardEntity, SecureCar
             cardNumber = cardNumber,
             cardExpiryDate = cardExpiryDate,
             cardCvv = cardCvv,
-            cardProvider = cardProvider,
+            cardProvider = CardProviderEnum.fromName(cardProvider),
             createdAt = createdAt,
             userUid = userUid
         )
@@ -31,7 +32,7 @@ internal class SecureCardLocalMapper: IBrownieMapper<SecureCardEntity, SecureCar
             cardNumber = cardNumber,
             cardExpiryDate = cardExpiryDate,
             cardCvv = cardCvv,
-            cardProvider = cardProvider,
+            cardProvider = cardProvider.name,
             createdAt = createdAt,
             userUid = userUid
         )

@@ -192,13 +192,13 @@ class HomeViewModel @Inject constructor(
     private fun onMapExceptionToState(ex: Exception, uiState: HomeUiState) =
         uiState.copy(
             isLoading = false,
-            error = errorMapper.mapToMessage(ex)
+            errorMessage = errorMapper.mapToMessage(ex)
         )
 }
 
 data class HomeUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null,
+    override val errorMessage: String? = null,
     val selectedOption: FilterOptionsEnum = FilterOptionsEnum.ALL,
     val filterOptions: List<FilterOptionsEnum> = FilterOptionsEnum.entries,
     val accountToDelete: AccountBO? = null,
@@ -210,9 +210,9 @@ data class HomeUiState(
     val fabButtonItemList: List<BrownieFabButtonItem> = emptyList(),
     val fabButtonMain: BrownieFabButtonMain = BrownieFabButtonMain(R.drawable.icon_add),
     val credentials: List<ICredentialBO> = emptyList()
-): UiState<HomeUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): HomeUiState =
-        copy(isLoading = isLoading, error = error)
+): UiState<HomeUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): HomeUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 enum class FilterOptionsEnum {

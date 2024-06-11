@@ -43,11 +43,11 @@ class SplashViewModel @Inject constructor(
 
 data class SplashUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null,
+    override val errorMessage: String? = null,
     val isAuth: Boolean = false
-): UiState<SplashUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): SplashUiState =
-        copy(isLoading = isLoading, error = error)
+): UiState<SplashUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): SplashUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 sealed interface SplashSideEffects: SideEffect {

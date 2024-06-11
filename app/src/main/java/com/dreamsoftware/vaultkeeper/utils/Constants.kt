@@ -55,12 +55,3 @@ val suggestionsWithImages = listOf(
     "Wordpress" to R.drawable.icon_wordpress,
     "YouTube" to R.drawable.icon_youtube
 )
-
-val cardSuggestions = listOf(
-    "Visa" to R.drawable.icon_visa,
-    "Mastercard" to R.drawable.icon_mastercard,
-    "American Express" to R.drawable.icon_american_express,
-    "Rupay" to R.drawable.icon_rupay,
-    "Diners Club" to R.drawable.icon_diners_club,
-    "Other" to R.drawable.icon_card
-)

@@ -69,7 +69,7 @@ class GenerateViewModel @Inject constructor(
 
 data class GenerateUiState(
     override val isLoading: Boolean = false,
-    override val error: String? = null,
+    override val errorMessage: String? = null,
     val message: String? = null,
     val password: String = String.EMPTY,
     val passwordLength: Int = 12,
@@ -77,9 +77,9 @@ data class GenerateUiState(
     val upperCase: Boolean = true,
     val digits: Boolean = true,
     val specialCharacters: Boolean = true
-): UiState<GenerateUiState>(isLoading, error) {
-    override fun copyState(isLoading: Boolean, error: String?): GenerateUiState =
-        copy(isLoading = isLoading, error = error)
+): UiState<GenerateUiState>(isLoading, errorMessage) {
+    override fun copyState(isLoading: Boolean, errorMessage: String?): GenerateUiState =
+        copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
 sealed interface GenerateSideEffects: SideEffect
