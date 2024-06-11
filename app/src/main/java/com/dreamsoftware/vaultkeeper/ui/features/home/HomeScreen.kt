@@ -10,7 +10,8 @@ import com.dreamsoftware.brownie.component.screen.BrownieScreen
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onGoToAddNewAccount: () -> Unit,
-    onGoToAddNewSecureCard: () -> Unit
+    onGoToAddNewSecureCard: () -> Unit,
+    onGoToEditSecureCard: (cardUid: String) -> Unit
 ) {
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
     BrownieScreen(
@@ -20,6 +21,7 @@ fun HomeScreen(
             when(it) {
                 HomeSideEffects.AddNewAccountPassword -> onGoToAddNewAccount()
                 HomeSideEffects.AddNewSecureCard -> onGoToAddNewSecureCard()
+                is HomeSideEffects.EditSecureCard -> onGoToEditSecureCard(it.cardUid)
             }
         },
         onInit = { loadData() }

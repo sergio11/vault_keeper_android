@@ -147,6 +147,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    override fun onEditSecureCard(cardUid: String) {
+        launchSideEffect(HomeSideEffects.EditSecureCard(cardUid))
+    }
+
     private fun onLoadData() {
         with(uiState.value) {
             when(selectedOption) {
@@ -222,4 +226,5 @@ enum class FilterOptionsEnum {
 sealed interface HomeSideEffects: SideEffect {
     data object AddNewSecureCard: HomeSideEffects
     data object AddNewAccountPassword: HomeSideEffects
+    data class EditSecureCard(val cardUid: String): HomeSideEffects
 }

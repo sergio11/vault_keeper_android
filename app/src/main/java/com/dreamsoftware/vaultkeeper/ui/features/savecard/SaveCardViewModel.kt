@@ -87,6 +87,7 @@ class SaveCardViewModel @Inject constructor(
     private fun onFetchSecureCardDetailsSuccessfully(secureCard: SecureCardBO) {
         updateState {
             it.copy(
+                isEditScreen = true,
                 cardUid = secureCard.uid,
                 cardNumber = secureCard.cardNumber,
                 cardHolderName = secureCard.cardHolderName,

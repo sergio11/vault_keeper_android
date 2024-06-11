@@ -15,4 +15,5 @@ interface HomeScreenActionListener {
     fun onFilterOptionUpdated(newFilterOption: FilterOptionsEnum)
     fun onFilterBottomSheetVisibilityUpdated(isVisible: Boolean)
     fun onFabItemClicked(fabButtonItem: BrownieFabButtonItem)
+    fun onEditSecureCard(cardUid: String)
 }

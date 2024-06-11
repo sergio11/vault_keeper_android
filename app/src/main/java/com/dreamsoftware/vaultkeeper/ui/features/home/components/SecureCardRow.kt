@@ -133,8 +133,8 @@ fun SecureCardRow(
                             },
                             onClick = {
                                 //add edit screen navigation
-                                //navigator.navigate(CardScreenDestination(card.id))
                                 expanded = false
+                                actionListener.onEditSecureCard(card.uid)
                             },
                             trailingIcon = {
                                 Icon(

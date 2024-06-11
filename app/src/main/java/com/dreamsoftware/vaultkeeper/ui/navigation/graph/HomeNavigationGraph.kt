@@ -29,6 +29,9 @@ fun NavGraphBuilder.HomeNavigationGraph(
                     },
                     onGoToAddNewSecureCard = {
                         navigate(Screens.Main.Home.CreateSecureCard.route)
+                    },
+                    onGoToEditSecureCard = {
+                        navigate(Screens.Main.Home.EditSecureCard.buildRoute(it))
                     }
                 )
             }
@@ -74,6 +77,23 @@ fun NavGraphBuilder.HomeNavigationGraph(
                         popBackStack()
                     }
                 )
+            }
+        }
+
+        composable(
+            route = Screens.Main.Home.EditSecureCard.route
+        ) { navBackStackEntry ->
+            navBackStackEntry.arguments?.let { args ->
+                Screens.Main.Home.EditSecureCard.parseArgs(args)?.let {
+                    with(navController) {
+                        SaveCardScreen(
+                            args = it,
+                            onBackPressed = {
+                                popBackStack()
+                            }
+                        )
+                    }
+                }
             }
         }
     }
