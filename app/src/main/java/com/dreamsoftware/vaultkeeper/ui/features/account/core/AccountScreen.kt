@@ -16,13 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.dreamsoftware.brownie.component.BrownieLoadingDialog
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.core.components.CommonVideoBackground
+import com.dreamsoftware.vaultkeeper.ui.core.components.LoadingDialog
 
 @Composable
 fun AccountScreen(
@@ -31,21 +31,18 @@ fun AccountScreen(
     @DrawableRes screenBackgroundRes: Int? = null,
     isLoading: Boolean,
     errorMessage: String? = null,
+    infoMessage: String? = null,
     enableVerticalScroll: Boolean = true,
     screenContent: @Composable ColumnScope.() -> Unit
 ) {
-    BrownieLoadingDialog(
-        isShowingDialog = isLoading,
-        mainLogoRes = R.drawable.icon_home,
-        titleRes = R.string.loading_dialog_title_text,
-        descriptionRes = R.string.loading_dialog_description_text
-    )
+    LoadingDialog(isShowingDialog = isLoading)
     BrownieScreenContent(
         titleRes = mainTitleRes,
         backgroundRes = screenBackgroundRes,
         enableVerticalScroll = enableVerticalScroll,
         hasTopBar = false,
         errorMessage = errorMessage,
+        infoMessage = infoMessage,
         onBuildBackgroundContent = {
             videoResourceId?.let {
                 CommonVideoBackground(videoResourceId = it)
