@@ -16,4 +16,5 @@ interface HomeScreenActionListener {
     fun onFilterBottomSheetVisibilityUpdated(isVisible: Boolean)
     fun onFabItemClicked(fabButtonItem: BrownieFabButtonItem)
     fun onEditSecureCard(cardUid: String)
+    fun onEditAccountPassword(accountUid: String)
 }

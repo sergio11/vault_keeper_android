@@ -32,6 +32,9 @@ fun NavGraphBuilder.HomeNavigationGraph(
                     },
                     onGoToEditSecureCard = {
                         navigate(Screens.Main.Home.EditSecureCard.buildRoute(it))
+                    },
+                    onGoToEditAccountPassword = {
+                        navigate(Screens.Main.Home.EditAccountPassword.buildRoute(it))
                     }
                 )
             }
@@ -87,6 +90,23 @@ fun NavGraphBuilder.HomeNavigationGraph(
                 Screens.Main.Home.EditSecureCard.parseArgs(args)?.let {
                     with(navController) {
                         SaveCardScreen(
+                            args = it,
+                            onBackPressed = {
+                                popBackStack()
+                            }
+                        )
+                    }
+                }
+            }
+        }
+
+        composable(
+            route = Screens.Main.Home.EditAccountPassword.route
+        ) { navBackStackEntry ->
+            navBackStackEntry.arguments?.let { args ->
+                Screens.Main.Home.EditAccountPassword.parseArgs(args)?.let {
+                    with(navController) {
+                        SavePasswordScreen(
                             args = it,
                             onBackPressed = {
                                 popBackStack()

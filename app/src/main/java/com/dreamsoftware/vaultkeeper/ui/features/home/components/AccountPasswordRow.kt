@@ -163,8 +163,8 @@ fun AccountPasswordRow(
                                 )
                             },
                             onClick = {
-                                //navigator.navigate(PasswordScreenDestination(account.id))
                                 expanded = false
+                                actionListener.onEditAccountPassword(account.uid)
                             },
                             trailingIcon = {
                                 Icon(

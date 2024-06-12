@@ -11,7 +11,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onGoToAddNewAccount: () -> Unit,
     onGoToAddNewSecureCard: () -> Unit,
-    onGoToEditSecureCard: (cardUid: String) -> Unit
+    onGoToEditSecureCard: (cardUid: String) -> Unit,
+    onGoToEditAccountPassword: (accountUid: String) -> Unit
 ) {
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
     BrownieScreen(
@@ -22,6 +23,7 @@ fun HomeScreen(
                 HomeSideEffects.AddNewAccountPassword -> onGoToAddNewAccount()
                 HomeSideEffects.AddNewSecureCard -> onGoToAddNewSecureCard()
                 is HomeSideEffects.EditSecureCard -> onGoToEditSecureCard(it.cardUid)
+                is HomeSideEffects.EditAccountPassword -> onGoToEditAccountPassword(it.accountUid)
             }
         },
         onInit = { loadData() }

@@ -117,6 +117,7 @@ class SavePasswordViewModel @Inject constructor(
     private fun onFetchAccountDetailsSuccessfully(account: AccountPasswordBO) {
         updateState {
             it.copy(
+                isEditScreen = true,
                 accountUid = account.uid,
                 accountName = account.accountName,
                 username = account.userName,
