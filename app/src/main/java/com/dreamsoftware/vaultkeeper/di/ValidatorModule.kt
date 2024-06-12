@@ -1,7 +1,7 @@
 package com.dreamsoftware.vaultkeeper.di
 
 import android.content.Context
-import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthRequestBO
 import com.dreamsoftware.vaultkeeper.domain.model.SaveMasterKeyBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
@@ -74,7 +74,7 @@ class ValidatorModule {
     @ViewModelScoped
     fun provideAccountValidator(
         messagesResolver: IAccountValidationMessagesResolver
-    ): IBusinessEntityValidator<AccountBO> = AccountValidatorImpl(messagesResolver)
+    ): IBusinessEntityValidator<AccountPasswordBO> = AccountValidatorImpl(messagesResolver)
 
     @Provides
     @ViewModelScoped

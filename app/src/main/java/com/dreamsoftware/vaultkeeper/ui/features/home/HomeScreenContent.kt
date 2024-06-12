@@ -49,7 +49,7 @@ import com.dreamsoftware.brownie.component.fab.BrownieFabButtonSub
 import com.dreamsoftware.brownie.component.fab.BrownieMultiFloatingActionButton
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.AccountPasswordRow
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.ColumnProgressIndicator
@@ -257,7 +257,7 @@ fun HomeScreenContent(
 
                             items(credentials.size) { idx ->
                                 when (val credential = credentials[idx]) {
-                                    is AccountBO -> {
+                                    is AccountPasswordBO -> {
                                         if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.PASSWORDS) {
                                             AccountPasswordRow(
                                                 account = credential,

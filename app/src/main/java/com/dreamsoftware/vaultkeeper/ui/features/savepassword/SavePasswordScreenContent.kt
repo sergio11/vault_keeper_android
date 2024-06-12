@@ -1,7 +1,5 @@
 package com.dreamsoftware.vaultkeeper.ui.features.savepassword
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,12 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
+import com.dreamsoftware.brownie.component.BrownieFieldDropdown
 import com.dreamsoftware.brownie.component.BrownieImageIcon
 import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
@@ -30,7 +30,7 @@ import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.BrownieType
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.features.savepassword.component.SearchOutlinedTextFieldWithDropdown
+import com.dreamsoftware.vaultkeeper.ui.core.components.LoadingDialog
 import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
 @Composable
@@ -40,8 +40,10 @@ fun SavePasswordScreenContent(
 ) {
     with(uiState) {
         with(MaterialTheme.colorScheme) {
+            LoadingDialog(isShowingDialog = isLoading)
             BrownieScreenContent(
                 hasTopBar = false,
+                errorMessage = errorMessage,
                 enableVerticalScroll = true,
                 screenContainerColor = primary
             ) {
@@ -72,9 +74,24 @@ fun SavePasswordScreenContent(
                 }
 
                 BrownieSheetSurface(enableVerticalScroll = false) {
-                    SearchOutlinedTextFieldWithDropdown(
-                        uiState = uiState,
-                        actionListener = actionListener
+
+                    val context =  LocalContext.current
+
+                    BrownieFieldDropdown(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        labelRes = R.string.account_password,
+                        placeHolderRes = R.string.account_password_placeholder,
+                        value = accountName,
+                        onValueChanged = actionListener::onFilterByAccountName,
+                        menuItems = accountSuggestionsMenuItems,
+                        leadingIconRes = R.drawable.icon_card_number,
+                        enableKeyboardController = false,
+                        onMenuItemClicked = {
+                            val accountName = it.text ?: it.textRes?.let(context::getString)
+                            if(!accountName.isNullOrBlank()) {
+                                actionListener.onAccountNameUpdated(accountName)
+                            }
+                        }
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -148,7 +165,7 @@ fun SavePasswordScreenContent(
 
                         BrownieTextFieldPassword(
                             modifier = Modifier
-                                .weight(1f)
+                                .fillMaxWidth(0.8f)
                                 .padding(end = 6.dp),
                             labelRes = R.string.password_label,
                             placeHolderRes = R.string.password_placeholder,
@@ -162,13 +179,7 @@ fun SavePasswordScreenContent(
                             supportingText = {
                                 "${password.length}/25"
                             },
-                            prefix = {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    TextFieldSeparator(24)
-                                }
-                            }
+                            enableTextFieldSeparator = true
                         )
 
                         Icon(
@@ -198,20 +209,12 @@ fun SavePasswordScreenContent(
                         placeHolderRes = R.string.note_placeholder,
                         supportingText = { "${note.length}/140" },
                         leadingIconRes = R.drawable.icon_note,
-                        keyboardType = KeyboardType.Number,
                         onValueChanged = {
                             if (it.length <= 140) {
                                 actionListener.onNoteUpdated(note = it)
                             }
                         },
-                        prefix = {
-                            Row(
-                                modifier = Modifier.padding(top = 6.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                TextFieldSeparator(134)
-                            }
-                        },
+                        enableTextFieldSeparator = true,
                         onDone = {
                             actionListener.onSave()
                         }
@@ -231,18 +234,4 @@ fun SavePasswordScreenContent(
             }
         }
     }
-}
-
-@Composable
-private fun TextFieldSeparator(
-    height: Int
-) {
-    Box(
-        modifier = Modifier
-            .padding(end = 12.dp)
-            .height(height.dp)
-            .width(1.dp)
-            .background(color = Color.LightGray),
-        contentAlignment = Alignment.Center
-    ) {}
 }

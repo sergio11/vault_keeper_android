@@ -7,7 +7,7 @@ import com.dreamsoftware.vaultkeeper.data.database.exception.AccountNotFoundExce
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAccountRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.dto.AccountDTO
 import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepositoryImpl
-import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
 import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,13 +15,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 internal class AccountRepositoryImpl(
     private val localDataSource: IAccountLocalDataSource,
     private val remoteDataSource: IAccountRemoteDataSource,
-    private val accountLocalMapper: IBrownieMapper<AccountEntity, AccountBO>,
-    private val accountRemoteMapper: IBrownieMapper<AccountDTO, AccountBO>,
+    private val accountLocalMapper: IBrownieMapper<AccountEntity, AccountPasswordBO>,
+    private val accountRemoteMapper: IBrownieMapper<AccountDTO, AccountPasswordBO>,
     private val dataProtectionService: IDataProtectionService,
     dispatcher: CoroutineDispatcher
 ): SupportRepositoryImpl(dispatcher), IAccountRepository {
 
-    override suspend fun insert(account: AccountBO): AccountBO = safeExecute {
+    override suspend fun insert(account: AccountPasswordBO): AccountPasswordBO = safeExecute {
         val accountProtected = dataProtectionService.wrap(account)
         remoteDataSource.save(accountRemoteMapper.mapOutToIn(accountProtected)).let {
             localDataSource
@@ -31,7 +31,7 @@ internal class AccountRepositoryImpl(
         }
     }
 
-    override suspend fun update(account: AccountBO) = safeExecute {
+    override suspend fun update(account: AccountPasswordBO) = safeExecute {
         val secureCardProtected = dataProtectionService.wrap(account)
         remoteDataSource.save(accountRemoteMapper.mapOutToIn(secureCardProtected)).also {
             localDataSource.update(accountLocalMapper.mapOutToIn(secureCardProtected))
@@ -43,7 +43,7 @@ internal class AccountRepositoryImpl(
         localDataSource.delete(accountUid)
     }
 
-    override suspend fun findAllByUserId(userUid: String): List<AccountBO> = safeExecute {
+    override suspend fun findAllByUserId(userUid: String): List<AccountPasswordBO> = safeExecute {
         try {
             localDataSource
                 .findAll()
@@ -60,7 +60,7 @@ internal class AccountRepositoryImpl(
         }
     }
 
-    override suspend fun findById(userUid: String, accountUid: String): AccountBO = safeExecute {
+    override suspend fun findById(userUid: String, accountUid: String): AccountPasswordBO = safeExecute {
         try {
             localDataSource.findById(accountUid)
                 .let(accountLocalMapper::mapInToOut)

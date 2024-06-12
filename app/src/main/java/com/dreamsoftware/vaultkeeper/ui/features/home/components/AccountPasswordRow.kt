@@ -35,14 +35,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreenActionListener
 import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.utils.suggestionsWithImages
 
 @Composable
 fun AccountPasswordRow(
-    account: AccountBO,
+    account: AccountPasswordBO,
     actionListener: HomeScreenActionListener
 ) {
     Card(

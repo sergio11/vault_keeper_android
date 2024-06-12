@@ -4,31 +4,6 @@ import com.dreamsoftware.vaultkeeper.R
 
 const val ENCRYPTED_SHARED_PREFS_NAME = "encrypted_shared_prefs"
 
-val accountSuggestions = listOf(
-    "Amazon Prime",
-    "Behance",
-    "Discord",
-    "Dribbble",
-    "Facebook",
-    "Github",
-    "Gmail",
-    "Instagram",
-    "LinkedIn",
-    "Medium",
-    "Messenger",
-    "Netflix",
-    "Pinterest",
-    "Quora",
-    "Reddit",
-    "Snapchat",
-    "Spotify",
-    "Stackoverflow",
-    "Tumblr",
-    "Twitter",
-    "Whatsapp",
-    "Wordpress",
-    "YouTube"
-)
 
 val suggestionsWithImages = listOf(
     "Amazon Prime" to R.drawable.icon_amazon_prime_video,

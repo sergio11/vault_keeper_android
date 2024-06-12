@@ -9,7 +9,7 @@ import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.di.HomeErrorMapper
-import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.model.ICredentialBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllAccountsUseCase
@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
         )
     )
 
-    override fun onDeleteAccount(account: AccountBO) {
+    override fun onDeleteAccount(account: AccountPasswordBO) {
        updateState {
            it.copy(
                showAccountDeleteDialog = true,
@@ -205,7 +205,7 @@ data class HomeUiState(
     override val errorMessage: String? = null,
     val selectedOption: FilterOptionsEnum = FilterOptionsEnum.ALL,
     val filterOptions: List<FilterOptionsEnum> = FilterOptionsEnum.entries,
-    val accountToDelete: AccountBO? = null,
+    val accountToDelete: AccountPasswordBO? = null,
     val showAccountDeleteDialog: Boolean = false,
     val secureCardToDelete: SecureCardBO? = null,
     val showCardDeleteDialog: Boolean = false,

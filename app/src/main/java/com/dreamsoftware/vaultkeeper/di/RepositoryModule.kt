@@ -26,7 +26,7 @@ import com.dreamsoftware.vaultkeeper.data.repository.mapper.AuthUserMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.PBEDataMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.SecureCardLocalMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.SecureCardRemoteMapper
-import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.model.PBEDataBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
@@ -66,11 +66,11 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAccountLocalMapper(): IBrownieMapper<AccountEntity, AccountBO> = AccountLocalMapper()
+    fun provideAccountLocalMapper(): IBrownieMapper<AccountEntity, AccountPasswordBO> = AccountLocalMapper()
 
     @Provides
     @Singleton
-    fun provideAccountRemoteMapper(): IBrownieMapper<AccountDTO, AccountBO> = AccountRemoteMapper()
+    fun provideAccountRemoteMapper(): IBrownieMapper<AccountDTO, AccountPasswordBO> = AccountRemoteMapper()
 
     @Provides
     @Singleton
@@ -115,8 +115,8 @@ class RepositoryModule {
     fun provideAccountRepository(
         localDataSource: IAccountLocalDataSource,
         remoteDataSource: IAccountRemoteDataSource,
-        accountLocalMapper: IBrownieMapper<AccountEntity, AccountBO>,
-        accountRemoteMapper: IBrownieMapper<AccountDTO, AccountBO>,
+        accountLocalMapper: IBrownieMapper<AccountEntity, AccountPasswordBO>,
+        accountRemoteMapper: IBrownieMapper<AccountDTO, AccountPasswordBO>,
         dataProtectionService: IDataProtectionService,
         @IoDispatcher dispatcher: CoroutineDispatcher
     ): IAccountRepository =

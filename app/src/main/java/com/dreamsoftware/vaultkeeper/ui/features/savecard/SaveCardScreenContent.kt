@@ -93,7 +93,7 @@ fun SaveCardScreenContent(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         labelRes = R.string.card_provider,
                         placeHolderRes = R.string.card_provider_placeholder,
-                        value = cardProviderMenuItemSelected,
+                        menuItemSelected = cardProviderMenuItemSelected,
                         menuItems = cardProviderMenuItems,
                         leadingIconRes = R.drawable.icon_card_number,
                         onMenuItemClicked = actionListener::onCardProviderUpdated

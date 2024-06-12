@@ -1,5 +1,6 @@
 package com.dreamsoftware.vaultkeeper.ui.features.savepassword
 
+
 interface SavePasswordScreenActionListener {
     fun onResetSuggestions()
     fun onAccountNameUpdated(newName: String)

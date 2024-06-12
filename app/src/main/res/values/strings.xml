@@ -75,6 +75,8 @@
     <string name="card_cvv_placeholder">CVV</string>
     <string name="card_provider">Card Provider</string>
     <string name="card_provider_placeholder">Card Provider Placeholder</string>
+    <string name="account_password">Account password</string>
+    <string name="account_password_placeholder">Account password Placeholder</string>
 
     <string name="close_session_dialog_title">Logout from VaultKeeper?</string>
     <string name="close_session_dialog_description">Logging out will delete all your saved data including cards and passwords. Are you sure you want to proceed?</string>
@@ -135,4 +137,28 @@
     <string name="rupay">Rupay</string>
     <string name="diners_club">Diners Club</string>
     <string name="other">Other</string>
+    <string name="amazon_prime">Amazon Prime</string>
+    <string name="behance">Behance</string>
+    <string name="discord">Discord</string>
+    <string name="dribbble">Dribbble</string>
+    <string name="facebook">Facebook</string>
+    <string name="github">Github</string>
+    <string name="gmail">Gmail</string>
+    <string name="instagram">Instagram</string>
+    <string name="linkedin">LinkedIn</string>
+    <string name="medium">Medium</string>
+    <string name="messenger">Messenger</string>
+    <string name="netflix">Netflix</string>
+    <string name="pinterest">Pinterest</string>
+    <string name="quora">Quora</string>
+    <string name="reddit">Reddit</string>
+    <string name="snapchat">Snapchat</string>
+    <string name="spotify">Spotify</string>
+    <string name="stackoverflow">Stackoverflow</string>
+    <string name="tumblr">Tumblr</string>
+    <string name="twitter">Twitter</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="wordpress">Wordpress</string>
+    <string name="youtube">YouTube</string>
+
 </resources>

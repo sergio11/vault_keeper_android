@@ -1,11 +1,11 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home
 
 import com.dreamsoftware.brownie.component.fab.BrownieFabButtonItem
-import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 
 interface HomeScreenActionListener {
-    fun onDeleteAccount(account: AccountBO)
+    fun onDeleteAccount(account: AccountPasswordBO)
     fun onDeleteAccountConfirmed()
     fun onDeleteAccountCancelled()
     fun onDeleteSecureCard(secureCard: SecureCardBO)

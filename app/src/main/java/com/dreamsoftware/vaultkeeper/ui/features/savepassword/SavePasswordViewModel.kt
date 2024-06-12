@@ -1,17 +1,18 @@
 package com.dreamsoftware.vaultkeeper.ui.features.savepassword
 
-import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.dreamsoftware.brownie.component.BrownieDropdownMenuItem
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
+import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.di.SavePasswordErrorMapper
-import com.dreamsoftware.vaultkeeper.domain.model.AccountBO
+import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
-import com.dreamsoftware.vaultkeeper.utils.accountSuggestions
+import com.dreamsoftware.vaultkeeper.utils.IApplicationAware
 import com.dreamsoftware.vaultkeeper.utils.getRandomNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -21,7 +22,8 @@ class SavePasswordViewModel @Inject constructor(
     private val saveAccountUseCase: SaveAccountUseCase,
     private val getAccountByIdUseCase: GetAccountByIdUseCase,
     private val passwordGeneratorService: IPasswordGeneratorService,
-    @SavePasswordErrorMapper private val errorMapper: IBrownieErrorMapper
+    @SavePasswordErrorMapper private val errorMapper: IBrownieErrorMapper,
+    private val applicationAware: IApplicationAware
 ) : BrownieViewModel<SavePasswordUiState, SavePasswordUiSideEffects>(), SavePasswordScreenActionListener {
 
     fun getAccountById(accountUid: String) {
@@ -33,26 +35,26 @@ class SavePasswordViewModel @Inject constructor(
         )
     }
 
-    override fun onGetDefaultState(): SavePasswordUiState = SavePasswordUiState()
+    override fun onGetDefaultState(): SavePasswordUiState = SavePasswordUiState(
+        accountSuggestionsMenuItems = getAccountProviderSuggestions()
+    )
 
     override fun onResetSuggestions() {
-        updateState { it.copy(suggestions = SnapshotStateList()) }
+        updateState { it.copy(accountSuggestionsMenuItems = getAccountProviderSuggestions()) }
     }
 
     override fun onAccountNameUpdated(newName: String) {
         updateState { it.copy(
             accountName = newName,
-            suggestions = SnapshotStateList()
+            accountSuggestionsMenuItems = getAccountProviderSuggestions()
         ) }
     }
 
     override fun onFilterByAccountName(name: String) {
         updateState { it.copy(
             accountName = name,
-            suggestions = SnapshotStateList<String>().apply {
-                if(name.isNotEmpty()) {
-                    addAll(accountSuggestions.filter { result -> result.contains(name, true) })
-                }
+            accountSuggestionsMenuItems = getAccountProviderSuggestions().filter { account ->
+                account.textRes?.let(applicationAware::getString)?.lowercase()?.contains(name.lowercase()) ?: false
             }
         ) }
     }
@@ -112,7 +114,7 @@ class SavePasswordViewModel @Inject constructor(
         launchSideEffect(SavePasswordUiSideEffects.SavePasswordCancelled)
     }
 
-    private fun onFetchAccountDetailsSuccessfully(account: AccountBO) {
+    private fun onFetchAccountDetailsSuccessfully(account: AccountPasswordBO) {
         updateState {
             it.copy(
                 accountUid = account.uid,
@@ -126,7 +128,7 @@ class SavePasswordViewModel @Inject constructor(
         }
     }
 
-    private fun onAccountSavedSuccessfully(account: AccountBO) {
+    private fun onAccountSavedSuccessfully(account: AccountPasswordBO) {
         updateState {
             it.copy(
                 isEditScreen = true,
@@ -146,6 +148,32 @@ class SavePasswordViewModel @Inject constructor(
             isLoading = false,
             errorMessage = errorMapper.mapToMessage(ex)
         )
+
+    private fun getAccountProviderSuggestions() =
+        listOf(
+            BrownieDropdownMenuItem(textRes = R.string.amazon_prime),
+            BrownieDropdownMenuItem(textRes = R.string.behance),
+            BrownieDropdownMenuItem(textRes = R.string.discord),
+            BrownieDropdownMenuItem(textRes = R.string.dribbble),
+            BrownieDropdownMenuItem(textRes = R.string.facebook),
+            BrownieDropdownMenuItem(textRes = R.string.gmail),
+            BrownieDropdownMenuItem(textRes = R.string.github),
+            BrownieDropdownMenuItem(textRes = R.string.instagram),
+            BrownieDropdownMenuItem(textRes = R.string.medium),
+            BrownieDropdownMenuItem(textRes = R.string.messenger),
+            BrownieDropdownMenuItem(textRes = R.string.netflix),
+            BrownieDropdownMenuItem(textRes = R.string.pinterest),
+            BrownieDropdownMenuItem(textRes = R.string.quora),
+            BrownieDropdownMenuItem(textRes = R.string.reddit),
+            BrownieDropdownMenuItem(textRes = R.string.snapchat),
+            BrownieDropdownMenuItem(textRes = R.string.spotify),
+            BrownieDropdownMenuItem(textRes = R.string.stackoverflow),
+            BrownieDropdownMenuItem(textRes = R.string.tumblr),
+            BrownieDropdownMenuItem(textRes = R.string.twitter),
+            BrownieDropdownMenuItem(textRes = R.string.whatsapp),
+            BrownieDropdownMenuItem(textRes = R.string.wordpress),
+            BrownieDropdownMenuItem(textRes = R.string.youtube),
+        )
 }
 
 data class SavePasswordUiState(
@@ -160,7 +188,7 @@ data class SavePasswordUiState(
     val note: String = String.EMPTY,
     val mobileNumber: String = String.EMPTY,
     val password: String = String.EMPTY,
-    val suggestions: SnapshotStateList<String> = SnapshotStateList(),
+    val accountSuggestionsMenuItems: List<BrownieDropdownMenuItem> = emptyList()
 ): UiState<SavePasswordUiState>(isLoading, errorMessage) {
     override fun copyState(isLoading: Boolean, errorMessage: String?): SavePasswordUiState =
         copy(isLoading = isLoading, errorMessage = errorMessage)
