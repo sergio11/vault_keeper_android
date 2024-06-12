@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.sp
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreenActionListener
-import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.utils.suggestionsWithImages
 
 @Composable
@@ -91,7 +90,6 @@ fun AccountPasswordRow(
                     color = Color.Black,
                     style = TextStyle(
                         fontSize = 18.sp,
-                        fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -103,7 +101,6 @@ fun AccountPasswordRow(
                     overflow = TextOverflow.Ellipsis,
                     style = TextStyle(
                         fontSize = 12.sp,
-                        fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Normal
                     )
                 )
@@ -161,7 +158,6 @@ fun AccountPasswordRow(
                                     text = "Edit",
                                     style = TextStyle(
                                         fontSize = 14.sp,
-                                        fontFamily = poppinsFamily,
                                         fontWeight = FontWeight.Medium
                                     )
                                 )
@@ -184,7 +180,6 @@ fun AccountPasswordRow(
                                 Text(
                                     text = "Delete", style = TextStyle(
                                         fontSize = 14.sp,
-                                        fontFamily = poppinsFamily,
                                         fontWeight = FontWeight.Medium
                                     )
                                 )

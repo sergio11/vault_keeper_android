@@ -47,7 +47,6 @@ import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
-import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.utils.LocalSnackbar
 
 @Composable
@@ -146,7 +145,6 @@ fun UnlockScreenContent(
                     textAlign = TextAlign.Center,
                     style = TextStyle(
                         fontSize = 24.sp,
-                        fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Medium,
                         color = Color.Black
                     )
@@ -165,7 +163,6 @@ fun UnlockScreenContent(
                             text = "Enter Master key",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = poppinsFamily,
                                 color = Gray
                             )
                         )
@@ -189,7 +186,6 @@ fun UnlockScreenContent(
                         AnimatedVisibility(viewModel.unlockKey.isNotEmpty()) {
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
-                                fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.Medium,
                                 text = "Limit: ${viewModel.unlockKey.length}/8",
                             )
@@ -245,7 +241,6 @@ fun UnlockScreenContent(
                         Text(
                             text = "Proceed",
                             fontSize = 22.sp,
-                            fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium
                         )
                     }

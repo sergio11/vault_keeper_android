@@ -45,7 +45,6 @@ import com.dreamsoftware.vaultkeeper.ui.features.auth.AuthViewModel
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
-import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 
 @Composable
 fun UpdateMasterKeySheetContent(
@@ -75,7 +74,6 @@ fun UpdateMasterKeySheetContent(
                     text = stringResource(R.string.reset_master_key),
                     style = TextStyle(
                         fontSize = 22.sp,
-                        fontFamily = poppinsFamily,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Center,
                         color = Color.Black
@@ -89,7 +87,6 @@ fun UpdateMasterKeySheetContent(
                     text = stringResource(R.string.reset_key_tagline),
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Center,
                         color = Color.Black
@@ -104,7 +101,6 @@ fun UpdateMasterKeySheetContent(
                         Text(
                             text = "Enter Old Master key", style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = poppinsFamily,
                                 color = Gray
                             )
                         )
@@ -118,7 +114,6 @@ fun UpdateMasterKeySheetContent(
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = "Limit: ${viewModel.oldKey.length}/8",
-                                fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.Medium,
                             )
                         }
@@ -167,7 +162,6 @@ fun UpdateMasterKeySheetContent(
                             text = "Enter New Master key",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = poppinsFamily,
                                 color = Gray
                             )
                         )
@@ -182,7 +176,6 @@ fun UpdateMasterKeySheetContent(
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = "Limit: ${viewModel.newKey.length}/8",
-                                fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.Medium,
                             )
                         }
@@ -229,7 +222,6 @@ fun UpdateMasterKeySheetContent(
                             text = "Confirm New Master key",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                fontFamily = poppinsFamily,
                                 color = Gray
                             )
                         )
@@ -244,7 +236,6 @@ fun UpdateMasterKeySheetContent(
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = "Limit: ${viewModel.confirmNewKey.length}/8",
-                                fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.Medium,
                             )
                         }
@@ -305,7 +296,6 @@ fun UpdateMasterKeySheetContent(
                                 text = stringResource(R.string.reset_master_key),
                                 style = TextStyle(
                                     fontSize = 22.sp,
-                                    fontFamily = poppinsFamily,
                                     fontWeight = FontWeight.Medium
                                 )
                             )

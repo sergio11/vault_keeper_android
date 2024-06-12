@@ -41,7 +41,6 @@ import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreenActionListener
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
-import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 import com.dreamsoftware.vaultkeeper.ui.utils.obfuscateSecret
 import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderImage
 import com.dreamsoftware.vaultkeeper.utils.generateRandomBrush
@@ -126,7 +125,6 @@ fun SecureCardRow(
                                     text = "Edit",
                                     style = TextStyle(
                                         fontSize = 14.sp,
-                                        fontFamily = poppinsFamily,
                                         fontWeight = FontWeight.Medium
                                     )
                                 )
@@ -150,7 +148,6 @@ fun SecureCardRow(
                                 Text(
                                     text = "Delete", style = TextStyle(
                                         fontSize = 14.sp,
-                                        fontFamily = poppinsFamily,
                                         fontWeight = FontWeight.Medium
                                     )
                                 )

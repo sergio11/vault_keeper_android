@@ -23,7 +23,6 @@ import com.dreamsoftware.vaultkeeper.ui.features.settings.SettingsItem
 import com.dreamsoftware.vaultkeeper.ui.theme.Blue
 import com.dreamsoftware.vaultkeeper.ui.theme.LightBlue
 import com.dreamsoftware.vaultkeeper.ui.theme.Red
-import com.dreamsoftware.vaultkeeper.ui.theme.poppinsFamily
 
 @Composable
 internal fun SettingsItemRow(
@@ -57,7 +56,6 @@ internal fun SettingsItemRow(
                 text = item.text,
                 fontSize = 16.sp,
                 color = if (item is SettingsItem.LogoutItem) Red else Color.Black,
-                fontFamily = poppinsFamily,
                 fontWeight = FontWeight.Medium
             )
 
