@@ -15,8 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +27,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
+import com.dreamsoftware.brownie.component.BrownieSelectionRow
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
@@ -36,8 +35,6 @@ import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.features.generatepassword.components.CustomSlider
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
-import com.dreamsoftware.vaultkeeper.ui.theme.Blue
-import com.dreamsoftware.vaultkeeper.ui.theme.LightBlue
 import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
 @Composable
@@ -57,7 +54,7 @@ fun GeneratePasswordScreenContent(
                     modifier = Modifier
                         .padding(top = 18.dp, bottom = 12.dp)
                         .align(Alignment.CenterHorizontally),
-                    titleText = "Password Generator",
+                    titleRes = R.string.generator_password_screen_title,
                     type = BrownieTextTypeEnum.TITLE_LARGE,
                     textColor = onPrimary
                 )
@@ -90,7 +87,7 @@ fun GeneratePasswordScreenContent(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         type = BrownieTextTypeEnum.TITLE_SMALL,
                         textAlign = TextAlign.Center,
-                        titleText = "Options",
+                        titleRes = R.string.generator_password_screen_options,
                     )
                     Row(
                         modifier = Modifier.padding(horizontal = 16.dp),
@@ -98,7 +95,7 @@ fun GeneratePasswordScreenContent(
                     ) {
                         BrownieText(
                             type = BrownieTextTypeEnum.LABEL_LARGE,
-                            titleText = "Length",
+                            titleRes = R.string.generator_password_screen_length,
                         )
                         CustomSlider(
                             value = passwordLength.toFloat(),
@@ -107,77 +104,35 @@ fun GeneratePasswordScreenContent(
                         )
                     }
 
-                    SelectionRow(
-                        text = "Lower case",
+                    BrownieSelectionRow(
+                        titleRes = R.string.generator_password_screen_lower_case,
                         checked = lowerCase,
                         onCheckedChange = actionListener::onLowerCaseChanged
                     )
 
-                    SelectionRow(
-                        text = "Upper case",
+                    BrownieSelectionRow(
+                        titleRes = R.string.generator_password_screen_upper_case,
                         checked = upperCase,
                         onCheckedChange = actionListener::onUpperCaseChanged
                     )
 
-                    SelectionRow(
-                        text = "Digits",
+                    BrownieSelectionRow(
+                        titleRes = R.string.generator_password_screen_digits,
                         checked = digits,
                         onCheckedChange = actionListener::onDigitsChanged
                     )
 
-                    SelectionRow(
-                        text = "Special characters",
+                    BrownieSelectionRow(
+                        titleRes = R.string.generator_password_screen_special_characters,
                         checked = specialCharacters,
                         onCheckedChange = actionListener::onSpecialCharactersChanged
                     )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Row(
-                        modifier = Modifier
-                            .padding(
-                                start = 22.dp,
-                                end = 22.dp,
-                                bottom = 32.dp
-                            )
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        Box(
-                            modifier = Modifier
-                                .size(52.dp)
-                                .clip(CircleShape)
-                                .shadow(10.dp)
-                                .background(color = BgBlack)
-                                .clickWithRipple {
-                                    actionListener.onValidateAndSave()
-                                },
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .padding(all = 8.dp)
-                                    .size(40.dp),
-                                painter = painterResource(R.drawable.icon_regenerate),
-                                contentDescription = null,
-                                tint = Color.White
-                            )
-                        }
-
-                        BrownieButton(
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(52.dp)
-                                .padding(start = 16.dp),
-                            text = "Copy Password",
-                            onClick = {
-                                clipboardManager.setText(
-                                    AnnotatedString((password))
-                                )
-                                actionListener.onPasswordCopied()
-                            }
-                        )
-                    }
-
+                    Spacer(modifier = Modifier.height(34.dp))
+                    GeneratePasswordScreenActions(
+                        uiState = uiState,
+                        actionListener = actionListener,
+                        clipboardManager = clipboardManager
+                    )
                 }
             }
         }
@@ -185,30 +140,57 @@ fun GeneratePasswordScreenContent(
 }
 
 @Composable
-private fun SelectionRow(
-    text: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+private fun GeneratePasswordScreenActions(
+    uiState: GenerateUiState,
+    clipboardManager: ClipboardManager,
+    actionListener: GeneratePasswordScreenActionListener
 ) {
-    Row(
-        modifier = Modifier.padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        BrownieText(
-            type = BrownieTextTypeEnum.LABEL_LARGE,
-            titleText = text
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Switch(
-            modifier = Modifier.size(42.dp),
-            checked = checked,
-            onCheckedChange = onCheckedChange,
-            colors = SwitchDefaults.colors(
-                checkedTrackColor = Blue,
-                uncheckedTrackColor = LightBlue,
-                uncheckedBorderColor = LightBlue,
-                uncheckedThumbColor = Color.White
+    with(uiState) {
+        Row(
+            modifier = Modifier
+                .padding(
+                    start = 22.dp,
+                    end = 22.dp,
+                    bottom = 32.dp
+                )
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Box(
+                modifier = Modifier
+                    .size(52.dp)
+                    .clip(CircleShape)
+                    .shadow(10.dp)
+                    .background(color = BgBlack)
+                    .clickWithRipple {
+                        actionListener.onValidateAndSave()
+                    },
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .padding(all = 8.dp)
+                        .size(40.dp),
+                    painter = painterResource(R.drawable.icon_regenerate),
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
+
+            BrownieButton(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(52.dp)
+                    .padding(start = 16.dp),
+                textRes = R.string.generator_password_screen_copy_password,
+                onClick = {
+                    clipboardManager.setText(
+                        AnnotatedString((password))
+                    )
+                    actionListener.onPasswordCopied()
+                }
             )
-        )
+        }
     }
 }

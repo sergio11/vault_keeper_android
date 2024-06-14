@@ -50,6 +50,16 @@
     <string name="signup_signup_button_text">Sign Up Now!</string>
     <string name="signup_already_has_account_text">Already have an account?</string>
 
+    <!--Generator Password screen -->
+    <string name="generator_password_screen_title">Password Generator</string>
+    <string name="generator_password_screen_options">Options</string>
+    <string name="generator_password_screen_length">Length</string>
+    <string name="generator_password_screen_lower_case">Lower case</string>
+    <string name="generator_password_screen_upper_case">Upper case</string>
+    <string name="generator_password_screen_digits">Digits</string>
+    <string name="generator_password_screen_special_characters">Special characters</string>
+    <string name="generator_password_screen_copy_password">Copy Password</string>
+
 
     <string name="error_card_provider">Please choose a Card Provider</string>
     <string name="error_card_number_empty">Please provide Card Number</string>
