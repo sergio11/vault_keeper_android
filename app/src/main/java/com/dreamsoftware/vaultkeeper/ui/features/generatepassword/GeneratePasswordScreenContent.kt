@@ -29,11 +29,11 @@ import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieSelectionRow
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
+import com.dreamsoftware.brownie.component.BrownieSliderRow
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.features.generatepassword.components.CustomSlider
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
@@ -83,26 +83,20 @@ fun GeneratePasswordScreenContent(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Spacer(modifier = Modifier.height(20.dp))
+
                     BrownieText(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         type = BrownieTextTypeEnum.TITLE_SMALL,
                         textAlign = TextAlign.Center,
                         titleRes = R.string.generator_password_screen_options,
                     )
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        BrownieText(
-                            type = BrownieTextTypeEnum.LABEL_LARGE,
-                            titleRes = R.string.generator_password_screen_length,
-                        )
-                        CustomSlider(
-                            value = passwordLength.toFloat(),
-                            onValueChange = { actionListener.onPasswordLength(newLength = it.toInt()) },
-                            valueRange = 6f..15f
-                        )
-                    }
+
+                    BrownieSliderRow(
+                        titleRes = R.string.generator_password_screen_length,
+                        value = passwordLength.toFloat(),
+                        onValueChange = { actionListener.onPasswordLength(newLength = it.toInt()) },
+                        valueRange = 6f..15f
+                    )
 
                     BrownieSelectionRow(
                         titleRes = R.string.generator_password_screen_lower_case,
