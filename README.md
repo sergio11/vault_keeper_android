@@ -5,6 +5,10 @@
 
 VaultKeeper is the ultimate solution to simplify and secure your digital life. With VaultKeeper, you can efficiently and securely manage your passwords and banking details, all within an encrypted vault. No more juggling multiple credentials; our app provides hassle-free access to both your accounts and banking cards, all within a safeguarded and encrypted environment.
 
+VaultKeeper is designed to be your all-in-one digital security companion. The app ensures that every password and piece of financial information you store is encrypted with the latest security protocols. This encryption is not only robust but also ensures that even if your device is lost or stolen, **your data remains inaccessible to unauthorized users.**
+
+With VaultKeeper, you can generate strong, unique passwords for every account and store them safely. The intuitive interface, powered by Jetpack Compose, makes navigation and management of your data straightforward and enjoyable. No more struggling with remembering multiple passwords or worrying about the security of your banking information.
+
 <p align="center">
   <img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white" />
   <img src="https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white" />
@@ -34,12 +38,6 @@ At VaultKeeper, we have applied the best mobile architecture practices and desig
 * **🛡️ Peace of Mind and Security:** Enjoy the peace of mind knowing your data is protected with the highest security standards.
 * **⏱️ Efficiency and Convenience:** Simplify your digital life by having all your critical information in one securely accessible place.
 * **🌟 Innovation and Modernity:** Experience an app that is not only functional but also modern and at the forefront of mobile technology.
-
-## Detailed Overview:
-
-VaultKeeper is designed to be your all-in-one digital security companion. Our app ensures that every password and piece of financial information you store is encrypted with the latest security protocols. This encryption is not only robust but also ensures that even if your device is lost or stolen, your data remains inaccessible to unauthorized users.
-
-With VaultKeeper, you can generate strong, unique passwords for every account and store them safely. Our intuitive interface, powered by Jetpack Compose, makes navigation and management of your data straightforward and enjoyable. No more struggling with remembering multiple passwords or worrying about the security of your banking information.
 
 ## Seamless User Experience:
 
