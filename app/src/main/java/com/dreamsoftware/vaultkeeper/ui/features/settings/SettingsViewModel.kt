@@ -5,6 +5,8 @@ import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.vaultkeeper.R
+import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAuthenticateUserDetailUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCredentialsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
 import com.dreamsoftware.vaultkeeper.utils.IApplicationAware
@@ -15,6 +17,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val application: IApplicationAware,
     private val signOffUseCase: SignOffUseCase,
+    private val getAuthenticateUserDetailUseCase: GetAuthenticateUserDetailUseCase,
     private val removeAllCredentialsUseCase: RemoveAllCredentialsUseCase
 ) : BrownieViewModel<SettingsUiState, SettingsUiSideEffects>(), SettingsScreenActionListener {
 
@@ -28,6 +31,10 @@ class SettingsViewModel @Inject constructor(
                 it.copy(items = buildItems(hasBiometric = true))
             }
         }
+        executeUseCase(
+            useCase = getAuthenticateUserDetailUseCase,
+            onSuccess = ::onAuthenticatedUserLoadSuccessfully
+        )
     }
 
     override fun onUpdateSheetVisibility(isVisible: Boolean) {
@@ -75,6 +82,10 @@ class SettingsViewModel @Inject constructor(
     private fun onAllCredentialsRemoved() {
 
     }
+
+    private fun onAuthenticatedUserLoadSuccessfully(authUserBO: AuthUserBO) {
+        updateState { it.copy(authUserBO = authUserBO) }
+    }
 }
 
 data class SettingsUiState(
@@ -82,7 +93,8 @@ data class SettingsUiState(
     override val errorMessage: String? = null,
     val showSheet: Boolean = false,
     val showCloseSessionDialog: Boolean = false,
-    val items: List<SettingsItem> = emptyList()
+    val items: List<SettingsItem> = emptyList(),
+    val authUserBO: AuthUserBO? = null
 ): UiState<SettingsUiState>(isLoading, errorMessage) {
     override fun copyState(isLoading: Boolean, errorMessage: String?): SettingsUiState =
         copy(isLoading = isLoading, errorMessage = errorMessage)

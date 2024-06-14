@@ -24,7 +24,6 @@ import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.features.settings.components.SettingsItemRow
 import com.dreamsoftware.vaultkeeper.ui.features.settings.components.UserProfileRow
-import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 
 @Composable
 fun SettingsScreenContent(
@@ -64,7 +63,7 @@ fun SettingsScreenContent(
                 BrownieSheetSurface(
                     verticalArrangement = Arrangement.Top
                 ) {
-                    UserProfileRow(userData = null)
+                    UserProfileRow(userData = authUserBO)
                     HorizontalDivider(
                         color = Color.LightGray,
                         modifier = Modifier
@@ -99,14 +98,13 @@ fun SettingsScreenContent(
                                     .padding(16.dp),
                                 type = BrownieTextTypeEnum.LABEL_MEDIUM,
                                 titleRes = R.string.about_info,
-                                textColor = Color.Black
                             )
                             Spacer(modifier = Modifier.navigationBarsPadding())
                             Spacer(
                                 modifier = Modifier
                                     .height(50.dp)
                                     .fillMaxWidth()
-                                    .background(color = BgBlack)
+                                    .background(color = Color.White)
                             )
                         }
                     }

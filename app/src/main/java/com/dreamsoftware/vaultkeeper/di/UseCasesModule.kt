@@ -14,11 +14,12 @@ import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCredentialsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.GetAuthenticateUserDetailUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
-import com.dreamsoftware.vaultkeeper.domain.usecase.RemovePasswordAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCredentialsUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemovePasswordAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveSecureCardUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveCardUseCase
@@ -81,6 +82,14 @@ class UseCasesModule {
         userRepository: IUserRepository
     ): VerifyUserSessionUseCase =
         VerifyUserSessionUseCase(userRepository = userRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetAuthenticateUserDetailUseCase(
+        userRepository: IUserRepository
+    ): GetAuthenticateUserDetailUseCase =
+        GetAuthenticateUserDetailUseCase(userRepository = userRepository)
+
 
     @Provides
     @ViewModelScoped
