@@ -10,6 +10,7 @@ import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepository
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
 import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
+import com.dreamsoftware.vaultkeeper.ui.utils.containsIgnoreCase
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal class AccountRepositoryImpl(
@@ -43,7 +44,7 @@ internal class AccountRepositoryImpl(
         localDataSource.delete(accountUid)
     }
 
-    override suspend fun findAllByUserId(userUid: String): List<AccountPasswordBO> = safeExecute {
+    override suspend fun findAllByUserIdWhere(userUid: String, term: String?): List<AccountPasswordBO> = safeExecute {
         try {
             localDataSource
                 .findAll()
@@ -55,9 +56,9 @@ internal class AccountRepositoryImpl(
                     localDataSource
                         .insert(accountLocalMapper.mapOutToIn(it))
                 }
-        }.map {
-            dataProtectionService.unwrap(it)
         }
+            .map { dataProtectionService.unwrap(it) }
+            .filter { term == null || it.accountName.containsIgnoreCase(term) || it.email.containsIgnoreCase(term)  }
     }
 
     override suspend fun findById(userUid: String, accountUid: String): AccountPasswordBO = safeExecute {

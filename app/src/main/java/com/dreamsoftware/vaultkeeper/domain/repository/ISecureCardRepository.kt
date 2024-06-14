@@ -16,7 +16,7 @@ interface ISecureCardRepository {
     suspend fun deleteById(userUid: String, cardUid: String)
 
     @Throws(RepositoryOperationException::class)
-    suspend fun findAllByUserId(userUid: String): List<SecureCardBO>
+    suspend fun findAllByUserIdWhere(userUid: String, term: String?): List<SecureCardBO>
 
     @Throws(CardNotFoundException::class, RepositoryOperationException::class)
     suspend fun findById(userUid: String, cardUid: String): SecureCardBO

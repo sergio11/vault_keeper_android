@@ -16,7 +16,7 @@ interface IAccountRepository {
     suspend fun deleteById(userUid: String, accountUid: String)
 
     @Throws(RepositoryOperationException::class)
-    suspend fun findAllByUserId(userUid: String): List<AccountPasswordBO>
+    suspend fun findAllByUserIdWhere(userUid: String, term: String?): List<AccountPasswordBO>
 
     @Throws(AccountNotFoundException::class, RepositoryOperationException::class)
     suspend fun findById(userUid: String, accountUid: String): AccountPasswordBO

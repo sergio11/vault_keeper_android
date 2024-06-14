@@ -122,6 +122,7 @@ class HomeViewModel @Inject constructor(
 
     override fun onSearchQueryUpdated(newSearchQuery: String) {
         updateState { it.copy(searchQuery = newSearchQuery) }
+        onLoadData()
     }
 
     override fun onFilterOptionUpdated(newFilterOption: FilterOptionsEnum) {
@@ -166,24 +167,33 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onLoadAllAccounts() {
-        executeUseCase(
+        executeUseCaseWithParams(
             useCase = getAllAccountsUseCase,
+            params = GetAllAccountsUseCase.Params(
+                term = uiState.value.searchQuery
+            ),
             onSuccess = ::onLoadCredentialsSuccessfully,
             onMapExceptionToState = ::onMapExceptionToState
         )
     }
 
     private fun onLoadAllSecureCards() {
-        executeUseCase(
+        executeUseCaseWithParams(
             useCase = getAllCardsUseCase,
+            params = GetAllCardsUseCase.Params(
+                term = uiState.value.searchQuery
+            ),
             onSuccess = ::onLoadCredentialsSuccessfully,
             onMapExceptionToState = ::onMapExceptionToState
         )
     }
 
     private fun onLoadAllCredentials() {
-        executeUseCase(
+        executeUseCaseWithParams(
             useCase = getAllCredentialsUseCase,
+            params = GetAllCredentialsUseCase.Params(
+                term = uiState.value.searchQuery
+            ),
             onSuccess = ::onLoadCredentialsSuccessfully,
             onMapExceptionToState = ::onMapExceptionToState
         )

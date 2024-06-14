@@ -66,7 +66,6 @@ fun String.formatExpiryDate(): String {
 
 fun String.obfuscateSecret(takeLast: Int) = takeLast(takeLast).padStart(length, '*')
 
-
 fun CardProviderEnum?.toCardProviderImage() = this?.let {
     when(it) {
         CardProviderEnum.VISA -> R.drawable.icon_visa
@@ -81,3 +80,5 @@ fun CardProviderEnum?.toCardProviderImage() = this?.let {
 fun String?.toCardProviderImage() = this?.takeIf { CardProviderEnum.entries.map(CardProviderEnum::name).contains(it) }?.let {
     CardProviderEnum.valueOf(this).toCardProviderImage()
 } ?: R.drawable.icon_card
+
+fun String.containsIgnoreCase(term: String) = lowercase().contains(term.lowercase())

@@ -191,50 +191,9 @@ fun HomeScreenContent(
                     }
 
                     if (showSheet) {
-                        BrownieBottomSheet(
-                            onDismiss = {
-                                actionListener.onFilterBottomSheetVisibilityUpdated(
-                                    isVisible = false
-                                )
-                            },
-                            content = {
-                                LazyColumn {
-                                    items(filterOptions.size) { option ->
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .clickable {
-                                                    actionListener.onFilterOptionUpdated(
-                                                        newFilterOption = filterOptions[option]
-                                                    )
-                                                }
-                                                .padding(16.dp),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            val isSelected = selectedOption == filterOptions[option]
-                                            val icon =
-                                                if (isSelected) R.drawable.icon_selected else R.drawable.icon_unselected
-                                            BrownieImageIcon(
-                                                type = BrownieType.ICON,
-                                                iconRes = icon
-                                            )
-                                            Spacer(modifier = Modifier.width(8.dp))
-                                            BrownieText(
-                                                type = BrownieTextTypeEnum.LABEL_MEDIUM,
-                                                titleText = filterOptions[option].name,
-                                                textColor = Color.Black
-                                            )
-                                        }
-                                    }
-                                }
-                                Spacer(modifier = Modifier.navigationBarsPadding())
-                                Spacer(
-                                    modifier = Modifier
-                                        .height(50.dp)
-                                        .fillMaxWidth()
-                                        .background(color = Color.White)
-                                )
-                            }
+                        FilterOptionsBottomSheet(
+                            uiState = uiState,
+                            actionListener = actionListener
                         )
                     }
                     if (isLoading) {
@@ -245,37 +204,108 @@ fun HomeScreenContent(
                             selectedOption = selectedOption
                         )
                     } else {
-                        LazyColumn(
+                        CredentialsList(
+                            uiState = uiState,
+                            actionListener = actionListener,
+                            nestedScrollConnection = nestedScrollConnection
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+private fun FilterOptionsBottomSheet(
+    uiState: HomeUiState,
+    actionListener: HomeScreenActionListener
+) {
+    with(uiState) {
+        BrownieBottomSheet(
+            onDismiss = {
+                actionListener.onFilterBottomSheetVisibilityUpdated(
+                    isVisible = false
+                )
+            },
+            content = {
+                LazyColumn {
+                    items(filterOptions.size) { option ->
+                        Row(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .padding(
-                                    start = 8.dp, end = 8.dp,
-                                    top = 8.dp, bottom = 0.dp
-                                )
-                                .nestedScroll(nestedScrollConnection),
-                        ) {
-
-                            items(credentials.size) { idx ->
-                                when (val credential = credentials[idx]) {
-                                    is AccountPasswordBO -> {
-                                        if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.PASSWORDS) {
-                                            AccountPasswordRow(
-                                                account = credential,
-                                                actionListener = actionListener
-                                            )
-                                        }
-                                    }
-
-                                    is SecureCardBO -> {
-                                        if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.CARDS) {
-                                            SecureCardRow(
-                                                card = credential,
-                                                actionListener = actionListener
-                                            )
-                                        }
-                                    }
+                                .fillMaxWidth()
+                                .clickable {
+                                    actionListener.onFilterOptionUpdated(
+                                        newFilterOption = filterOptions[option]
+                                    )
                                 }
-                            }
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            val isSelected = selectedOption == filterOptions[option]
+                            val icon =
+                                if (isSelected) R.drawable.icon_selected else R.drawable.icon_unselected
+                            BrownieImageIcon(
+                                type = BrownieType.ICON,
+                                iconRes = icon
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            BrownieText(
+                                type = BrownieTextTypeEnum.LABEL_MEDIUM,
+                                titleText = filterOptions[option].name,
+                                textColor = Color.Black
+                            )
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.navigationBarsPadding())
+                Spacer(
+                    modifier = Modifier
+                        .height(50.dp)
+                        .fillMaxWidth()
+                        .background(color = Color.White)
+                )
+            }
+        )
+    }
+}
+
+@Composable
+private fun CredentialsList(
+    uiState: HomeUiState,
+    actionListener: HomeScreenActionListener,
+    nestedScrollConnection: NestedScrollConnection
+) {
+
+    with(uiState) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    start = 8.dp, end = 8.dp,
+                    top = 8.dp, bottom = 0.dp
+                )
+                .nestedScroll(nestedScrollConnection),
+        ) {
+
+            items(credentials.size) { idx ->
+                when (val credential = credentials[idx]) {
+                    is AccountPasswordBO -> {
+                        if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.PASSWORDS) {
+                            AccountPasswordRow(
+                                account = credential,
+                                actionListener = actionListener
+                            )
+                        }
+                    }
+
+                    is SecureCardBO -> {
+                        if (selectedOption == FilterOptionsEnum.ALL || selectedOption == FilterOptionsEnum.CARDS) {
+                            SecureCardRow(
+                                card = credential,
+                                actionListener = actionListener
+                            )
                         }
                     }
                 }

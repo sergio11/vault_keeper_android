@@ -10,6 +10,7 @@ import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepository
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
+import com.dreamsoftware.vaultkeeper.ui.utils.containsIgnoreCase
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal class SecureCardRepositoryImpl(
@@ -43,7 +44,7 @@ internal class SecureCardRepositoryImpl(
         localDataSource.delete(cardUid)
     }
 
-    override suspend fun findAllByUserId(userUid: String): List<SecureCardBO> = safeExecute {
+    override suspend fun findAllByUserIdWhere(userUid: String, term: String?): List<SecureCardBO> = safeExecute {
         try {
             localDataSource
                 .findAll()
@@ -55,7 +56,9 @@ internal class SecureCardRepositoryImpl(
                     localDataSource
                         .insert(secureCardLocalUserMapper.mapOutToIn(it))
                 }
-        }.map { dataProtectionService.unwrap(it) }
+        }
+            .map { dataProtectionService.unwrap(it) }
+            .filter { term == null || it.cardHolderName.containsIgnoreCase(term) || it.cardNumber.containsIgnoreCase(term) }
     }
 
     override suspend fun findById(userUid: String, cardUid: String): SecureCardBO = safeExecute {
