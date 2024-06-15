@@ -9,8 +9,8 @@ import com.dreamsoftware.vaultkeeper.ui.features.account.onboarding.OnboardingSc
 import com.dreamsoftware.vaultkeeper.ui.features.account.signin.SignInScreen
 import com.dreamsoftware.vaultkeeper.ui.features.account.signup.SignUpScreen
 import com.dreamsoftware.vaultkeeper.ui.features.account.splash.SplashScreen
+import com.dreamsoftware.vaultkeeper.ui.features.account.unlock.UnlockScreen
 import com.dreamsoftware.vaultkeeper.ui.features.main.MainScreen
-import com.dreamsoftware.vaultkeeper.ui.features.unlock.UnlockScreen
 import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
 import com.dreamsoftware.vaultkeeper.ui.navigation.utils.navigateSingleTopTo
 
@@ -31,7 +31,7 @@ fun RootNavigationGraph(
                         navigate(Screens.Onboarding.route)
                     },
                     onGoToHome = {
-                        navigate(Screens.Main.route)
+                        navigate(Screens.UnlockScreen.route)
                     },
                     onGoToCreateMasterKey = {
                         navigate(Screens.CreateMasterKey.route)
@@ -61,7 +61,7 @@ fun RootNavigationGraph(
             with(navController) {
                 SignInScreen(
                     onAuthenticated = {
-                        navigate(Screens.Main.route)
+                        navigate(Screens.UnlockScreen.route)
                     },
                     onMasterKeyNeeded = {
                         navigate(Screens.CreateMasterKey.route)

@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.ui.features.unlock
+package com.dreamsoftware.vaultkeeper.ui.features.account.unlock
 
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
@@ -8,7 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class UnlockScreenViewModel @Inject constructor() : BrownieViewModel<UnlockScreenUiState, UnlockScreenSideEffects>(), UnlockScreenActionListener {
+class UnlockScreenViewModel @Inject constructor(
+
+) : BrownieViewModel<UnlockScreenUiState, UnlockScreenSideEffects>(), UnlockScreenActionListener {
 
     override fun onGetDefaultState(): UnlockScreenUiState = UnlockScreenUiState()
     override fun onMaterKeyUpdated(newMasterKey: String) {

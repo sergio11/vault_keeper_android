@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.ui.features.unlock
+package com.dreamsoftware.vaultkeeper.ui.features.account.unlock
 
 interface UnlockScreenActionListener {
     fun onMaterKeyUpdated(newMasterKey: String)
