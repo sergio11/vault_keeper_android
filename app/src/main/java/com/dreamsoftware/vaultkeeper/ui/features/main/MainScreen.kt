@@ -14,7 +14,8 @@ import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
 @Composable
 fun MainScreen(
     viewModel: MainViewModel = hiltViewModel(),
-    onGoToSignIn: () -> Unit
+    onGoToSignIn: () -> Unit,
+    onGoToUnlockScreen: () -> Unit
 ) {
     val navController = rememberNavController()
     with(navController) {
@@ -32,7 +33,10 @@ fun MainScreen(
         }
         BrownieScreen(
             viewModel = viewModel,
-            onInitialUiState = { MainUiState() }
+            onInitialUiState = { MainUiState() },
+            onResume = {
+                onGoToUnlockScreen()
+            }
         ) { uiState ->
             MainScreenContent(
                 uiState = uiState,

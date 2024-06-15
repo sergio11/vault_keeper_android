@@ -15,22 +15,23 @@ core-ktx = "1.13.1"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
-lifecycle-runtime-ktx = "2.8.0"
+lifecycle-runtime-ktx = "2.8.2"
 activity-compose = "1.9.0"
-compose-bom = "2024.05.00"
+compose-bom = "2024.06.00"
 security-crypto = "1.0.0"
 security-crypto-ktx = "1.0.0"
 firebase-auth = "23.0.0"
 room-version = "2.6.1"
 core-splashscreen = "1.0.1"
-firebase-bom = "33.0.0"
+firebase-bom = "33.1.0"
 desugar-jdk-libs = "2.0.4"
-brownie-ui = "0.0.26"
-material-icons-extended = "1.6.7"
-exoplayer = "2.18.7"
-appcompat = "1.6.1"
+brownie-ui = "0.0.27"
+material-icons-extended = "1.6.8"
+exoplayer = "2.19.1"
+appcompat = "1.7.0"
 material = "1.12.0"
 datastore-preferences = "1.1.1"
+lifecycle-runtime-compose = "2.8.2"
 
 [libraries]
 core-library-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
@@ -51,6 +52,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 ui = { group = "androidx.compose.ui", name = "ui" }

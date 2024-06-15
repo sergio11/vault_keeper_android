@@ -49,6 +49,14 @@ fun NavGraphBuilder.HomeNavigationGraph(
         }
 
         composable(
+            route = Screens.Main.Home.Generate.route
+        ) {
+            with(navController) {
+                GeneratePasswordScreen()
+            }
+        }
+
+        composable(
             route = Screens.Main.Home.Settings.route
         ) {
             with(navController) {

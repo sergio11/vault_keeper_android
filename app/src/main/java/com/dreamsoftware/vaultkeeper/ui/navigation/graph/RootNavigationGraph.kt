@@ -10,6 +10,7 @@ import com.dreamsoftware.vaultkeeper.ui.features.account.signin.SignInScreen
 import com.dreamsoftware.vaultkeeper.ui.features.account.signup.SignUpScreen
 import com.dreamsoftware.vaultkeeper.ui.features.account.splash.SplashScreen
 import com.dreamsoftware.vaultkeeper.ui.features.main.MainScreen
+import com.dreamsoftware.vaultkeeper.ui.features.unlock.UnlockScreen
 import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
 import com.dreamsoftware.vaultkeeper.ui.navigation.utils.navigateSingleTopTo
 
@@ -103,13 +104,30 @@ fun RootNavigationGraph(
         }
 
         composable(
+            route = Screens.UnlockScreen.route
+        ) {
+            with(navController) {
+                UnlockScreen(
+                    onUnlocked = {
+                        navigate(Screens.Main.route)
+                    }
+                )
+            }
+        }
+
+        composable(
             route = Screens.Main.route
         ) {
-            MainScreen(
-                onGoToSignIn = {
-                    navController.navigateSingleTopTo(Screens.Onboarding.route)
-                }
-            )
+            with(navController) {
+                MainScreen(
+                    onGoToSignIn = {
+                        navigateSingleTopTo(Screens.Onboarding.route)
+                    },
+                    onGoToUnlockScreen = {
+                        navigate(Screens.UnlockScreen.route)
+                    }
+                )
+            }
         }
     }
 }
