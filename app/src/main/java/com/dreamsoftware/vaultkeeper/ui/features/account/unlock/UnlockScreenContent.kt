@@ -22,13 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
-import com.dreamsoftware.brownie.component.BrownieLoadingDialog
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextFieldPassword
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
+import com.dreamsoftware.vaultkeeper.ui.core.components.LoadingDialog
 
 @Composable
 fun UnlockScreenContent(
@@ -38,12 +38,7 @@ fun UnlockScreenContent(
     with(uiState) {
         val configuration = LocalConfiguration.current
         val screenHeight = configuration.screenHeightDp.dp
-        BrownieLoadingDialog(
-            isShowingDialog = isLoading,
-            mainLogoRes = R.drawable.icon_home,
-            titleRes = R.string.loading_dialog_title_text,
-            descriptionRes = R.string.loading_dialog_description_text
-        )
+        LoadingDialog(isShowingDialog = isLoading)
         BrownieScreenContent(
             enableVerticalScroll = true,
             hasTopBar = false,
@@ -99,7 +94,7 @@ private fun UnlockScreenSheetContent(
                         .padding(top = 16.dp, bottom = 6.dp)
                         .fillMaxWidth(),
                     type = BrownieTextTypeEnum.TITLE_MEDIUM,
-                    titleRes = R.string.setup_master_key,
+                    titleRes = R.string.unlock_screen_secondary_title,
                     textAlign = TextAlign.Center
                 )
 

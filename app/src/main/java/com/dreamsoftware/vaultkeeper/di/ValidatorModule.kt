@@ -3,7 +3,7 @@ package com.dreamsoftware.vaultkeeper.di
 import android.content.Context
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthRequestBO
-import com.dreamsoftware.vaultkeeper.domain.model.SaveMasterKeyBO
+import com.dreamsoftware.vaultkeeper.domain.model.SaveSecretBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.model.SignUpBO
 import com.dreamsoftware.vaultkeeper.domain.validation.IAccountValidationMessagesResolver
@@ -80,7 +80,7 @@ class ValidatorModule {
     @ViewModelScoped
     fun provideSaveMasterKeyValidator(
         messagesResolver: ISaveMasterKeyValidationMessagesResolver
-    ): IBusinessEntityValidator<SaveMasterKeyBO> = SaveMasterKeyValidatorImpl(messagesResolver)
+    ): IBusinessEntityValidator<SaveSecretBO> = SaveMasterKeyValidatorImpl(messagesResolver)
 
     @Provides
     @ViewModelScoped

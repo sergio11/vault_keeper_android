@@ -1,7 +1,7 @@
 package com.dreamsoftware.vaultkeeper.di
 
+import com.dreamsoftware.vaultkeeper.data.remote.datasource.ISecretRemoteDataSource
 import com.dreamsoftware.vaultkeeper.domain.repository.IPreferenceRepository
-import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.service.ICryptoService
 import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
@@ -37,8 +37,8 @@ class ServiceModule {
     @Singleton
     fun provideDataProtectionService(
         cryptoService: ICryptoService,
-        secretRepository: ISecretRepository,
+        secretDataSource: ISecretRemoteDataSource,
         preferenceRepository: IPreferenceRepository
     ): IDataProtectionService =
-        DataProtectionServiceImpl(cryptoService, secretRepository, preferenceRepository)
+        DataProtectionServiceImpl(cryptoService, secretDataSource, preferenceRepository)
 }

@@ -13,7 +13,9 @@ fun UnlockScreen(
         viewModel = viewModel,
         onInitialUiState = { UnlockScreenUiState() },
         onSideEffect = {
-
+            when(it) {
+                UnlockScreenSideEffects.AccountUnlockSuccessfully -> onUnlocked()
+            }
         }
     ) { uiState ->
         UnlockScreenContent(

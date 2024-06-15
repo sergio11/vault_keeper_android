@@ -2,16 +2,22 @@ package com.dreamsoftware.vaultkeeper.domain.usecase
 
 import com.dreamsoftware.brownie.core.BrownieUseCaseWithParams
 import com.dreamsoftware.vaultkeeper.domain.exception.InvalidDataException
-import com.dreamsoftware.vaultkeeper.domain.model.SaveMasterKeyBO
+import com.dreamsoftware.vaultkeeper.domain.model.SaveSecretBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IPreferenceRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
+import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import com.dreamsoftware.vaultkeeper.domain.validation.IBusinessEntityValidator
 
 class SaveMasterKeyUseCase(
     private val preferencesRepository: IPreferenceRepository,
     private val secretRepository: ISecretRepository,
-    private val masterKeyValidator: IBusinessEntityValidator<SaveMasterKeyBO>
+    private val masterKeyValidator: IBusinessEntityValidator<SaveSecretBO>,
+    private val passwordGeneratorService: IPasswordGeneratorService
 ): BrownieUseCaseWithParams<SaveMasterKeyUseCase.Params, Unit>() {
+
+    private companion object {
+        const val SECRET_SALT_LENGTH = 20
+    }
 
     override suspend fun onExecuted(params: Params): Unit =
         params.toSaveSecretBO(userUid = preferencesRepository.getAuthUserUid()).let { saveSecretBO ->
@@ -22,10 +28,11 @@ class SaveMasterKeyUseCase(
             }
         }
 
-    private fun Params.toSaveSecretBO(userUid: String) = SaveMasterKeyBO(
+    private fun Params.toSaveSecretBO(userUid: String) = SaveSecretBO(
         key = key,
         confirmKey = confirmKey,
-        userUid = userUid
+        userUid = userUid,
+        salt = passwordGeneratorService.generatePassword(length = SECRET_SALT_LENGTH)
     )
 
     data class Params(
