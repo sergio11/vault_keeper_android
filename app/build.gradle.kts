@@ -89,6 +89,8 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    implementation(libs.lifecycle.runtime.compose)
+
     // Crypto security
     implementation(libs.androidx.security.crypto)
 

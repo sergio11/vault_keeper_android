@@ -15,7 +15,6 @@ fun MainScreenContent(
     onGoToSignIn: () -> Unit,
     navHostController: NavHostController
 ) {
-
     with(uiState) {
         BrownieScreenContent(
             hasTopBar = false,

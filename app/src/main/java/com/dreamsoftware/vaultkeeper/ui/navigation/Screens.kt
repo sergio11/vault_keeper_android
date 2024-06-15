@@ -14,6 +14,7 @@ sealed class Screens(val route: String, arguments: List<NamedNavArgument> = empt
     data object SignIn: Screens("sign_in")
     data object SignUp: Screens("sign_up")
     data object CreateMasterKey: Screens("create_master_key")
+    data object UnlockScreen: Screens("unlock_screen")
     sealed class Main private constructor(route: String) : Screens(route) {
         companion object {
             const val route = "main"
