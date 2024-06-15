@@ -18,6 +18,11 @@
     <string name="setup_master_key">Setup Master Key</string>
     <string name="setup_key_tagline_2">Create a Master Key to secure your credentials with end-to-end encryption</string>
 
+    <!-- Unlock Screen -->
+    <string name="unlock_screen_title">Enter your secure passcode to access all your passwords and banking cards. Your digital security awaits! </string>
+    <string name="unlock_screen_button">Unlock</string>
+    <string name="unlock_screen_secondary_title">Unlock Your Vault</string>
+
     <!-- Home and Settings -->
     <string name="home">Home</string>
     <string name="settings">Settings</string>

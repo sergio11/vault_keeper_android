@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.features.unlock.UnlockScreenViewModel
+import com.dreamsoftware.vaultkeeper.ui.features.account.unlock.UnlockScreenViewModel
 import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
 
 @Composable
