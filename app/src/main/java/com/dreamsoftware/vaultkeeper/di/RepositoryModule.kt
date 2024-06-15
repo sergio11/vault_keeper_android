@@ -24,18 +24,19 @@ import com.dreamsoftware.vaultkeeper.data.repository.mapper.AccountRemoteMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.AuthUserInfo
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.AuthUserMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.PBEDataMapper
+import com.dreamsoftware.vaultkeeper.data.repository.mapper.SaveSecretMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.SecureCardLocalMapper
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.SecureCardRemoteMapper
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.model.PBEDataBO
+import com.dreamsoftware.vaultkeeper.domain.model.SaveSecretBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.repository.IAccountRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IPreferenceRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
-import com.dreamsoftware.vaultkeeper.domain.service.ICryptoService
 import com.dreamsoftware.vaultkeeper.domain.service.IDataProtectionService
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import dagger.Module
@@ -75,6 +76,10 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun providePBEDataMapper(): IBrownieOneSideMapper<SecretDTO, PBEDataBO> = PBEDataMapper()
+
+    @Provides
+    @Singleton
+    fun provideSaveSecretDataMapper(): IBrownieOneSideMapper<SaveSecretBO, SecretDTO> = SaveSecretMapper()
 
     @Provides
     @Singleton
@@ -134,14 +139,18 @@ class RepositoryModule {
     fun provideSecretRepository(
         secretDataSource: ISecretRemoteDataSource,
         passwordGenerator: IPasswordGeneratorService,
-        pbeDataMapper: IBrownieOneSideMapper<SecretDTO, PBEDataBO>,
-        cryptoService: ICryptoService
+        dataProtectionService: IDataProtectionService,
+        secretMapper: IBrownieOneSideMapper<SecretDTO, PBEDataBO>,
+        saveSecretMapper: IBrownieOneSideMapper<SaveSecretBO, SecretDTO>,
+        @IoDispatcher dispatcher: CoroutineDispatcher
     ): ISecretRepository =
         SecretRepositoryImpl(
             secretDataSource,
             passwordGenerator,
-            pbeDataMapper,
-            cryptoService
+            dataProtectionService,
+            secretMapper,
+            saveSecretMapper,
+            dispatcher
         )
 
     @Provides
