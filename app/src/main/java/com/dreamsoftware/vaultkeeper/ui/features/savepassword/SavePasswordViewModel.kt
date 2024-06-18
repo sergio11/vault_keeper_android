@@ -12,7 +12,7 @@ import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
-import com.dreamsoftware.vaultkeeper.utils.IApplicationAware
+import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 import com.dreamsoftware.vaultkeeper.utils.getRandomNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class SavePasswordViewModel @Inject constructor(
     private val getAccountByIdUseCase: GetAccountByIdUseCase,
     private val passwordGeneratorService: IPasswordGeneratorService,
     @SavePasswordErrorMapper private val errorMapper: IBrownieErrorMapper,
-    private val applicationAware: IApplicationAware
+    private val applicationAware: IVaultKeeperApplicationAware
 ) : BrownieViewModel<SavePasswordUiState, SavePasswordUiSideEffects>(), SavePasswordScreenActionListener {
 
     fun getAccountById(accountUid: String) {

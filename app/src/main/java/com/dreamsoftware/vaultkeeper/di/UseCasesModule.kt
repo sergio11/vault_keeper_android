@@ -17,6 +17,7 @@ import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCredentialsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAuthenticateUserDetailUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.LockAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCredentialsUseCase
@@ -29,8 +30,10 @@ import com.dreamsoftware.vaultkeeper.domain.usecase.SignInUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignUpUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.ValidateMasterKeyUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserAccountStatusUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserSessionUseCase
 import com.dreamsoftware.vaultkeeper.domain.validation.IBusinessEntityValidator
+import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -71,11 +74,13 @@ class UseCasesModule {
     @ViewModelScoped
     fun provideSignOffUseCase(
         userRepository: IUserRepository,
-        preferenceRepository: IPreferenceRepository
+        preferenceRepository: IPreferenceRepository,
+        applicationAware: IVaultKeeperApplicationAware
     ): SignOffUseCase =
         SignOffUseCase(
             userRepository = userRepository,
-            preferenceRepository = preferenceRepository
+            preferenceRepository = preferenceRepository,
+            applicationAware = applicationAware
         )
 
     @Provides
@@ -249,9 +254,28 @@ class UseCasesModule {
     @ViewModelScoped
     fun provideValidateMasterKeyUseCase(
         preferenceRepository: IPreferenceRepository,
-        secretRepository: ISecretRepository
+        secretRepository: ISecretRepository,
+        applicationAware: IVaultKeeperApplicationAware
     ): ValidateMasterKeyUseCase = ValidateMasterKeyUseCase(
         preferencesRepository = preferenceRepository,
-        secretRepository = secretRepository
+        secretRepository = secretRepository,
+        applicationAware = applicationAware
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideLockAccountUseCase(
+        applicationAware: IVaultKeeperApplicationAware
+    ): LockAccountUseCase = LockAccountUseCase(
+        applicationAware = applicationAware
+    )
+
+
+    @Provides
+    @ViewModelScoped
+    fun provideVerifyUserAccountStatusUseCase(
+        applicationAware: IVaultKeeperApplicationAware
+    ): VerifyUserAccountStatusUseCase = VerifyUserAccountStatusUseCase(
+        applicationAware = applicationAware
     )
 }

@@ -20,22 +20,32 @@ fun MainScreen(
     val navController = rememberNavController()
     with(navController) {
         val navBackStackEntry by currentBackStackEntryAsState()
-        val hideBottomItems by remember { derivedStateOf {
-            when (navBackStackEntry?.destination?.route) {
-                Screens.Main.Home.Info.route,
-                Screens.Main.Home.Generate.route,
-                Screens.Main.Home.Settings.route -> false
-                else -> true
+        val hideBottomItems by remember {
+            derivedStateOf {
+                when (navBackStackEntry?.destination?.route) {
+                    Screens.Main.Home.Info.route,
+                    Screens.Main.Home.Generate.route,
+                    Screens.Main.Home.Settings.route -> false
+                    else -> true
+                }
             }
-        } }
+        }
         LaunchedEffect(hideBottomItems) {
             viewModel.onBottomItemsVisibilityChanged(hideBottomItems)
         }
         BrownieScreen(
             viewModel = viewModel,
             onInitialUiState = { MainUiState() },
+            onSideEffect = {
+                when (it) {
+                    MainSideEffects.AccountIsLockedSideEffect -> onGoToUnlockScreen()
+                }
+            },
             onResume = {
-                onGoToUnlockScreen()
+                onVerifyUserAccountStatus()
+            },
+            onPause = {
+                onLockAccount()
             }
         ) { uiState ->
             MainScreenContent(

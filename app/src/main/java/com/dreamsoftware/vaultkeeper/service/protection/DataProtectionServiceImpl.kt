@@ -21,19 +21,27 @@ internal class DataProtectionServiceImpl(
     override suspend fun <T : ICryptable<T>> wrapAsRoot(data: T): T =
         wrap(secret = vaultRootSecret.getMasterPassword(), salt = vaultRootSecret.getMasterSalt(), data = data)
 
-    override suspend fun <T: ICryptable<T>> wrap(data: T): T = getAuthUserSecret().let {
-        wrap(secret = it.secret, salt = it.salt, data = data)
+    override suspend fun <T: ICryptable<T>> wrap(data: T): T = getAuthUserSecret().let { (secret, salt) ->
+        wrap(secret = secret, salt = salt, data = data)
     }
 
     override suspend fun <T : ICryptable<T>> unwrapAsRoot(data: T): T =
         unwrap(secret = vaultRootSecret.getMasterPassword(), salt = vaultRootSecret.getMasterSalt(), data = data)
 
-    override suspend fun <T: ICryptable<T>> unwrap(data: T): T = getAuthUserSecret().let {
-        unwrap(secret = it.secret, salt = it.salt, data = data)
+    override suspend fun <T: ICryptable<T>> unwrap(data: T): T = getAuthUserSecret().let { (secret, salt) ->
+        unwrap(secret = secret, salt = salt, data = data)
     }
 
-    private suspend fun getAuthUserSecret() =
-        secretDataSource.getByUserUid(preferenceRepository.getAuthUserUid())
+    private suspend fun getAuthUserSecret(): Pair<String, String> =
+        secretDataSource.getByUserUid(preferenceRepository.getAuthUserUid()).run {
+            with(vaultRootSecret) {
+                with(cryptoService) {
+                    val secret = decodeAndDecrypt(password = getMasterPassword(), salt = getMasterSalt(), data = secret)
+                    val salt = decodeAndDecrypt(password = getMasterPassword(), salt = getMasterSalt(), data = salt)
+                    secret to salt
+                }
+            }
+        }
 
     private fun <T: ICryptable<T>> wrap(secret: String, salt: String, data: T): T {
         val encryptVisitor = EncryptVisitor(secret, salt)

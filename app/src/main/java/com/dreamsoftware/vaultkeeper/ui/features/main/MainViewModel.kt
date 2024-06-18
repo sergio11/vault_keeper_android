@@ -6,13 +6,18 @@ import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.vaultkeeper.R
+import com.dreamsoftware.vaultkeeper.domain.usecase.LockAccountUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserAccountStatusUseCase
 import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(): BrownieViewModel<MainUiState, MainSideEffects>() {
+class MainViewModel @Inject constructor(
+    private val verifyUserAccountStatusUseCase: VerifyUserAccountStatusUseCase,
+    private val lockAccountUseCase: LockAccountUseCase
+): BrownieViewModel<MainUiState, MainSideEffects>() {
 
     override fun onGetDefaultState(): MainUiState = MainUiState(mainDestinationList = listOf(
         BottomNavBarItem(
@@ -39,6 +44,23 @@ class MainViewModel @Inject constructor(): BrownieViewModel<MainUiState, MainSid
             }
         }
     }
+
+    fun onVerifyUserAccountStatus() {
+        executeUseCase(
+            useCase = verifyUserAccountStatusUseCase,
+            onSuccess = ::onVerifyUserAccountCompleted
+        )
+    }
+
+    fun onLockAccount() {
+        executeUseCase(useCase = lockAccountUseCase)
+    }
+
+    private fun onVerifyUserAccountCompleted(isUnlocked: Boolean) {
+        if(!isUnlocked) {
+            launchSideEffect(MainSideEffects.AccountIsLockedSideEffect, enableReplay = true)
+        }
+    }
 }
 
 data class MainUiState(
@@ -52,4 +74,6 @@ data class MainUiState(
         copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
-sealed interface MainSideEffects: SideEffect
+sealed interface MainSideEffects: SideEffect {
+    data object AccountIsLockedSideEffect: MainSideEffects
+}
