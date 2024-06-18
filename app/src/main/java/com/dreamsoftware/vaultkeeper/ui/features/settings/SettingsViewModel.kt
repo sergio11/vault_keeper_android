@@ -9,13 +9,13 @@ import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAuthenticateUserDetailUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCredentialsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
-import com.dreamsoftware.vaultkeeper.utils.IApplicationAware
+import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val application: IApplicationAware,
+    private val application: IVaultKeeperApplicationAware,
     private val signOffUseCase: SignOffUseCase,
     private val getAuthenticateUserDetailUseCase: GetAuthenticateUserDetailUseCase,
     private val removeAllCredentialsUseCase: RemoveAllCredentialsUseCase
