@@ -8,7 +8,6 @@ data class SaveAccountPasswordScreenArgs(
     val accountUid: String
 )
 
-
 @Composable
 fun SavePasswordScreen(
     viewModel: SavePasswordViewModel = hiltViewModel(),

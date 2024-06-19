@@ -45,7 +45,9 @@ fun SavePasswordScreenContent(
                 hasTopBar = false,
                 errorMessage = errorMessage,
                 enableVerticalScroll = true,
-                screenContainerColor = primary
+                screenContainerColor = primary,
+                onInfoMessageCleared = actionListener::onInfoMessageCleared,
+                onErrorMessageCleared = actionListener::onErrorMessageCleared,
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

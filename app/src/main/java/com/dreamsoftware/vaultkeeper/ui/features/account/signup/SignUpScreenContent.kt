@@ -27,7 +27,9 @@ fun SignUpScreenContent(
             mainTitleRes = R.string.signup_main_title_text,
             isLoading = isLoading,
             errorMessage = errorMessage,
-            screenBackgroundRes = R.drawable.main_background
+            screenBackgroundRes = R.drawable.main_background,
+            onInfoMessageCleared = actionListener::onInfoMessageCleared,
+            onErrorMessageCleared = actionListener::onErrorMessageCleared,
         ) {
             BrownieText(
                 modifier = Modifier

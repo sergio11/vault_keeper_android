@@ -23,10 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ClipboardManager
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -53,10 +50,7 @@ fun SecureCardRow(
 
     with(MaterialTheme.colorScheme) {
         var expanded by remember { mutableStateOf(false) }
-
         val contentBrush by remember { mutableStateOf(generateRandomBrush()) }
-
-        val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
         BrownieCardRow(contentBrush = contentBrush) {
 
@@ -99,26 +93,22 @@ fun SecureCardRow(
                     iconRes = R.drawable.icon_copy,
                     containerColor = Color.Transparent
                 ) {
-                    clipboardManager.setText(AnnotatedString(card.cardNumber))
-                    //viewModel.showCopyMsg(stringType = "Card Number")
+                    actionListener.onCopyCardNumberToClipboard(card.cardNumber)
                 }
 
                 Box {
-
                     BrownieIconButton(
                         iconRes = R.drawable.icon_more,
                         containerColor = Color.Transparent
                     ) {
                         expanded = true
                     }
-
                     DropdownMenu(
                         expanded = expanded,
                         onDismissRequest = { expanded = false },
                         modifier = Modifier
                             .background(Color.White)
                     ) {
-
                         DropdownMenuItem(
                             text = {
                                 Text(
@@ -142,7 +132,6 @@ fun SecureCardRow(
                                 )
                             }
                         )
-
                         DropdownMenuItem(
                             text = {
                                 Text(

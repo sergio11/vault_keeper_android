@@ -1,6 +1,8 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.unlock
 
-interface UnlockScreenActionListener {
+import com.dreamsoftware.brownie.core.IBrownieScreenActionListener
+
+interface UnlockScreenActionListener: IBrownieScreenActionListener {
     fun onMaterKeyUpdated(newMasterKey: String)
 
     fun onValidate()

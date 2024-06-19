@@ -1,6 +1,8 @@
 package com.dreamsoftware.vaultkeeper.ui.features.generatepassword
 
-interface GeneratePasswordScreenActionListener {
+import com.dreamsoftware.brownie.core.IBrownieScreenActionListener
+
+interface GeneratePasswordScreenActionListener: IBrownieScreenActionListener {
     fun onPasswordLength(newLength: Int)
     fun onLowerCaseChanged(hasLowerCase: Boolean)
     fun onUpperCaseChanged(hasUpperCase: Boolean)

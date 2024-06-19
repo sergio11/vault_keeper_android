@@ -25,6 +25,8 @@ fun SignInScreenContent(
         AccountScreen(
             mainTitleRes = R.string.signin_main_title_text,
             isLoading = isLoading,
+            onInfoMessageCleared = actionsListener::onInfoMessageCleared,
+            onErrorMessageCleared = actionsListener::onErrorMessageCleared,
             errorMessage = errorMessage,
             screenBackgroundRes = R.drawable.main_background) {
             BrownieText(

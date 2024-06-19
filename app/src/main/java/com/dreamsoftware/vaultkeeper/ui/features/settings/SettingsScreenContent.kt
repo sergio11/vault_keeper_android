@@ -49,7 +49,9 @@ fun SettingsScreenContent(
 
             BrownieScreenContent(
                 hasTopBar = false,
-                screenContainerColor = primary
+                screenContainerColor = primary,
+                onInfoMessageCleared = actionListener::onInfoMessageCleared,
+                onErrorMessageCleared = actionListener::onErrorMessageCleared
             ) {
 
                 BrownieText(

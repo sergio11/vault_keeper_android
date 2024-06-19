@@ -1,6 +1,8 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.onboarding
 
-interface OnboardingScreenActionListener {
+import com.dreamsoftware.brownie.core.IBrownieScreenActionListener
+
+interface OnboardingScreenActionListener: IBrownieScreenActionListener {
     fun onNavigateToSignIn()
     fun onNavigateToSignUp()
 }

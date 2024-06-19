@@ -43,6 +43,8 @@ fun UnlockScreenContent(
             enableVerticalScroll = true,
             hasTopBar = false,
             errorMessage = errorMessage,
+            onInfoMessageCleared = actionListener::onInfoMessageCleared,
+            onErrorMessageCleared = actionListener::onErrorMessageCleared,
             backgroundRes = R.drawable.main_background
         ) {
             Column(

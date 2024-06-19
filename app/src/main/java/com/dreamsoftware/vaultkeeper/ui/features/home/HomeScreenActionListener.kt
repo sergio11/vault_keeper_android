@@ -1,10 +1,11 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home
 
 import com.dreamsoftware.brownie.component.fab.BrownieFabButtonItem
+import com.dreamsoftware.brownie.core.IBrownieScreenActionListener
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 
-interface HomeScreenActionListener {
+interface HomeScreenActionListener: IBrownieScreenActionListener {
     fun onDeleteAccount(account: AccountPasswordBO)
     fun onDeleteAccountConfirmed()
     fun onDeleteAccountCancelled()
@@ -17,4 +18,7 @@ interface HomeScreenActionListener {
     fun onFabItemClicked(fabButtonItem: BrownieFabButtonItem)
     fun onEditSecureCard(cardUid: String)
     fun onEditAccountPassword(accountUid: String)
+    fun onCopyCardNumberToClipboard(cardNumber: String)
+
+    fun onCopyAccountPasswordToClipboard(accountPassword: String)
 }

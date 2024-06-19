@@ -17,6 +17,8 @@ import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCredentialsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemovePasswordAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveSecureCardUseCase
+import com.dreamsoftware.vaultkeeper.ui.utils.obfuscateSecret
+import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,6 +29,7 @@ class HomeViewModel @Inject constructor(
     private val getAllCredentialsUseCase: GetAllCredentialsUseCase,
     private val removeSecureCardUseCase: RemoveSecureCardUseCase,
     private val removePasswordAccountUseCase: RemovePasswordAccountUseCase,
+    private val applicationAware: IVaultKeeperApplicationAware,
     @HomeErrorMapper private val errorMapper: IBrownieErrorMapper
 ) : BrownieViewModel<HomeUiState, HomeSideEffects>(), HomeScreenActionListener {
 
@@ -156,6 +159,20 @@ class HomeViewModel @Inject constructor(
         launchSideEffect(HomeSideEffects.EditAccountPassword(accountUid))
     }
 
+    override fun onCopyCardNumberToClipboard(cardNumber: String) {
+        updateState {
+            it.copy(infoMessage = applicationAware.getString(R.string.copy_secure_card_to_clipboard, cardNumber.obfuscateSecret(4)))
+        }
+        launchSideEffect(HomeSideEffects.CopyTextToClipboard(cardNumber))
+    }
+
+    override fun onCopyAccountPasswordToClipboard(accountPassword: String) {
+        updateState {
+            it.copy(infoMessage = applicationAware.getString(R.string.copy_account_password_to_clipboard))
+        }
+        launchSideEffect(HomeSideEffects.CopyTextToClipboard(accountPassword))
+    }
+
     private fun onLoadData() {
         with(uiState.value) {
             when(selectedOption) {
@@ -212,11 +229,16 @@ class HomeViewModel @Inject constructor(
             isLoading = false,
             errorMessage = errorMapper.mapToMessage(ex)
         )
+
+    override fun onInfoMessageCleared() {
+        updateState { it.copy(infoMessage = null) }
+    }
 }
 
 data class HomeUiState(
     override val isLoading: Boolean = false,
     override val errorMessage: String? = null,
+    val infoMessage: String? = null,
     val selectedOption: FilterOptionsEnum = FilterOptionsEnum.ALL,
     val filterOptions: List<FilterOptionsEnum> = FilterOptionsEnum.entries,
     val accountToDelete: AccountPasswordBO? = null,
@@ -242,4 +264,5 @@ sealed interface HomeSideEffects: SideEffect {
     data object AddNewAccountPassword: HomeSideEffects
     data class EditSecureCard(val cardUid: String): HomeSideEffects
     data class EditAccountPassword(val accountUid: String): HomeSideEffects
+    data class CopyTextToClipboard(val text: String): HomeSideEffects
 }

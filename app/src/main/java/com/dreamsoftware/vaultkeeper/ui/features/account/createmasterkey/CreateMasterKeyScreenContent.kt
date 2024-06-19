@@ -43,6 +43,8 @@ fun CreateMasterKeyScreenContent(
             enableVerticalScroll = true,
             hasTopBar = false,
             errorMessage = errorMessage,
+            onErrorMessageCleared = actionListener::onErrorMessageCleared,
+            onInfoMessageCleared = actionListener::onInfoMessageCleared,
             backgroundRes = R.drawable.main_background
         ) {
             Column(

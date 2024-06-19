@@ -1,6 +1,8 @@
 package com.dreamsoftware.vaultkeeper.ui.features.account.createmasterkey
 
-interface CreateMasterKeyScreenActionListener {
+import com.dreamsoftware.brownie.core.IBrownieScreenActionListener
+
+interface CreateMasterKeyScreenActionListener: IBrownieScreenActionListener {
     fun onMaterKeyUpdated(newMasterKey: String)
     fun onRepeatMasterKeyUpdated(newRepeatMasterKey: String)
     fun onSave()
