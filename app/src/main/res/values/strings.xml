@@ -122,6 +122,9 @@
     <string name="settings_screen_remove_all_credentials">Remove all credentials</string>
     <string name="settings_screen_logout">Logout</string>
 
+    <!-- Update master key screen -->
+    <string name="update_master_key_headline">Boost Your Security: Time for a Master Key Upgrade!</string>
+
     <!-- User Information Labels and Placeholders -->
     <string name="username_label">Username</string>
     <string name="username_placeholder">Username</string>
