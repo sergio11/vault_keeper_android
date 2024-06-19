@@ -1,6 +1,7 @@
 package com.dreamsoftware.vaultkeeper.ui.features.settings
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
@@ -101,15 +102,15 @@ data class SettingsUiState(
 }
 
 sealed class SettingsItem(
-    val text: String,
+    @StringRes val textRes: Int,
     @DrawableRes val icon: Int
 ) {
-    data object MaterKeyItem: SettingsItem(text = "Reset Master Key", icon = R.drawable.icon_lock_open)
-    data class BiometricItem(val isEnabled: Boolean): SettingsItem(text = "Fingerprint Unlock", icon = R.drawable.icon_fingerprint)
-    data object ShareItem: SettingsItem(text = "Share", icon = R.drawable.icon_share)
-    data object AboutItem: SettingsItem(text = "About", icon = R.drawable.icon_info)
-    data object RemoveAllCredentials: SettingsItem(text = "Remove all credentials", icon = R.drawable.icon_info)
-    data object LogoutItem: SettingsItem(text = "Logout", icon = R.drawable.icon_logout)
+    data object MaterKeyItem: SettingsItem(textRes = R.string.settings_screen_reset_master_key, icon = R.drawable.icon_lock_open)
+    data class BiometricItem(val isEnabled: Boolean): SettingsItem(textRes = R.string.settings_screen_fingerprint_unlock, icon = R.drawable.icon_fingerprint)
+    data object ShareItem: SettingsItem(textRes = R.string.settings_screen_share, icon = R.drawable.icon_share)
+    data object AboutItem: SettingsItem(textRes = R.string.settings_screen_about, icon = R.drawable.icon_info)
+    data object RemoveAllCredentials: SettingsItem(textRes = R.string.settings_screen_remove_all_credentials, icon = R.drawable.icon_info)
+    data object LogoutItem: SettingsItem(textRes = R.string.settings_screen_logout, icon = R.drawable.icon_logout)
 }
 
 sealed interface SettingsUiSideEffects: SideEffect {

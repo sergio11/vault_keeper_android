@@ -59,7 +59,7 @@ fun SettingsScreenContent(
                         .padding(top = 18.dp, bottom = 12.dp)
                         .align(Alignment.CenterHorizontally),
                     type = BrownieTextTypeEnum.TITLE_LARGE,
-                    titleText = "Settings",
+                    titleRes = R.string.settings_screen_title,
                     textColor = onPrimary
                 )
                 BrownieSheetSurface(
