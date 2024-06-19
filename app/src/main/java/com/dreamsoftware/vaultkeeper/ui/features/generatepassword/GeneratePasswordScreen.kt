@@ -3,6 +3,7 @@ package com.dreamsoftware.vaultkeeper.ui.features.generatepassword
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dreamsoftware.brownie.component.screen.BrownieScreen
@@ -16,7 +17,11 @@ fun GeneratePasswordScreen(
         viewModel = viewModel,
         onInitialUiState = { GenerateUiState() },
         onSideEffect = {
-
+            when(it) {
+                is GenerateSideEffects.CopyPasswordToClipboard -> {
+                    clipboardManager.setText(AnnotatedString(it.password))
+                }
+            }
         },
         onInit = {
             generateInitialPassword()
@@ -24,7 +29,6 @@ fun GeneratePasswordScreen(
     ) { uiState ->
         GeneratePasswordScreenContent(
             uiState = uiState,
-            clipboardManager = clipboardManager,
             actionListener = viewModel
         )
     }

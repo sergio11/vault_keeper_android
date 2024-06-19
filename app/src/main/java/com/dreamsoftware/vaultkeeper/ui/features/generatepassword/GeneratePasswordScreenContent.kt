@@ -21,9 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
@@ -40,7 +38,6 @@ import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 @Composable
 fun GeneratePasswordScreenContent(
     uiState: GenerateUiState,
-    clipboardManager: ClipboardManager,
     actionListener: GeneratePasswordScreenActionListener
 ) {
     with(uiState) {
@@ -49,6 +46,8 @@ fun GeneratePasswordScreenContent(
                 hasTopBar = false,
                 enableVerticalScroll = true,
                 screenContainerColor = primary,
+                infoMessage = infoMessage,
+                errorMessage = errorMessage,
                 onInfoMessageCleared = actionListener::onInfoMessageCleared,
                 onErrorMessageCleared = actionListener::onErrorMessageCleared,
             ) {
@@ -125,9 +124,7 @@ fun GeneratePasswordScreenContent(
                     )
                     Spacer(modifier = Modifier.height(34.dp))
                     GeneratePasswordScreenActions(
-                        uiState = uiState,
-                        actionListener = actionListener,
-                        clipboardManager = clipboardManager
+                        actionListener = actionListener
                     )
                 }
             }
@@ -137,56 +134,49 @@ fun GeneratePasswordScreenContent(
 
 @Composable
 private fun GeneratePasswordScreenActions(
-    uiState: GenerateUiState,
-    clipboardManager: ClipboardManager,
     actionListener: GeneratePasswordScreenActionListener
 ) {
-    with(uiState) {
-        Row(
+    Row(
+        modifier = Modifier
+            .padding(
+                start = 22.dp,
+                end = 22.dp,
+                bottom = 32.dp
+            )
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Box(
             modifier = Modifier
-                .padding(
-                    start = 22.dp,
-                    end = 22.dp,
-                    bottom = 32.dp
-                )
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .size(52.dp)
+                .clip(CircleShape)
+                .shadow(10.dp)
+                .background(color = BgBlack)
+                .clickWithRipple {
+                    actionListener.onValidateAndSave()
+                },
         ) {
-
-            Box(
+            Icon(
                 modifier = Modifier
-                    .size(52.dp)
-                    .clip(CircleShape)
-                    .shadow(10.dp)
-                    .background(color = BgBlack)
-                    .clickWithRipple {
-                        actionListener.onValidateAndSave()
-                    },
-            ) {
-                Icon(
-                    modifier = Modifier
-                        .padding(all = 8.dp)
-                        .size(40.dp),
-                    painter = painterResource(R.drawable.icon_regenerate),
-                    contentDescription = null,
-                    tint = Color.White
-                )
-            }
-
-            BrownieButton(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(52.dp)
-                    .padding(start = 16.dp),
-                textRes = R.string.generator_password_screen_copy_password,
-                onClick = {
-                    clipboardManager.setText(
-                        AnnotatedString((password))
-                    )
-                    actionListener.onPasswordCopied()
-                }
+                    .padding(all = 8.dp)
+                    .size(40.dp),
+                painter = painterResource(R.drawable.icon_regenerate),
+                contentDescription = null,
+                tint = Color.White
             )
         }
+
+        BrownieButton(
+            modifier = Modifier
+                .weight(1f)
+                .height(52.dp)
+                .padding(start = 16.dp),
+            textRes = R.string.generator_password_screen_copy_password,
+            onClick = {
+                actionListener.onPasswordCopied()
+            }
+        )
     }
 }
