@@ -2,8 +2,6 @@ package com.dreamsoftware.vaultkeeper.utils
 
 import com.dreamsoftware.vaultkeeper.R
 
-const val ENCRYPTED_SHARED_PREFS_NAME = "encrypted_shared_prefs"
-
 
 val suggestionsWithImages = listOf(
     "Amazon Prime" to R.drawable.icon_amazon_prime_video,
