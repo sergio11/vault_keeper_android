@@ -28,11 +28,11 @@ import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.BrownieType
+import com.dreamsoftware.brownie.component.core.BrownieMaskVisualTransformation
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.core.components.LoadingDialog
 import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderImage
-import com.dreamsoftware.vaultkeeper.utils.MaskVisualTransformation
 import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
 @Composable
@@ -155,7 +155,7 @@ fun SaveCardScreenContent(
                         supportingText = {
                             "mm/yy"
                         },
-                        visualTransformation = MaskVisualTransformation("##/##"),
+                        visualTransformation = BrownieMaskVisualTransformation("##/##"),
                         isSingleLine = true,
                         leadingIconRes = R.drawable.icon_date,
                         keyboardType = KeyboardType.Number
