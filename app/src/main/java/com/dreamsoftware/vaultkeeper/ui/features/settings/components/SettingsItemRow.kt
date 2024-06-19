@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
@@ -52,7 +53,7 @@ internal fun SettingsItemRow(
                 BrownieText(
                     modifier = Modifier.padding(top = 2.dp, start = 16.dp),
                     type = BrownieTextTypeEnum.LABEL_LARGE,
-                    titleText = item.text,
+                    titleText = stringResource(id = item.textRes),
                     textColor = if (item is SettingsItem.LogoutItem) error else primary
                 )
 

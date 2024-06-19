@@ -44,8 +44,8 @@ class HomeViewModel @Inject constructor(
 
     override fun onGetDefaultState(): HomeUiState = HomeUiState(
         fabButtonItemList = listOf(
-            BrownieFabButtonItem(id = ADD_CARD_BUTTON_ID, iconRes = R.drawable.icon_card, label = "Add Card"),
-            BrownieFabButtonItem(id = ADD_PASSWORD_BUTTON_ID, iconRes = R.drawable.icon_pass, label = "Add Password")
+            BrownieFabButtonItem(id = ADD_CARD_BUTTON_ID, iconRes = R.drawable.icon_card, labelRes = R.string.add_card),
+            BrownieFabButtonItem(id = ADD_PASSWORD_BUTTON_ID, iconRes = R.drawable.icon_pass, labelRes = R.string.add_password)
         )
     )
 

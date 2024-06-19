@@ -113,6 +113,15 @@
     <string name="close_session_dialog_cancel">Cancel</string>
     <string name="close_session_dialog_accept">Accept</string>
 
+    <!-- Settings -->
+    <string name="settings_screen_title">Settings</string>
+    <string name="settings_screen_reset_master_key">Reset Master Key</string>
+    <string name="settings_screen_fingerprint_unlock">Fingerprint Unlock</string>
+    <string name="settings_screen_share">Share</string>
+    <string name="settings_screen_about">About</string>
+    <string name="settings_screen_remove_all_credentials">Remove all credentials</string>
+    <string name="settings_screen_logout">Logout</string>
+
     <!-- User Information Labels and Placeholders -->
     <string name="username_label">Username</string>
     <string name="username_placeholder">Username</string>
@@ -194,7 +203,9 @@
     <string name="wordpress">Wordpress</string>
     <string name="youtube">YouTube</string>
 
-    <string name="content_loading_placeholder">Just a moment...</string>
+    <string name="add_card">Add Card</string>
+    <string name="add_password">Add Password</string>
+    <string name="content_loading_placeholder">Just a moment…</string>
     <string name="nothing_found">Oops! We couldn\'t find anything!</string>
     <string name="vault_empty">Your vault is empty. Time to fill it up!</string>
     <string name="no_passwords_found">No passwords here! Let\'s add some!</string>
