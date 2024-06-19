@@ -1,7 +1,8 @@
 package com.dreamsoftware.vaultkeeper.ui.features.savepassword
 
+import com.dreamsoftware.brownie.core.IBrownieScreenActionListener
 
-interface SavePasswordScreenActionListener {
+interface SavePasswordScreenActionListener: IBrownieScreenActionListener {
     fun onResetSuggestions()
     fun onAccountNameUpdated(newName: String)
     fun onFilterByAccountName(name: String)

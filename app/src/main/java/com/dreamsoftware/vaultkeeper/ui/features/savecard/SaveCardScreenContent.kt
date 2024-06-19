@@ -47,7 +47,9 @@ fun SaveCardScreenContent(
                 hasTopBar = false,
                 errorMessage = errorMessage,
                 enableVerticalScroll = true,
-                screenContainerColor = primary
+                screenContainerColor = primary,
+                onInfoMessageCleared = actionListener::onInfoMessageCleared,
+                onErrorMessageCleared = actionListener::onErrorMessageCleared,
             ) {
                 val keyboardController = LocalSoftwareKeyboardController.current
                 Row(

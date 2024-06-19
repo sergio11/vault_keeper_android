@@ -31,7 +31,9 @@ fun AccountScreen(
     @DrawableRes screenBackgroundRes: Int? = null,
     isLoading: Boolean,
     errorMessage: String? = null,
+    onErrorMessageCleared: () -> Unit = {},
     infoMessage: String? = null,
+    onInfoMessageCleared: () -> Unit = {},
     enableVerticalScroll: Boolean = true,
     screenContent: @Composable ColumnScope.() -> Unit
 ) {

@@ -1,8 +1,9 @@
 package com.dreamsoftware.vaultkeeper.ui.features.savecard
 
 import com.dreamsoftware.brownie.component.BrownieDropdownMenuItem
+import com.dreamsoftware.brownie.core.IBrownieScreenActionListener
 
-interface SaveCardScreenActionListener {
+interface SaveCardScreenActionListener: IBrownieScreenActionListener {
     fun onSaveSecureCard()
     fun onCancel()
     fun onCardNumberUpdated(newCardNumber: String)

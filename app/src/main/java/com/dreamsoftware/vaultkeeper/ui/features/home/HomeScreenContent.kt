@@ -34,7 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieBottomSheet
@@ -59,7 +58,6 @@ import com.dreamsoftware.vaultkeeper.ui.features.home.components.SecureCardRow
 @Composable
 fun HomeScreenContent(
     uiState: HomeUiState,
-    clipboardManager: ClipboardManager,
     actionListener: HomeScreenActionListener
 ) {
     with(uiState) {
@@ -110,7 +108,10 @@ fun HomeScreenContent(
 
             BrownieScreenContent(
                 hasTopBar = false,
+                infoMessage = infoMessage,
                 screenContainerColor = primary,
+                onErrorMessageCleared = actionListener::onErrorMessageCleared,
+                onInfoMessageCleared = actionListener::onInfoMessageCleared,
                 onBuildFloatingActionButton = {
                     AnimatedVisibility(
                         visible = isVisible.value,

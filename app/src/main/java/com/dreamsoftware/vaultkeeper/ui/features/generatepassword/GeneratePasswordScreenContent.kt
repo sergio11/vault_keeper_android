@@ -48,7 +48,9 @@ fun GeneratePasswordScreenContent(
             BrownieScreenContent(
                 hasTopBar = false,
                 enableVerticalScroll = true,
-                screenContainerColor = primary
+                screenContainerColor = primary,
+                onInfoMessageCleared = actionListener::onInfoMessageCleared,
+                onErrorMessageCleared = actionListener::onErrorMessageCleared,
             ) {
                 BrownieText(
                     modifier = Modifier

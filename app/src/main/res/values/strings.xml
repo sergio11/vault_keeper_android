@@ -193,4 +193,7 @@
     <string name="whatsapp">Whatsapp</string>
     <string name="wordpress">Wordpress</string>
     <string name="youtube">YouTube</string>
+
+    <string name="copy_account_password_to_clipboard">Copy account password to clipboard</string>
+    <string name="copy_secure_card_to_clipboard" formatted="false">Copy secure card: %s to clipboard</string>
 </resources>

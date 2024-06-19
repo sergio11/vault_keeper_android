@@ -25,10 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ClipboardManager
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -57,8 +54,6 @@ fun AccountPasswordRow(
     ) {
 
         var expanded by remember { mutableStateOf(false) }
-
-        val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
         val matchingImage =
             suggestionsWithImages.firstOrNull { it.first == account.accountName }?.second
@@ -111,11 +106,7 @@ fun AccountPasswordRow(
 
                 IconButton(
                     onClick = {
-                        val password = account.password
-                        clipboardManager.setText(
-                            AnnotatedString(password)
-                        )
-                        //viewModel.showCopyMsg(stringType = "Password")
+                        actionListener.onCopyAccountPasswordToClipboard(account.password)
                     },
                     modifier = Modifier.size(32.dp)
                 ) {
