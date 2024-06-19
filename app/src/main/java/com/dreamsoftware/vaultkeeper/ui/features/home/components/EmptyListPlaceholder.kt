@@ -1,6 +1,8 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home.components
 
 import androidx.compose.runtime.Composable
+import com.dreamsoftware.brownie.component.BrownieColumnPlaceHolder
+import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.features.home.FilterOptionsEnum
 
 @Composable
@@ -9,12 +11,24 @@ fun EmptyListPlaceholder(
     selectedOption: FilterOptionsEnum
 ) {
     if (isSearch) {
-        CommonColumnPlaceHolder(text = "Sorry, Nothing found!")
+        BrownieColumnPlaceHolder(
+            titleRes = R.string.nothing_found,
+            iconRes = R.drawable.img_empty_box
+        )
     } else {
         when (selectedOption) {
-            FilterOptionsEnum.ALL -> CommonColumnPlaceHolder(text = "Vault is empty")
-            FilterOptionsEnum.PASSWORDS -> CommonColumnPlaceHolder(text = "No Passwords found!")
-            FilterOptionsEnum.CARDS -> CommonColumnPlaceHolder(text = "No Cards found!")
+            FilterOptionsEnum.ALL -> BrownieColumnPlaceHolder(
+                titleRes = R.string.vault_empty,
+                iconRes = R.drawable.img_empty_box
+            )
+            FilterOptionsEnum.PASSWORDS -> BrownieColumnPlaceHolder(
+                titleRes = R.string.no_passwords_found,
+                iconRes = R.drawable.img_empty_box
+            )
+            FilterOptionsEnum.CARDS -> BrownieColumnPlaceHolder(
+                titleRes = R.string.no_cards_found,
+                iconRes = R.drawable.img_empty_box
+            )
         }
     }
 }

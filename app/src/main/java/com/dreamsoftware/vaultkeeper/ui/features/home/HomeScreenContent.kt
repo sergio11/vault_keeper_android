@@ -37,6 +37,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieBottomSheet
+import com.dreamsoftware.brownie.component.BrownieColumnProgressIndicator
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
 import com.dreamsoftware.brownie.component.BrownieDialog
 import com.dreamsoftware.brownie.component.BrownieImageIcon
@@ -51,7 +52,6 @@ import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.AccountPasswordRow
-import com.dreamsoftware.vaultkeeper.ui.features.home.components.ColumnProgressIndicator
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.EmptyListPlaceholder
 import com.dreamsoftware.vaultkeeper.ui.features.home.components.SecureCardRow
 
@@ -198,7 +198,7 @@ fun HomeScreenContent(
                         )
                     }
                     if (isLoading) {
-                        ColumnProgressIndicator()
+                        BrownieColumnProgressIndicator(textIndicatorRes = R.string.content_loading_placeholder)
                     } else if (credentials.isEmpty()) {
                         EmptyListPlaceholder(
                             isSearch = searchQuery.isNotEmpty(),
