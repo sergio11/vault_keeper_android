@@ -78,6 +78,8 @@
     <string name="generator_password_screen_digits">Digits</string>
     <string name="generator_password_screen_special_characters">Special characters</string>
     <string name="generator_password_screen_copy_password">Copy Password</string>
+    <string name="generator_password_screen_invalid_options">Please toggle at least one option.</string>
+    <string name="generator_password_screen_copy_password_clipboard">Password copied to clipboard.</string>
 
     <!-- Error Messages for Card Inputs -->
     <string name="error_card_provider">Please choose a Card Provider</string>

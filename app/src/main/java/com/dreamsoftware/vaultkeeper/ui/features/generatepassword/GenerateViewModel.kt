@@ -4,13 +4,16 @@ import com.dreamsoftware.brownie.core.BrownieViewModel
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
+import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
+import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class GenerateViewModel @Inject constructor(
-    private val passwordGenerator: IPasswordGeneratorService
+    private val passwordGenerator: IPasswordGeneratorService,
+    private val applicationAware: IVaultKeeperApplicationAware
 ) : BrownieViewModel<GenerateUiState, GenerateSideEffects>(), GeneratePasswordScreenActionListener {
 
     override fun onGetDefaultState(): GenerateUiState = GenerateUiState()
@@ -37,7 +40,7 @@ class GenerateViewModel @Inject constructor(
     override fun onValidateAndSave() {
         updateState {
             if (!(it.lowerCase || it.upperCase || it.digits || it.specialCharacters)) {
-                it.copy(message = "Please toggle at least one option.")
+                it.copy(errorMessage = applicationAware.getString(R.string.generator_password_screen_invalid_options))
             } else {
                 it.copy(password = passwordGenerator.generatePassword(
                     length = it.passwordLength,
@@ -51,7 +54,7 @@ class GenerateViewModel @Inject constructor(
     }
 
     override fun onPasswordCopied() {
-        updateState { it.copy(message = "Password copied to clipboard.") }
+        updateState { it.copy(infoMessage = applicationAware.getString(R.string.generator_password_screen_copy_password_clipboard)) }
     }
 
     fun generateInitialPassword() {
@@ -70,7 +73,7 @@ class GenerateViewModel @Inject constructor(
 data class GenerateUiState(
     override val isLoading: Boolean = false,
     override val errorMessage: String? = null,
-    val message: String? = null,
+    val infoMessage: String? = null,
     val password: String = String.EMPTY,
     val passwordLength: Int = 12,
     val lowerCase: Boolean = true,
@@ -82,4 +85,6 @@ data class GenerateUiState(
         copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
-sealed interface GenerateSideEffects: SideEffect
+sealed interface GenerateSideEffects: SideEffect {
+    data class CopyPasswordToClipboard(val password: String): GenerateSideEffects
+}
