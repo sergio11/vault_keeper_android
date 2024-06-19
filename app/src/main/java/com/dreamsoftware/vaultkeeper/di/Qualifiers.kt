@@ -44,6 +44,10 @@ annotation class CreateMasterKeyErrorMapper
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class UpdateMasterKeyErrorMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class HomeErrorMapper
 
 @Qualifier

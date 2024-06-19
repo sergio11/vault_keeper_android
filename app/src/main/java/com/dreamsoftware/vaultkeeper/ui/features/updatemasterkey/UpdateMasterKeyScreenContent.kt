@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.ui.features.account.createmasterkey
+package com.dreamsoftware.vaultkeeper.ui.features.updatemasterkey
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -22,19 +22,19 @@ import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.core.components.CommonMasterKeyScreenContent
 
 @Composable
-fun CreateMasterKeyScreenContent(
-    uiState: CreateMasterKeyUiState,
-    actionListener: CreateMasterKeyScreenActionListener
+fun UpdateMasterKeyScreenContent(
+    uiState: UpdateMasterKeyUiState,
+    actionListener: UpdateMasterKeyScreenActionListener
 ) {
     with(uiState) {
         CommonMasterKeyScreenContent(
-            mainTitleRes = R.string.setup_key_tagline_2,
+            mainTitleRes = R.string.update_master_key_headline,
             isLoading = isLoading,
             errorMessage = errorMessage,
             onErrorMessageCleared = actionListener::onErrorMessageCleared,
             onInfoMessageCleared = actionListener::onInfoMessageCleared,
         ) {
-            CreateMasterKeySheetContent(
+            UpdateMasterKeySheetContent(
                 uiState = uiState,
                 actionListener = actionListener
             )
@@ -43,9 +43,9 @@ fun CreateMasterKeyScreenContent(
 }
 
 @Composable
-private fun CreateMasterKeySheetContent(
-    uiState: CreateMasterKeyUiState,
-    actionListener: CreateMasterKeyScreenActionListener
+private fun UpdateMasterKeySheetContent(
+    uiState: UpdateMasterKeyUiState,
+    actionListener: UpdateMasterKeyScreenActionListener
 ) {
     with(uiState) {
         Box(
@@ -57,7 +57,6 @@ private fun CreateMasterKeySheetContent(
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
             ) {
-
                 BrownieSheetSurface(
                     enableVerticalScroll = false
                 ) {

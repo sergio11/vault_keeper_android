@@ -67,8 +67,8 @@ sealed class Screens(val route: String, arguments: List<NamedNavArgument> = empt
                     }
                 }
             }
-        }
 
-        data object CreateCard : Screens("create_card")
+            data object UpdateMasterKey : Screens("update_master_key")
+        }
     }
 }

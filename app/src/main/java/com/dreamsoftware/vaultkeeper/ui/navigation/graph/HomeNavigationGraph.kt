@@ -9,6 +9,7 @@ import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreen
 import com.dreamsoftware.vaultkeeper.ui.features.savecard.SaveCardScreen
 import com.dreamsoftware.vaultkeeper.ui.features.savepassword.SavePasswordScreen
 import com.dreamsoftware.vaultkeeper.ui.features.settings.SettingsScreen
+import com.dreamsoftware.vaultkeeper.ui.features.updatemasterkey.UpdateMasterKeyScreen
 import com.dreamsoftware.vaultkeeper.ui.navigation.Screens
 
 fun NavGraphBuilder.HomeNavigationGraph(
@@ -61,7 +62,9 @@ fun NavGraphBuilder.HomeNavigationGraph(
         ) {
             with(navController) {
                 SettingsScreen(
-                    onGoToCreateMasterKey = {},
+                    onGoToUpdateMasterKey = {
+                        navigate(Screens.Main.Home.UpdateMasterKey.route)
+                    },
                     onGoToSignIn = onGoToSignIn
                 )
             }
@@ -122,6 +125,19 @@ fun NavGraphBuilder.HomeNavigationGraph(
                         )
                     }
                 }
+            }
+        }
+
+        composable(
+            route = Screens.Main.Home.UpdateMasterKey.route
+        ) {
+            with(navController) {
+                UpdateMasterKeyScreen(
+                    onMasterKeyUpdated = {},
+                    onBackPressed = {
+                        popBackStack()
+                    }
+                )
             }
         }
     }

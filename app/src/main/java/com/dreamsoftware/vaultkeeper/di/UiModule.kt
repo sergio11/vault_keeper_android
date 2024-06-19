@@ -9,6 +9,7 @@ import com.dreamsoftware.vaultkeeper.ui.features.account.unlock.UnlockScreenSimp
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.savecard.SaveSecureCardSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.savepassword.SavePasswordSimpleErrorMapper
+import com.dreamsoftware.vaultkeeper.ui.features.updatemasterkey.UpdateMasterKeySimpleErrorMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,6 +61,14 @@ class UiModule {
         @ApplicationContext context: Context
     ): IBrownieErrorMapper =
         CreateMasterKeySimpleErrorMapper(context = context)
+
+    @Provides
+    @ViewModelScoped
+    @UpdateMasterKeyErrorMapper
+    fun provideUpdateMasterKeyErrorMapper(
+        @ApplicationContext context: Context
+    ): IBrownieErrorMapper =
+        UpdateMasterKeySimpleErrorMapper(context = context)
 
     @Provides
     @ViewModelScoped
