@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.dreamsoftware.brownie.component.BrownieLoadingDialog
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
@@ -36,12 +35,7 @@ fun CommonMasterKeyScreenContent(
 ) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
-    BrownieLoadingDialog(
-        isShowingDialog = isLoading,
-        mainLogoRes = R.drawable.icon_home,
-        titleRes = R.string.loading_dialog_title_text,
-        descriptionRes = R.string.loading_dialog_description_text
-    )
+    LoadingDialog(isShowingDialog = isLoading)
     BrownieScreenContent(
         enableVerticalScroll = true,
         hasTopBar = false,
@@ -52,7 +46,9 @@ fun CommonMasterKeyScreenContent(
         backgroundRes = R.drawable.main_background
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().heightIn(min = screenHeight),
+            modifier = Modifier
+                .fillMaxSize()
+                .heightIn(min = screenHeight),
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -74,7 +70,11 @@ fun CommonMasterKeyScreenContent(
                 titleRes = mainTitleRes,
             )
             Spacer(modifier = Modifier.weight(1f))
-            screenContent()
+            Column(
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                screenContent()
+            }
         }
     }
 }

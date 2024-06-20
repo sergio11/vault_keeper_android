@@ -11,6 +11,7 @@ import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecureCardRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.IUserRepository
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
+import com.dreamsoftware.vaultkeeper.domain.usecase.CreateMasterKeyUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllAccountsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAllCardsUseCase
@@ -25,10 +26,10 @@ import com.dreamsoftware.vaultkeeper.domain.usecase.RemovePasswordAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveSecureCardUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveCardUseCase
-import com.dreamsoftware.vaultkeeper.domain.usecase.SaveMasterKeyUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignInUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignUpUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.UpdateMasterKeyUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.ValidateMasterKeyUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserAccountStatusUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserSessionUseCase
@@ -226,12 +227,12 @@ class UseCasesModule {
 
     @Provides
     @ViewModelScoped
-    fun provideSaveMasterKeyUseCaseUseCase(
+    fun provideCreateMasterKeyUseCaseUseCase(
         preferencesRepository: IPreferenceRepository,
         secretRepository: ISecretRepository,
         masterKeyValidator: IBusinessEntityValidator<SaveSecretBO>,
         passwordGeneratorService: IPasswordGeneratorService
-    ): SaveMasterKeyUseCase = SaveMasterKeyUseCase(
+    ): CreateMasterKeyUseCase = CreateMasterKeyUseCase(
         preferencesRepository = preferencesRepository,
         secretRepository = secretRepository,
         masterKeyValidator = masterKeyValidator,
@@ -277,5 +278,23 @@ class UseCasesModule {
         applicationAware: IVaultKeeperApplicationAware
     ): VerifyUserAccountStatusUseCase = VerifyUserAccountStatusUseCase(
         applicationAware = applicationAware
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideUpdateMasterKeyUseCaseUseCase(
+        preferencesRepository: IPreferenceRepository,
+        secretRepository: ISecretRepository,
+        masterKeyValidator: IBusinessEntityValidator<SaveSecretBO>,
+        passwordGeneratorService: IPasswordGeneratorService,
+        accountRepository: IAccountRepository,
+        secureCardRepository: ISecureCardRepository
+    ): UpdateMasterKeyUseCase = UpdateMasterKeyUseCase(
+        preferencesRepository = preferencesRepository,
+        secretRepository = secretRepository,
+        masterKeyValidator = masterKeyValidator,
+        passwordGeneratorService = passwordGeneratorService,
+        accountRepository = accountRepository,
+        secureCardRepository = secureCardRepository
     )
 }

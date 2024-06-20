@@ -5,7 +5,7 @@ import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountLocalDataS
 import com.dreamsoftware.vaultkeeper.data.database.datasource.impl.core.SupportDataSourceImpl
 import com.dreamsoftware.vaultkeeper.data.database.entity.AccountEntity
 import com.dreamsoftware.vaultkeeper.data.database.exception.AccessDatabaseException
-import com.dreamsoftware.vaultkeeper.data.database.exception.AccountNotFoundException
+import com.dreamsoftware.vaultkeeper.data.database.exception.AccountPasswordRecordNotFoundException
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal class AccountLocalDataSourceImpl(
@@ -13,36 +13,36 @@ internal class AccountLocalDataSourceImpl(
     dispatcher: CoroutineDispatcher
 ): SupportDataSourceImpl(dispatcher), IAccountLocalDataSource {
 
-    @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
+    @Throws(AccountPasswordRecordNotFoundException::class, AccessDatabaseException::class)
     override suspend fun insert(accountEntity: AccountEntity): AccountEntity = safeExecute {
         accountDao.insertAccount(accountEntity).let {
-            accountDao.getAccountById(accountEntity.uid) ?: throw AccountNotFoundException("Account not found")
+            accountDao.getAccountById(accountEntity.uid) ?: throw AccountPasswordRecordNotFoundException("Account not found")
         }
     }
 
-    @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
+    @Throws(AccountPasswordRecordNotFoundException::class, AccessDatabaseException::class)
     override suspend fun update(accountEntity: AccountEntity) = safeExecute {
         accountDao.updateAccount(accountEntity)
     }
 
-    @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
+    @Throws(AccountPasswordRecordNotFoundException::class, AccessDatabaseException::class)
     override suspend fun delete(uid: String) = safeExecute {
         with(accountDao) {
             val account = getAccountById(uid)
-            account ?: throw AccountNotFoundException()
+            account ?: throw AccountPasswordRecordNotFoundException()
             deleteAccount(account)
         }
     }
 
     @Throws(AccessDatabaseException::class)
     override suspend fun findAll(): List<AccountEntity> = safeExecute {
-        accountDao.getAllAccounts().takeIf { it.isNotEmpty() } ?: throw AccountNotFoundException("No accounts were found")
+        accountDao.getAllAccounts().takeIf { it.isNotEmpty() } ?: throw AccountPasswordRecordNotFoundException("No accounts were found")
     }
 
-    @Throws(AccountNotFoundException::class, AccessDatabaseException::class)
+    @Throws(AccountPasswordRecordNotFoundException::class, AccessDatabaseException::class)
     override suspend fun findById(uid: String): AccountEntity = safeExecute {
         val account = accountDao.getAccountById(uid)
-        account ?: throw AccountNotFoundException()
+        account ?: throw AccountPasswordRecordNotFoundException()
     }
 
     @Throws(AccessDatabaseException::class)

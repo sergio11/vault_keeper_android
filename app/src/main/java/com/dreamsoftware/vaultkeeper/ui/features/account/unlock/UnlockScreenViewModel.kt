@@ -6,7 +6,6 @@ import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.di.UnlockScreenErrorMapper
-import com.dreamsoftware.vaultkeeper.domain.model.PBEDataBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.ValidateMasterKeyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -28,12 +27,12 @@ class UnlockScreenViewModel @Inject constructor(
             params = ValidateMasterKeyUseCase.Params(
                 key = uiState.value.masterKey
             ),
-            onSuccess = ::onMasterKeyValidatedSuccessfully,
+            onSuccess = { onMasterKeyValidatedSuccessfully() },
             onMapExceptionToState = ::onMapExceptionToState
         )
     }
 
-    private fun onMasterKeyValidatedSuccessfully(data: PBEDataBO) {
+    private fun onMasterKeyValidatedSuccessfully() {
         launchSideEffect(UnlockScreenSideEffects.AccountUnlockSuccessfully)
     }
 

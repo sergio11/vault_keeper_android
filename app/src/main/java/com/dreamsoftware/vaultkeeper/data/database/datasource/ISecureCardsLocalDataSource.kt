@@ -2,7 +2,7 @@ package com.dreamsoftware.vaultkeeper.data.database.datasource
 
 import com.dreamsoftware.vaultkeeper.data.database.entity.SecureCardEntity
 import com.dreamsoftware.vaultkeeper.data.database.exception.AccessDatabaseException
-import com.dreamsoftware.vaultkeeper.data.database.exception.SecureCardNotFoundException
+import com.dreamsoftware.vaultkeeper.data.database.exception.SecureCardRecordNotFoundException
 
 /**
  * Interface for the secure cards data source.
@@ -14,30 +14,30 @@ interface ISecureCardsLocalDataSource {
      * Inserts a card into the database.
      *
      * @param secureCardEntity The card entity to be inserted.
-     * @throws SecureCardNotFoundException If the card is not found.
+     * @throws SecureCardRecordNotFoundException If the card is not found.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
+    @Throws(SecureCardRecordNotFoundException::class, AccessDatabaseException::class)
     suspend fun insert(secureCardEntity: SecureCardEntity): SecureCardEntity
 
     /**
      * Updates an existing card in the database.
      *
      * @param secureCardEntity The card entity to be updated.
-     * @throws SecureCardNotFoundException If the card is not found.
+     * @throws SecureCardRecordNotFoundException If the card is not found.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
+    @Throws(SecureCardRecordNotFoundException::class, AccessDatabaseException::class)
     suspend fun update(secureCardEntity: SecureCardEntity)
 
     /**
      * Deletes a card from the database.
      *
      * @param cardUid The card entity to be deleted.
-     * @throws SecureCardNotFoundException If the card is not found.
+     * @throws SecureCardRecordNotFoundException If the card is not found.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
+    @Throws(SecureCardRecordNotFoundException::class, AccessDatabaseException::class)
     suspend fun delete(cardUid: String)
 
     /**
@@ -46,7 +46,7 @@ interface ISecureCardsLocalDataSource {
      * @return A list of all card entities.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
+    @Throws(SecureCardRecordNotFoundException::class, AccessDatabaseException::class)
     suspend fun findAll(): List<SecureCardEntity>
 
     /**
@@ -54,10 +54,10 @@ interface ISecureCardsLocalDataSource {
      *
      * @param cardUid The ID of the card to be retrieved.
      * @return The card entity if found.
-     * @throws SecureCardNotFoundException If the card is not found.
+     * @throws SecureCardRecordNotFoundException If the card is not found.
      * @throws AccessDatabaseException If any database access error occurs.
      */
-    @Throws(SecureCardNotFoundException::class, AccessDatabaseException::class)
+    @Throws(SecureCardRecordNotFoundException::class, AccessDatabaseException::class)
     suspend fun findById(cardUid: String): SecureCardEntity
 
     /**

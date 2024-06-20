@@ -15,4 +15,7 @@ internal class SaveMasterKeyValidationMessagesResolverImpl(
 
     override fun getKeyIncorrectLengthError(): String =
         context.getString(R.string.masterkey_incorrect_length_error)
+
+    override fun getSaltIncorrectLengthError(): String =
+        context.getString(R.string.salt_incorrect_length_error)
 }

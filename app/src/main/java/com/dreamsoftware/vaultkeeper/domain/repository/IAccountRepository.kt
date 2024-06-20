@@ -13,10 +13,16 @@ interface IAccountRepository {
     suspend fun update(account: AccountPasswordBO)
 
     @Throws(AccountNotFoundException::class, RepositoryOperationException::class)
+    suspend fun update(accountList: List<AccountPasswordBO>)
+
+    @Throws(AccountNotFoundException::class, RepositoryOperationException::class)
     suspend fun deleteById(userUid: String, accountUid: String)
 
     @Throws(RepositoryOperationException::class)
     suspend fun findAllByUserIdWhere(userUid: String, term: String?): List<AccountPasswordBO>
+
+    @Throws(RepositoryOperationException::class)
+    suspend fun findAllByUserId(userUid: String): List<AccountPasswordBO>
 
     @Throws(AccountNotFoundException::class, RepositoryOperationException::class)
     suspend fun findById(userUid: String, accountUid: String): AccountPasswordBO
