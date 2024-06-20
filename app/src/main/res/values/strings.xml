@@ -104,6 +104,12 @@
     <string name="card_cvv_placeholder">CVV</string>
     <string name="card_provider">Card Provider</string>
     <string name="card_provider_placeholder">Card Provider Placeholder</string>
+    <string name="add_new_card_title">Create Your New Card</string>
+    <string name="edit_card_title">Update Your Card</string>
+    <string name="update_card_button">Apply Changes</string>
+    <string name="create_card_button">Save Your Card</string>
+    <string name="card_updated_successfully">Card updated successfully! Your details are now up-to-date.</string>
+    <string name="card_created_successfully">Card created successfully! Your new card is ready to use.</string>
 
     <!-- Account Information -->
     <string name="account_password">Account password</string>

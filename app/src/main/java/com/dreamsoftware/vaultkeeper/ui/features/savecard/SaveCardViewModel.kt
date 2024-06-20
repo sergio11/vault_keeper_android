@@ -12,6 +12,7 @@ import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SaveCardUseCase
+import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class SaveCardViewModel @Inject constructor(
     private val getCardByIdUseCase: GetCardByIdUseCase,
     private val saveCardUseCase: SaveCardUseCase,
-    @SaveSecureCardErrorMapper private val errorMapper: IBrownieErrorMapper
+    @SaveSecureCardErrorMapper private val errorMapper: IBrownieErrorMapper,
+    private val applicationAware: IVaultKeeperApplicationAware
 ) : BrownieViewModel<SaveCardUiState, SaveCardUiSideEffects>(), SaveCardScreenActionListener {
 
     fun getCardById(cardUid: String) {
@@ -92,7 +94,8 @@ class SaveCardViewModel @Inject constructor(
                 cardNumber = secureCard.cardNumber,
                 cardHolderName = secureCard.cardHolderName,
                 cardExpiryDate = secureCard.cardExpiryDate,
-                cardCVV = secureCard.cardCvv
+                cardCVV = secureCard.cardCvv,
+                cardProviderMenuItemSelected = it.cardProviderMenuItems.find { provider -> provider.id == secureCard.cardProvider.name },
             )
         }
     }
@@ -100,6 +103,11 @@ class SaveCardViewModel @Inject constructor(
     private fun onSecureCardSavedSuccessfully(secureCard: SecureCardBO) {
         updateState {
             it.copy(
+                infoMessage = applicationAware.getString(if(it.isEditScreen) {
+                    R.string.card_updated_successfully
+                } else {
+                    R.string.card_created_successfully
+                }),
                 isEditScreen = true,
                 cardUid = secureCard.uid,
                 cardNumber = secureCard.cardNumber,
@@ -115,11 +123,16 @@ class SaveCardViewModel @Inject constructor(
             isLoading = false,
             errorMessage = errorMapper.mapToMessage(ex)
         )
+
+    override fun onInfoMessageCleared() {
+        updateState { it.copy(infoMessage = null) }
+    }
 }
 
 data class SaveCardUiState(
     override val isLoading: Boolean = false,
     override val errorMessage: String? = null,
+    val infoMessage: String? = null,
     val message: String? = null,
     val isEditScreen: Boolean = false,
     val cardUid: String? = null,
