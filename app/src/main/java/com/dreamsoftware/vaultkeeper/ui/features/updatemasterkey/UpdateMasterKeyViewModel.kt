@@ -39,14 +39,19 @@ class UpdateMasterKeyViewModel @Inject constructor(
                     newKey = newMasterKey,
                     confirmKey = confirmNewMasterKey
                 ),
-                onSuccess = { onMasterKeyCreated() },
+                onSuccess = { onMasterKeyUpdated() },
                 onMapExceptionToState = ::onMapExceptionToState
             )
         }
     }
 
-    private fun onMasterKeyCreated() {
-        launchSideEffect(UpdateMasterKeySideEffects.MasterKeyCreatedSideEffect)
+    override fun onUpdateMasterKeyConfirmed() {
+        updateState { it.copy(masterKeyUpdatedDialogVisible = false) }
+        launchSideEffect(UpdateMasterKeySideEffects.MasterKeyUpdatedSuccessfully)
+    }
+
+    private fun onMasterKeyUpdated() {
+        updateState { it.copy(masterKeyUpdatedDialogVisible = true) }
     }
 
     private fun onMapExceptionToState(ex: Exception, uiState: UpdateMasterKeyUiState) =
@@ -59,6 +64,7 @@ class UpdateMasterKeyViewModel @Inject constructor(
 data class UpdateMasterKeyUiState(
     override val isLoading: Boolean = false,
     override val errorMessage: String? = null,
+    val masterKeyUpdatedDialogVisible: Boolean = false,
     val currentMasterKey: String = String.EMPTY,
     val newMasterKey: String = String.EMPTY,
     val confirmNewMasterKey: String = String.EMPTY
@@ -68,5 +74,5 @@ data class UpdateMasterKeyUiState(
 }
 
 sealed interface UpdateMasterKeySideEffects : SideEffect {
-    data object MasterKeyCreatedSideEffect : UpdateMasterKeySideEffects
+    data object MasterKeyUpdatedSuccessfully: UpdateMasterKeySideEffects
 }

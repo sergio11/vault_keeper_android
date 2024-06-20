@@ -7,4 +7,5 @@ interface UpdateMasterKeyScreenActionListener: IBrownieScreenActionListener {
     fun onNewMasterKeyUpdated(newMasterKey: String)
     fun onRepeatNewMasterKeyUpdated(newRepeatMasterKey: String)
     fun onSave()
+    fun onUpdateMasterKeyConfirmed()
 }

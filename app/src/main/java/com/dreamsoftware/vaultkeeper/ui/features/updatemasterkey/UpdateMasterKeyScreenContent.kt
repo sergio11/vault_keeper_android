@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
+import com.dreamsoftware.brownie.component.BrownieDialog
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextFieldPassword
@@ -34,6 +35,14 @@ fun UpdateMasterKeyScreenContent(
             onErrorMessageCleared = actionListener::onErrorMessageCleared,
             onInfoMessageCleared = actionListener::onInfoMessageCleared,
         ) {
+            BrownieDialog(
+                isVisible = masterKeyUpdatedDialogVisible,
+                mainLogoRes = R.drawable.main_logo_inverse,
+                titleRes = R.string.update_master_key_dialog_title,
+                descriptionRes = R.string.update_master_key_dialog_description,
+                acceptRes = R.string.update_master_key_dialog_accept,
+                onAcceptClicked = actionListener::onUpdateMasterKeyConfirmed
+            )
             UpdateMasterKeySheetContent(
                 uiState = uiState,
                 actionListener = actionListener
@@ -61,7 +70,6 @@ private fun UpdateMasterKeySheetContent(
                     enableVerticalScroll = false
                 ) {
                     val keyboard = LocalSoftwareKeyboardController.current
-
                     BrownieText(
                         modifier = Modifier
                             .padding(top = 16.dp, bottom = 6.dp)

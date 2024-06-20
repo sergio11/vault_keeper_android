@@ -16,7 +16,7 @@ fun UpdateMasterKeyScreen(
         onBackPressed = onBackPressed,
         onSideEffect = {
             when(it) {
-                is UpdateMasterKeySideEffects.MasterKeyCreatedSideEffect -> onMasterKeyUpdated()
+                is UpdateMasterKeySideEffects.MasterKeyUpdatedSuccessfully -> onMasterKeyUpdated()
             }
         }
     ) { uiState ->
