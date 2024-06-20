@@ -46,6 +46,7 @@ fun SaveCardScreenContent(
             BrownieScreenContent(
                 hasTopBar = false,
                 errorMessage = errorMessage,
+                infoMessage = infoMessage,
                 enableVerticalScroll = true,
                 screenContainerColor = primary,
                 onInfoMessageCleared = actionListener::onInfoMessageCleared,
@@ -72,7 +73,11 @@ fun SaveCardScreenContent(
                             start = 16.dp, end = 16.dp
                         ),
                         type = BrownieTextTypeEnum.TITLE_LARGE,
-                        titleText = if (isEditScreen) "Edit Card" else "Add New Card",
+                        titleRes = if (isEditScreen) {
+                            R.string.edit_card_title
+                        } else {
+                            R.string.add_new_card_title
+                        },
                         textColor = onPrimary
                     )
                 }
@@ -109,7 +114,9 @@ fun SaveCardScreenContent(
                             .fillMaxWidth(),
                         value = cardNumber,
                         onValueChanged = {
-                            actionListener.onCardNumberUpdated(newCardNumber = it)
+                            if (it.length <= 16) {
+                                actionListener.onCardNumberUpdated(newCardNumber = it)
+                            }
                         },
                         labelRes = R.string.card_number,
                         placeHolderRes = R.string.card_number_placeholder,
@@ -195,7 +202,11 @@ fun SaveCardScreenContent(
                             .fillMaxWidth(),
                         type = BrownieButtonTypeEnum.LARGE,
                         onClick = actionListener::onSaveSecureCard,
-                        text = if (isEditScreen) "Update Card" else "Save Card"
+                        textRes = if (isEditScreen) {
+                            R.string.update_card_button
+                        } else {
+                            R.string.create_card_button
+                        }
                     )
                 }
             }
