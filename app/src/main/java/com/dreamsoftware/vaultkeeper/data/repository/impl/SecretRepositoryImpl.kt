@@ -44,7 +44,7 @@ internal class SecretRepositoryImpl(
                 .let { secretDataSource.save(it) }
                 .let { secretDataSource.getByUserUid(secret.userUid) }
                 .let(secretMapper::mapInToOut)
-                .let { dataProtectionService.unwrap(it) }
+                .let { dataProtectionService.unwrapAsRoot(it) }
         } catch (ex: SaveSecretException) {
             ex.printStackTrace()
             throw SaveSecretDetailsException("An error occurred when trying to save secret information", ex)

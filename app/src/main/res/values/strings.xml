@@ -134,6 +134,10 @@
     <string name="update_master_key_confirm_new_key_label">Confirm Master key</string>
     <string name="update_master_key_confirm_new_key_placeholder">Confirm Master key</string>
     <string name="update_master_key_confirm_button">Update master key</string>
+    <string name="update_master_key_dialog_title">Success! Your Master Key is Updated!</string>
+    <string name="update_master_key_dialog_description">Your security just got a major boost. Keep your credentials safe with your new master key.</string>
+    <string name="update_master_key_dialog_accept">Got it!</string>
+
 
     <!-- User Information Labels and Placeholders -->
     <string name="username_label">Username</string>

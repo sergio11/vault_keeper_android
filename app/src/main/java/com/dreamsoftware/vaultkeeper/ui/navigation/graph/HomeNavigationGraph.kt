@@ -133,7 +133,9 @@ fun NavGraphBuilder.HomeNavigationGraph(
         ) {
             with(navController) {
                 UpdateMasterKeyScreen(
-                    onMasterKeyUpdated = {},
+                    onMasterKeyUpdated = {
+                        popBackStack()
+                    },
                     onBackPressed = {
                         popBackStack()
                     }
