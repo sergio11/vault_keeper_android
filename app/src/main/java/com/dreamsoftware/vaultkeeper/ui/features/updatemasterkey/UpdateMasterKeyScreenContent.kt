@@ -67,7 +67,7 @@ private fun UpdateMasterKeySheetContent(
                             .padding(top = 16.dp, bottom = 6.dp)
                             .fillMaxWidth(),
                         type = BrownieTextTypeEnum.TITLE_MEDIUM,
-                        titleRes = R.string.setup_master_key,
+                        titleRes = R.string.update_master_key_title,
                         textAlign = TextAlign.Center
                     )
 
@@ -75,17 +75,17 @@ private fun UpdateMasterKeySheetContent(
                         modifier = Modifier
                             .padding(top = 6.dp, start = 16.dp, end = 16.dp)
                             .fillMaxWidth(),
-                        labelRes = R.string.create_master_key_label,
-                        placeHolderRes = R.string.create_master_key_placeholder,
-                        value = masterKey,
+                        labelRes = R.string.update_master_key_current_key_label,
+                        placeHolderRes = R.string.update_master_key_current_key_placeholder,
+                        value = currentMasterKey,
                         onValueChanged = {
                             if (it.length <= 8) {
-                                actionListener.onMaterKeyUpdated(newMasterKey = it)
+                                actionListener.onMasterKeyUpdated(masterKey = it)
                             }
                         },
                         leadingIconRes = R.drawable.icon_lock,
                         supportingText = {
-                            "${masterKey.length}/8"
+                            "${currentMasterKey.length}/8"
                         }
                     )
 
@@ -95,17 +95,37 @@ private fun UpdateMasterKeySheetContent(
                         modifier = Modifier
                             .padding(top = 6.dp, start = 16.dp, end = 16.dp)
                             .fillMaxWidth(),
-                        labelRes = R.string.create_master_confirm_key_label,
-                        placeHolderRes = R.string.create_master_confirm_key_placeholder,
-                        value = confirmMasterKey,
+                        labelRes = R.string.update_master_key_new_key_label,
+                        placeHolderRes = R.string.update_master_key_new_key_placeholder,
+                        value = newMasterKey,
                         onValueChanged = {
                             if (it.length <= 8) {
-                                actionListener.onRepeatMasterKeyUpdated(newRepeatMasterKey = it)
+                                actionListener.onNewMasterKeyUpdated(newMasterKey = it)
                             }
                         },
                         leadingIconRes = R.drawable.icon_lock,
                         supportingText = {
-                            "${confirmMasterKey.length}/8"
+                            "${newMasterKey.length}/8"
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    BrownieTextFieldPassword(
+                        modifier = Modifier
+                            .padding(top = 6.dp, start = 16.dp, end = 16.dp)
+                            .fillMaxWidth(),
+                        labelRes = R.string.update_master_key_confirm_new_key_label,
+                        placeHolderRes = R.string.update_master_key_confirm_new_key_placeholder,
+                        value = confirmNewMasterKey,
+                        onValueChanged = {
+                            if (it.length <= 8) {
+                                actionListener.onRepeatNewMasterKeyUpdated(newRepeatMasterKey = it)
+                            }
+                        },
+                        leadingIconRes = R.drawable.icon_lock,
+                        supportingText = {
+                            "${confirmNewMasterKey.length}/8"
                         },
                         onDone = {
                             keyboard?.hide()
@@ -118,7 +138,7 @@ private fun UpdateMasterKeySheetContent(
                             .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
                             .fillMaxWidth(),
                         type = BrownieButtonTypeEnum.LARGE,
-                        text = "Save Master Key"
+                        textRes = R.string.update_master_key_confirm_button
                     ) {
                         actionListener.onSave()
                     }

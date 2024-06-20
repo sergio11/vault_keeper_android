@@ -126,6 +126,14 @@
 
     <!-- Update master key screen -->
     <string name="update_master_key_headline">Boost Your Security: Time for a Master Key Upgrade!</string>
+    <string name="update_master_key_title">Update Master Key</string>
+    <string name="update_master_key_current_key_label">Enter Master key</string>
+    <string name="update_master_key_current_key_placeholder">Enter Master key</string>
+    <string name="update_master_key_new_key_label">New Master key</string>
+    <string name="update_master_key_new_key_placeholder">New Master key</string>
+    <string name="update_master_key_confirm_new_key_label">Confirm Master key</string>
+    <string name="update_master_key_confirm_new_key_placeholder">Confirm Master key</string>
+    <string name="update_master_key_confirm_button">Update master key</string>
 
     <!-- User Information Labels and Placeholders -->
     <string name="username_label">Username</string>
@@ -165,6 +173,7 @@
     <string name="master_key_empty_error">Please enter a Master Key</string>
     <string name="master_key_mismatch_error">Please enter correct Master Key</string>
     <string name="masterkey_incorrect_length_error">A Master Key should at least have 6 characters</string>
+    <string name="salt_incorrect_length_error">A Salt should at least have 8 characters</string>
 
     <!-- Validation Messages -->
     <string name="invalid_email_message">Invalid email format.</string>

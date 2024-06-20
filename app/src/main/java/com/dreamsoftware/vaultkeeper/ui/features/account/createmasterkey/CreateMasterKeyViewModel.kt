@@ -6,13 +6,13 @@ import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.di.CreateMasterKeyErrorMapper
-import com.dreamsoftware.vaultkeeper.domain.usecase.SaveMasterKeyUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.CreateMasterKeyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateMasterKeyViewModel @Inject constructor(
-    private val saveMasterKeyUseCase: SaveMasterKeyUseCase,
+    private val createMasterKeyUseCase: CreateMasterKeyUseCase,
     @CreateMasterKeyErrorMapper private val errorMapper: IBrownieErrorMapper
 ) : BrownieViewModel<CreateMasterKeyUiState, CreateMasterKeySideEffects>(),
     CreateMasterKeyScreenActionListener {
@@ -30,8 +30,8 @@ class CreateMasterKeyViewModel @Inject constructor(
     override fun onSave() {
         with(uiState.value) {
             executeUseCaseWithParams(
-                useCase = saveMasterKeyUseCase,
-                params = SaveMasterKeyUseCase.Params(
+                useCase = createMasterKeyUseCase,
+                params = CreateMasterKeyUseCase.Params(
                     key = masterKey,
                     confirmKey = confirmMasterKey
                 ),
