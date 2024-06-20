@@ -24,7 +24,8 @@ class SavePasswordViewModel @Inject constructor(
     private val passwordGeneratorService: IPasswordGeneratorService,
     @SavePasswordErrorMapper private val errorMapper: IBrownieErrorMapper,
     private val applicationAware: IVaultKeeperApplicationAware
-) : BrownieViewModel<SavePasswordUiState, SavePasswordUiSideEffects>(), SavePasswordScreenActionListener {
+) : BrownieViewModel<SavePasswordUiState, SavePasswordUiSideEffects>(),
+    SavePasswordScreenActionListener {
 
     fun getAccountById(accountUid: String) {
         executeUseCaseWithParams(
@@ -44,19 +45,24 @@ class SavePasswordViewModel @Inject constructor(
     }
 
     override fun onAccountNameUpdated(newName: String) {
-        updateState { it.copy(
-            accountName = newName,
-            accountSuggestionsMenuItems = getAccountProviderSuggestions()
-        ) }
+        updateState {
+            it.copy(
+                accountName = newName,
+                accountSuggestionsMenuItems = getAccountProviderSuggestions()
+            )
+        }
     }
 
     override fun onFilterByAccountName(name: String) {
-        updateState { it.copy(
-            accountName = name,
-            accountSuggestionsMenuItems = getAccountProviderSuggestions().filter { account ->
-                account.textRes?.let(applicationAware::getString)?.lowercase()?.contains(name.lowercase()) ?: false
-            }
-        ) }
+        updateState {
+            it.copy(
+                accountName = name,
+                accountSuggestionsMenuItems = getAccountProviderSuggestions().filter { account ->
+                    account.textRes?.let(applicationAware::getString)?.lowercase()
+                        ?.contains(name.lowercase()) ?: false
+                }
+            )
+        }
     }
 
     override fun onUsernameUpdated(username: String) {
@@ -81,13 +87,15 @@ class SavePasswordViewModel @Inject constructor(
 
     override fun onGenerateRandomPassword() {
         updateState {
-            it.copy(password = passwordGeneratorService.generatePassword(
-                length = getRandomNumber(),
-                isWithSpecial = true,
-                isWithUppercase = true,
-                isWithLetters = true,
-                isWithNumbers = true
-            ))
+            it.copy(
+                password = passwordGeneratorService.generatePassword(
+                    length = getRandomNumber(),
+                    isWithSpecial = true,
+                    isWithUppercase = true,
+                    isWithLetters = true,
+                    isWithNumbers = true
+                )
+            )
         }
     }
 
@@ -132,6 +140,13 @@ class SavePasswordViewModel @Inject constructor(
     private fun onAccountSavedSuccessfully(account: AccountPasswordBO) {
         updateState {
             it.copy(
+                infoMessage = applicationAware.getString(
+                    if (it.isEditScreen) {
+                        R.string.account_password_updated_successfully
+                    } else {
+                        R.string.account_password_created_successfully
+                    }
+                ),
                 isEditScreen = true,
                 accountUid = account.uid,
                 accountName = account.accountName,
@@ -149,6 +164,10 @@ class SavePasswordViewModel @Inject constructor(
             isLoading = false,
             errorMessage = errorMapper.mapToMessage(ex)
         )
+
+    override fun onInfoMessageCleared() {
+        updateState { it.copy(infoMessage = null) }
+    }
 
     private fun getAccountProviderSuggestions() =
         listOf(
@@ -180,6 +199,7 @@ class SavePasswordViewModel @Inject constructor(
 data class SavePasswordUiState(
     override val isLoading: Boolean = false,
     override val errorMessage: String? = null,
+    val infoMessage: String? = null,
     val isEditScreen: Boolean = false,
     val expanded: Boolean = false,
     val accountUid: String? = null,
@@ -190,11 +210,11 @@ data class SavePasswordUiState(
     val mobileNumber: String = String.EMPTY,
     val password: String = String.EMPTY,
     val accountSuggestionsMenuItems: List<BrownieDropdownMenuItem> = emptyList()
-): UiState<SavePasswordUiState>(isLoading, errorMessage) {
+) : UiState<SavePasswordUiState>(isLoading, errorMessage) {
     override fun copyState(isLoading: Boolean, errorMessage: String?): SavePasswordUiState =
         copy(isLoading = isLoading, errorMessage = errorMessage)
 }
 
-sealed interface SavePasswordUiSideEffects: SideEffect {
-    data object SavePasswordCancelled: SavePasswordUiSideEffects
+sealed interface SavePasswordUiSideEffects : SideEffect {
+    data object SavePasswordCancelled : SavePasswordUiSideEffects
 }

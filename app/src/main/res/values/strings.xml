@@ -114,6 +114,22 @@
     <!-- Account Information -->
     <string name="account_password">Account password</string>
     <string name="account_password_placeholder">Account password Placeholder</string>
+    <string name="username_label">Username</string>
+    <string name="username_placeholder">Username</string>
+    <string name="email_label">Email</string>
+    <string name="email_placeholder">Email</string>
+    <string name="mobile_number_label">Mobile number</string>
+    <string name="mobile_number_placeholder">Mobile number</string>
+    <string name="note_label">Note</string>
+    <string name="note_placeholder">Note</string>
+    <string name="password_label">Password</string>
+    <string name="password_placeholder">Password</string>
+    <string name="add_new_account_password_title">Create Your New Account</string>
+    <string name="edit_account_password_title">Update Your Account</string>
+    <string name="update_account_password_button">Apply Changes</string>
+    <string name="create_account_password_button">Save Your Password</string>
+    <string name="account_password_updated_successfully">Account password updated successfully! Your details are now up-to-date.</string>
+    <string name="account_password_created_successfully">Account password created successfully! Your Account password is ready to use.</string>
 
     <!-- Logout Dialog -->
     <string name="close_session_dialog_title">Logout from VaultKeeper?</string>
@@ -143,19 +159,6 @@
     <string name="update_master_key_dialog_title">Success! Your Master Key is Updated!</string>
     <string name="update_master_key_dialog_description">Your security just got a major boost. Keep your credentials safe with your new master key.</string>
     <string name="update_master_key_dialog_accept">Got it!</string>
-
-
-    <!-- User Information Labels and Placeholders -->
-    <string name="username_label">Username</string>
-    <string name="username_placeholder">Username</string>
-    <string name="email_label">Email</string>
-    <string name="email_placeholder">Email</string>
-    <string name="mobile_number_label">Mobile number</string>
-    <string name="mobile_number_placeholder">Mobile number</string>
-    <string name="note_label">Note</string>
-    <string name="note_placeholder">Note</string>
-    <string name="password_label">Password</string>
-    <string name="password_placeholder">Password</string>
 
     <!-- Validation Errors -->
     <string name="invalid_account_name">Please provide an account name</string>

@@ -44,6 +44,7 @@ fun SavePasswordScreenContent(
             BrownieScreenContent(
                 hasTopBar = false,
                 errorMessage = errorMessage,
+                infoMessage = infoMessage,
                 enableVerticalScroll = true,
                 screenContainerColor = primary,
                 onInfoMessageCleared = actionListener::onInfoMessageCleared,
@@ -70,7 +71,11 @@ fun SavePasswordScreenContent(
                             start = 16.dp, end = 16.dp
                         ),
                         type = BrownieTextTypeEnum.TITLE_LARGE,
-                        titleText = if (isEditScreen) "Edit Password" else "Add New Password",
+                        titleRes = if (isEditScreen) {
+                            R.string.edit_account_password_title
+                        } else {
+                            R.string.add_new_account_password_title
+                        },
                         textColor = MaterialTheme.colorScheme.onPrimary
                     )
                 }
@@ -207,6 +212,7 @@ fun SavePasswordScreenContent(
                             .height(200.dp),
                         value = note,
                         maxLines = 6,
+                        isSingleLine = false,
                         labelRes = R.string.note_label,
                         placeHolderRes = R.string.note_placeholder,
                         supportingText = { "${note.length}/140" },
@@ -230,7 +236,11 @@ fun SavePasswordScreenContent(
                             .fillMaxWidth(),
                         type = BrownieButtonTypeEnum.LARGE,
                         onClick = actionListener::onSave,
-                        text =  if (isEditScreen) "Update Password" else "Save Password"
+                        textRes =  if (isEditScreen) {
+                            R.string.update_account_password_button
+                        } else {
+                            R.string.create_account_password_button
+                        }
                     )
                 }
             }
