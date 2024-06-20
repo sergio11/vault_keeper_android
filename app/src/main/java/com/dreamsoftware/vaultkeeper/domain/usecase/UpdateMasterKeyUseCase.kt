@@ -25,17 +25,20 @@ class UpdateMasterKeyUseCase(
     }
 
     override suspend fun onExecuted(params: Params): Unit = with(params) {
-        val userUid = preferencesRepository.getAuthUserUid()
-        secretRepository.validateSecretForUser(ValidateSecretBO(key = key, userUid = userUid))
-        val secureCards = secureCardRepository.findAllByUserId(userUid)
-        val accounts = accountRepository.findAllByUserId(userUid)
-        toSaveSecretBO(userUid = userUid).let { saveSecretBO ->
-            masterKeyValidator.validate(saveSecretBO).takeIf { it.isNotEmpty() }?.let { errors ->
-                throw InvalidDataException(errors, "Invalid data provided")
-            } ?: run {
-                secretRepository.save(saveSecretBO).also {
-                    secureCardRepository.update(secureCards)
-                    accountRepository.update(accounts)
+        with(secretRepository) {
+            val userUid = preferencesRepository.getAuthUserUid()
+            validateSecretForUser(ValidateSecretBO(key = key, userUid = userUid))
+            val secureCards = secureCardRepository.findAllByUserId(userUid)
+            val accounts = accountRepository.findAllByUserId(userUid)
+            toSaveSecretBO(userUid = userUid).let { saveSecretBO ->
+                masterKeyValidator.validate(saveSecretBO).takeIf { it.isNotEmpty() }?.let { errors ->
+                    throw InvalidDataException(errors, "Invalid data provided")
+                } ?: run {
+                    deleteUserSecret(userUid)
+                    save(saveSecretBO).also {
+                        secureCardRepository.update(secureCards)
+                        accountRepository.update(accounts)
+                    }
                 }
             }
         }

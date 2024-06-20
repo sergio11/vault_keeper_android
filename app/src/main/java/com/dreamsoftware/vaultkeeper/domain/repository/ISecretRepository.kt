@@ -13,6 +13,9 @@ interface ISecretRepository {
     suspend fun save(secret: SaveSecretBO): PBEDataBO
 
     @Throws(NotSecretFoundException::class)
+    suspend fun deleteUserSecret(userUid: String)
+
+    @Throws(NotSecretFoundException::class)
     suspend fun getSecretForUser(userUid: String): PBEDataBO
 
     @Throws(ValidateSecretException::class)
