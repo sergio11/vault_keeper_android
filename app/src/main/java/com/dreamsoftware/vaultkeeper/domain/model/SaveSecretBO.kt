@@ -10,7 +10,6 @@ data class SaveSecretBO(
         const val FIELD_KEY = "key"
         const val FIELD_CONFIRM_KEY = "confirmKey"
         const val FIELD_SALT_KEY = "salt"
-        const val FIELD_USER_UID = "userUid"
     }
 
     override fun accept(visitor: ICryptoVisitor): SaveSecretBO = with(visitor) {
@@ -18,7 +17,6 @@ data class SaveSecretBO(
             key = visit(FIELD_KEY, key),
             confirmKey = visit(FIELD_CONFIRM_KEY, confirmKey),
             salt = visit(FIELD_SALT_KEY, salt),
-            userUid = visit(FIELD_USER_UID, userUid)
         )
     }
 }

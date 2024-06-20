@@ -231,12 +231,14 @@ class UseCasesModule {
         preferencesRepository: IPreferenceRepository,
         secretRepository: ISecretRepository,
         masterKeyValidator: IBusinessEntityValidator<SaveSecretBO>,
-        passwordGeneratorService: IPasswordGeneratorService
+        passwordGeneratorService: IPasswordGeneratorService,
+        applicationAware: IVaultKeeperApplicationAware
     ): CreateMasterKeyUseCase = CreateMasterKeyUseCase(
         preferencesRepository = preferencesRepository,
         secretRepository = secretRepository,
         masterKeyValidator = masterKeyValidator,
-        passwordGeneratorService = passwordGeneratorService
+        passwordGeneratorService = passwordGeneratorService,
+        applicationAware = applicationAware
     )
 
     @Provides

@@ -52,6 +52,15 @@ internal class SecretRepositoryImpl(
     }
 
     @Throws(SecretNotFoundException::class)
+    override suspend fun deleteUserSecret(userUid: String) = safeExecute {
+        try {
+            secretDataSource.deleteByUserUid(userUid)
+        } catch (ex: SecretNotFoundException) {
+            throw NotSecretFoundException("An error occurred when trying to delete secret information", ex)
+        }
+    }
+
+    @Throws(SecretNotFoundException::class)
     override suspend fun getSecretForUser(userUid: String): PBEDataBO = safeExecute {
         try {
             secretDataSource.getByUserUid(userUid)

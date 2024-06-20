@@ -7,12 +7,14 @@ import com.dreamsoftware.vaultkeeper.domain.repository.IPreferenceRepository
 import com.dreamsoftware.vaultkeeper.domain.repository.ISecretRepository
 import com.dreamsoftware.vaultkeeper.domain.service.IPasswordGeneratorService
 import com.dreamsoftware.vaultkeeper.domain.validation.IBusinessEntityValidator
+import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 
 class CreateMasterKeyUseCase(
     private val preferencesRepository: IPreferenceRepository,
     private val secretRepository: ISecretRepository,
     private val masterKeyValidator: IBusinessEntityValidator<SaveSecretBO>,
-    private val passwordGeneratorService: IPasswordGeneratorService
+    private val passwordGeneratorService: IPasswordGeneratorService,
+    private val applicationAware: IVaultKeeperApplicationAware
 ): BrownieUseCaseWithParams<CreateMasterKeyUseCase.Params, Unit>() {
 
     private companion object {
@@ -24,7 +26,9 @@ class CreateMasterKeyUseCase(
             masterKeyValidator.validate(saveSecretBO).takeIf { it.isNotEmpty() }?.let { errors ->
                 throw InvalidDataException(errors, "Invalid data provided")
             } ?: run {
-                secretRepository.save(saveSecretBO)
+                secretRepository.save(saveSecretBO).also {
+                    applicationAware.unlockAccount()
+                }
             }
         }
 

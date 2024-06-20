@@ -3,8 +3,8 @@
     <string name="app_name">VaultKeeper</string>
 
     <!-- Loading Dialog -->
-    <string name="loading_dialog_title_text">Loading</string>
-    <string name="loading_dialog_description_text">Please wait while we fetch the data…</string>
+    <string name="loading_dialog_title_text">Hang Tight!</string>
+    <string name="loading_dialog_description_text">We\'re working on it. This won\'t take long…</string>
 
     <!-- Splash Screen -->
     <string name="splash_loading_title">Welcome to VaultKeeper. We\'re setting up everything to keep your credentials secure. Please wait a moment.</string>

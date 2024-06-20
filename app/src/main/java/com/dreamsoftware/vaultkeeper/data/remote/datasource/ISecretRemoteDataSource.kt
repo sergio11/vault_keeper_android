@@ -19,6 +19,9 @@ interface ISecretRemoteDataSource {
     @Throws(SecretNotFoundException::class)
     suspend fun getByUserUid(uid: String): SecretDTO
 
+    @Throws(SecretNotFoundException::class)
+    suspend fun deleteByUserUid(uid: String)
+
     @Throws(VerifySecretsException::class)
     suspend fun hasSecretByUserUid(uid: String): Boolean
 }

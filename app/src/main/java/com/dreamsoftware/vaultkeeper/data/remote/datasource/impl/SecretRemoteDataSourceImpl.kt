@@ -52,6 +52,16 @@ internal class SecretRemoteDataSourceImpl(
         }
     }
 
+    @Throws(SecretNotFoundException::class)
+    override suspend fun deleteByUserUid(uid: String): Unit = withContext(Dispatchers.IO) {
+        try {
+            val documentReference = firebaseStore.collection(COLLECTION_NAME).document(uid)
+            documentReference.delete().await()
+        } catch (ex: Exception) {
+            throw SecretNotFoundException("An error occurred when trying to delete secret information", ex)
+        }
+    }
+
     @Throws(VerifySecretsException::class)
     override suspend fun hasSecretByUserUid(uid: String): Boolean =
         try {
