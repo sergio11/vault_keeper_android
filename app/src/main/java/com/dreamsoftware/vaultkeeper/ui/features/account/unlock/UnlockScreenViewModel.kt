@@ -6,6 +6,7 @@ import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.di.UnlockScreenErrorMapper
+import com.dreamsoftware.vaultkeeper.domain.usecase.UnLockAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.ValidateMasterKeyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -13,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UnlockScreenViewModel @Inject constructor(
     private val validateMasterKeyUseCase: ValidateMasterKeyUseCase,
-    @UnlockScreenErrorMapper private val errorMapper: IBrownieErrorMapper,
+    private val unLockAccountUseCase: UnLockAccountUseCase,
+    @UnlockScreenErrorMapper private val errorMapper: IBrownieErrorMapper
 ) : BrownieViewModel<UnlockScreenUiState, UnlockScreenSideEffects>(), UnlockScreenActionListener {
 
     override fun onGetDefaultState(): UnlockScreenUiState = UnlockScreenUiState()
@@ -27,6 +29,14 @@ class UnlockScreenViewModel @Inject constructor(
             params = ValidateMasterKeyUseCase.Params(
                 key = uiState.value.masterKey
             ),
+            onSuccess = { onMasterKeyValidatedSuccessfully() },
+            onMapExceptionToState = ::onMapExceptionToState
+        )
+    }
+
+    override fun onBiometricAuthSuccessfully() {
+        executeUseCase(
+            useCase = unLockAccountUseCase,
             onSuccess = { onMasterKeyValidatedSuccessfully() },
             onMapExceptionToState = ::onMapExceptionToState
         )

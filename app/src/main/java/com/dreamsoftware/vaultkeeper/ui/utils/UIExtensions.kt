@@ -1,10 +1,16 @@
 package com.dreamsoftware.vaultkeeper.ui.utils
 
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import androidx.annotation.StringRes
 import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 
@@ -40,6 +46,44 @@ fun Context.isBiometricSupported(): Boolean {
             // Biometric status unknown or another error occurred
             return false
         }
+    }
+}
+
+
+fun Context.showBiometricPrompt(
+    @StringRes titleRes: Int,
+    @StringRes subtitleRes: Int,
+    @StringRes negativeButtonTextRes: Int,
+    onSuccess: (BiometricPrompt.AuthenticationResult) -> Unit,
+    onError: (Int, CharSequence) -> Unit = { _, _ -> },
+    onFailure: () -> Unit = {}
+) {
+    val executor = ContextCompat.getMainExecutor(this)
+    findActivity().safeCast<FragmentActivity>()?.let {
+        val biometricPrompt = BiometricPrompt(it, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                onSuccess(result)
+            }
+
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                onError(errorCode, errString)
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                onFailure()
+            }
+        })
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(getString(titleRes))
+            .setSubtitle(getString(subtitleRes))
+            .setNegativeButtonText(getString(negativeButtonTextRes))
+            .build()
+
+        biometricPrompt.authenticate(promptInfo)
     }
 }
 
@@ -82,3 +126,14 @@ fun String?.toCardProviderImage() = this?.takeIf { CardProviderEnum.entries.map(
 } ?: R.drawable.icon_card
 
 fun String.containsIgnoreCase(term: String) = lowercase().contains(term.lowercase())
+
+inline fun <reified T> Any?.safeCast(): T? = (this as? T)
+
+fun Context.findActivity(): Activity? {
+    var context = this
+    while (context is ContextWrapper) {
+        if (context is Activity) return context
+        context = context.baseContext
+    }
+    return null
+}

@@ -22,6 +22,9 @@
     <string name="unlock_screen_title">Enter your secure passcode to access all your passwords and banking cards. Your digital security awaits! </string>
     <string name="unlock_screen_button">Unlock</string>
     <string name="unlock_screen_secondary_title">Unlock Your Vault</string>
+    <string name="biometric_prompt_title">Unlock with Biometrics</string>
+    <string name="biometric_prompt_subtitle">Place your finger on the sensor to continue</string>
+    <string name="biometric_prompt_negative_button">Use Password Instead</string>
 
     <!-- Home and Settings -->
     <string name="home">Home</string>

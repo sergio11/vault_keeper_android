@@ -5,5 +5,9 @@ interface IPreferencesDataSource {
 
     suspend fun getAuthUserUid(): String
 
+    suspend fun hasBiometricAuthEnabled(): Boolean
+
+    suspend fun updateBiometricAuthState(isEnabled: Boolean)
+
     suspend fun clearData()
 }

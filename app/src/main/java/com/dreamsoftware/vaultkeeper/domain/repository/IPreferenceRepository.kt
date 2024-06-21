@@ -11,5 +11,11 @@ interface IPreferenceRepository {
     suspend fun getAuthUserUid(): String
 
     @Throws(PreferenceDataException::class)
+    suspend fun hasBiometricAuthEnabled(): Boolean
+
+    @Throws(PreferenceDataException::class)
+    suspend fun updateBiometricAuthState(isEnabled: Boolean)
+
+    @Throws(PreferenceDataException::class)
     suspend fun clearData()
 }
