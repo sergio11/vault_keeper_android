@@ -16,6 +16,9 @@ fun UnlockScreen(
             when(it) {
                 UnlockScreenSideEffects.AccountUnlockSuccessfully -> onUnlocked()
             }
+        },
+        onInit = {
+            onInit()
         }
     ) { uiState ->
         UnlockScreenContent(

@@ -30,8 +30,10 @@ import com.dreamsoftware.vaultkeeper.domain.usecase.SignInUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignUpUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.UnLockAccountUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.UpdateBiometricAuthStateUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.UpdateMasterKeyUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.ValidateMasterKeyUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyBiometricAuthEnabledUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserAccountStatusUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserSessionUseCase
 import com.dreamsoftware.vaultkeeper.domain.validation.IBusinessEntityValidator
@@ -280,6 +282,22 @@ class UseCasesModule {
         applicationAware: IVaultKeeperApplicationAware
     ): UnLockAccountUseCase = UnLockAccountUseCase(
         applicationAware = applicationAware
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideUpdateBiometricAuthStateUseCase(
+        preferenceRepository: IPreferenceRepository
+    ): UpdateBiometricAuthStateUseCase = UpdateBiometricAuthStateUseCase(
+        preferenceRepository = preferenceRepository
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideVerifyBiometricAuthEnabledUseCase(
+        preferenceRepository: IPreferenceRepository
+    ): VerifyBiometricAuthEnabledUseCase = VerifyBiometricAuthEnabledUseCase(
+        preferenceRepository = preferenceRepository
     )
 
     @Provides
