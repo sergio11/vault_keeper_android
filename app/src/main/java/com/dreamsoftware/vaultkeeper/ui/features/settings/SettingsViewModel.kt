@@ -10,6 +10,8 @@ import com.dreamsoftware.vaultkeeper.domain.model.AuthUserBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAuthenticateUserDetailUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveAllCredentialsUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.UpdateBiometricAuthStateUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyBiometricAuthEnabledUseCase
 import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,7 +21,9 @@ class SettingsViewModel @Inject constructor(
     private val application: IVaultKeeperApplicationAware,
     private val signOffUseCase: SignOffUseCase,
     private val getAuthenticateUserDetailUseCase: GetAuthenticateUserDetailUseCase,
-    private val removeAllCredentialsUseCase: RemoveAllCredentialsUseCase
+    private val removeAllCredentialsUseCase: RemoveAllCredentialsUseCase,
+    private val verifyBiometricAuthEnabledUseCase: VerifyBiometricAuthEnabledUseCase,
+    private val updateBiometricAuthStateUseCase: UpdateBiometricAuthStateUseCase
 ) : BrownieViewModel<SettingsUiState, SettingsUiSideEffects>(), SettingsScreenActionListener {
 
     override fun onGetDefaultState(): SettingsUiState = SettingsUiState(
@@ -27,11 +31,10 @@ class SettingsViewModel @Inject constructor(
     )
 
     fun onInit() {
-        if(application.isBiometricSupported()) {
-            updateState {
-                it.copy(items = buildItems(hasBiometric = true))
-            }
-        }
+        executeUseCase(
+            useCase = verifyBiometricAuthEnabledUseCase,
+            onSuccess = ::onVerifyBiometricAuthenticationCompleted
+        )
         executeUseCase(
             useCase = getAuthenticateUserDetailUseCase,
             onSuccess = ::onAuthenticatedUserLoadSuccessfully
@@ -49,7 +52,7 @@ class SettingsViewModel @Inject constructor(
     override fun onSettingItemClicked(item: SettingsItem) {
         when(item) {
             SettingsItem.AboutItem -> onUpdateSheetVisibility(isVisible = true)
-            is SettingsItem.BiometricItem -> {}
+            is SettingsItem.BiometricItem -> onUpdateBiometricAuthState(isEnabled = !item.isEnabled)
             SettingsItem.LogoutItem -> onUpdateCloseSessionDialogVisibility(isVisible = true)
             SettingsItem.MaterKeyItem -> launchSideEffect(SettingsUiSideEffects.ResetMasterKey)
             SettingsItem.ShareItem -> launchSideEffect(SettingsUiSideEffects.ShareApp)
@@ -63,10 +66,10 @@ class SettingsViewModel @Inject constructor(
         launchSideEffect(SettingsUiSideEffects.SessionDeleted)
     }
 
-    private fun buildItems(hasBiometric: Boolean = false) = buildList {
+    private fun buildItems(hasBiometric: Boolean = false, isBiometricEnabled: Boolean = false) = buildList {
         add(SettingsItem.MaterKeyItem)
         if(hasBiometric) {
-            add(SettingsItem.BiometricItem(isEnabled = false))
+            add(SettingsItem.BiometricItem(isEnabled = isBiometricEnabled))
         }
         add(SettingsItem.ShareItem)
         add(SettingsItem.AboutItem)
@@ -75,17 +78,31 @@ class SettingsViewModel @Inject constructor(
 
     private fun onRemoveAllCredentials() {
         executeUseCase(
-            useCase = removeAllCredentialsUseCase,
-            onSuccess = { onAllCredentialsRemoved() }
+            useCase = removeAllCredentialsUseCase
         )
-    }
-
-    private fun onAllCredentialsRemoved() {
-
     }
 
     private fun onAuthenticatedUserLoadSuccessfully(authUserBO: AuthUserBO) {
         updateState { it.copy(authUserBO = authUserBO) }
+    }
+
+    private fun onVerifyBiometricAuthenticationCompleted(isEnabled: Boolean) {
+        updateState { it.copy(items = buildItems(
+            hasBiometric = application.isBiometricSupported(),
+            isBiometricEnabled = isEnabled
+        )) }
+    }
+
+    private fun onUpdateBiometricAuthState(isEnabled: Boolean) {
+        executeUseCaseWithParams(
+            useCase = updateBiometricAuthStateUseCase,
+            params = UpdateBiometricAuthStateUseCase.Params(
+                isEnabled = isEnabled
+            ),
+            onSuccess = {
+                onVerifyBiometricAuthenticationCompleted(isEnabled)
+            }
+        )
     }
 }
 

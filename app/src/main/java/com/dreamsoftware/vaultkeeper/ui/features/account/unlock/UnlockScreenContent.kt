@@ -107,48 +107,43 @@ private fun UnlockScreenSheetContent(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                Spacer(
-                    modifier = Modifier
-                        .height(1.dp)
-                        .fillMaxWidth(0.5f)
-                        .background(color = Color.Gray)
-                        .align(Alignment.CenterHorizontally)
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                val context = LocalContext.current
-                IconButton(
-                    onClick = {
-                        context.showBiometricPrompt(
-                            titleRes = R.string.biometric_prompt_title,
-                            subtitleRes = R.string.biometric_prompt_subtitle,
-                            negativeButtonTextRes = R.string.biometric_prompt_negative_button,
-                            onSuccess = {
-                                actionListener.onBiometricAuthSuccessfully()
-                            },
-                            onError = { _, errString ->
-
-                            },
-                            onFailure = {
-
-                            }
-                        )
-                    },
-                    modifier = Modifier
-                        .size(82.dp)
-                        .padding(12.dp)
-                        .align(Alignment.CenterHorizontally)
-                ) {
-                    Icon(
+                if(isBiometricAuthEnabled) {
+                    Spacer(
                         modifier = Modifier
-                            .size(78.dp)
-                            .padding(end = 6.dp),
-                        painter = painterResource(R.drawable.icon_fingerprint),
-                        contentDescription = "Finger Print"
+                            .height(1.dp)
+                            .fillMaxWidth(0.5f)
+                            .background(color = Color.Gray)
+                            .align(Alignment.CenterHorizontally)
                     )
-                }
 
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    val context = LocalContext.current
+                    IconButton(
+                        onClick = {
+                            context.showBiometricPrompt(
+                                titleRes = R.string.biometric_prompt_title,
+                                subtitleRes = R.string.biometric_prompt_subtitle,
+                                negativeButtonTextRes = R.string.biometric_prompt_negative_button,
+                                onSuccess = {
+                                    actionListener.onBiometricAuthSuccessfully()
+                                }
+                            )
+                        },
+                        modifier = Modifier
+                            .size(82.dp)
+                            .padding(12.dp)
+                            .align(Alignment.CenterHorizontally)
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .size(78.dp)
+                                .padding(end = 6.dp),
+                            painter = painterResource(R.drawable.icon_fingerprint),
+                            contentDescription = "Finger Print"
+                        )
+                    }
+                }
             }
         }
     }
