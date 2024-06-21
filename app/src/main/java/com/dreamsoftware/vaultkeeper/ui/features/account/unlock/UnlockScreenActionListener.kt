@@ -6,4 +6,6 @@ interface UnlockScreenActionListener: IBrownieScreenActionListener {
     fun onMaterKeyUpdated(newMasterKey: String)
 
     fun onValidate()
+
+    fun onBiometricAuthSuccessfully()
 }

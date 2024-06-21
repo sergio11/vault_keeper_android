@@ -29,6 +29,7 @@ import com.dreamsoftware.vaultkeeper.domain.usecase.SaveCardUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignInUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignOffUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.SignUpUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.UnLockAccountUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.UpdateMasterKeyUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.ValidateMasterKeyUseCase
 import com.dreamsoftware.vaultkeeper.domain.usecase.VerifyUserAccountStatusUseCase
@@ -273,6 +274,13 @@ class UseCasesModule {
         applicationAware = applicationAware
     )
 
+    @Provides
+    @ViewModelScoped
+    fun provideUnLockAccountUseCase(
+        applicationAware: IVaultKeeperApplicationAware
+    ): UnLockAccountUseCase = UnLockAccountUseCase(
+        applicationAware = applicationAware
+    )
 
     @Provides
     @ViewModelScoped

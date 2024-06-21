@@ -156,7 +156,11 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun providePreferenceRepository(
-        preferenceDataSource: IPreferencesDataSource
+        preferenceDataSource: IPreferencesDataSource,
+        @IoDispatcher dispatcher: CoroutineDispatcher
     ): IPreferenceRepository =
-        PreferenceRepositoryImpl(preferenceDataSource)
+        PreferenceRepositoryImpl(
+            preferenceDataSource,
+            dispatcher
+        )
 }
