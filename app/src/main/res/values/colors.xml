@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FF0D47A1</color>
+
+    <color name="visa_start">#6C72CB</color>
+    <color name="visa_end">#0078FF</color>
+    <color name="mastercard_start">#8A2387</color>
+    <color name="mastercard_end">#E94057</color>
+    <color name="american_express_start">#56CCF2</color>
+    <color name="american_express_end">#2F80ED</color>
+    <color name="rupay_start">#FFD23F</color>
+    <color name="rupay_end">#FF6B6B</color>
+    <color name="diners_club_start">#6A3093</color>
+    <color name="diners_club_end">#A044FF</color>
+    <color name="other_start">#F7B733</color>
+    <color name="other_end">#FC4A1A</color>
 </resources>

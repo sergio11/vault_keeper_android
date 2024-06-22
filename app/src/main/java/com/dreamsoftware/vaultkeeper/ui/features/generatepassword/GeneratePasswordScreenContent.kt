@@ -1,6 +1,5 @@
 package com.dreamsoftware.vaultkeeper.ui.features.generatepassword
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -9,19 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
@@ -32,8 +24,7 @@ import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.theme.BgBlack
-import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
+import com.dreamsoftware.vaultkeeper.ui.features.home.components.BrownieIconButton
 
 @Composable
 fun GeneratePasswordScreenContent(
@@ -148,24 +139,10 @@ private fun GeneratePasswordScreenActions(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        Box(
-            modifier = Modifier
-                .size(52.dp)
-                .clip(CircleShape)
-                .shadow(10.dp)
-                .background(color = BgBlack)
-                .clickWithRipple {
-                    actionListener.onValidateAndSave()
-                },
+        BrownieIconButton(
+            iconRes = R.drawable.icon_regenerate
         ) {
-            Icon(
-                modifier = Modifier
-                    .padding(all = 8.dp)
-                    .size(40.dp),
-                painter = painterResource(R.drawable.icon_regenerate),
-                contentDescription = null,
-                tint = Color.White
-            )
+            actionListener.onValidateAndSave()
         }
 
         BrownieButton(

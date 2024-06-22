@@ -1,5 +1,6 @@
 package com.dreamsoftware.vaultkeeper.ui.features.main
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
@@ -24,7 +25,9 @@ fun MainScreenContent(
                 ) {
                     BrownieBottomBar(
                         currentItemRouteSelected = currentDestination?.route,
-                        items = mainDestinationList
+                        items = mainDestinationList,
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        iconColorSelected = MaterialTheme.colorScheme.primary
                     ) {
                         navHostController.navigate(it.route)
                     }

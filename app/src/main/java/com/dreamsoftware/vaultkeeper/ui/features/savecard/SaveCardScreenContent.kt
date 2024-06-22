@@ -91,7 +91,8 @@ fun SaveCardScreenContent(
                         cardNumber = cardNumber,
                         cardExpiryDate = cardExpiryDate,
                         cardCVV = cardCVV,
-                        cardIcon = cardProviderMenuItemSelected?.id.toCardProviderImage()
+                        cardIcon = cardProviderMenuItemSelected?.id.toCardProviderImage(),
+                        cardProviderEnum = cardProviderEnum
                     )
 
                     Spacer(modifier = Modifier.height(22.dp))

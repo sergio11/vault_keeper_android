@@ -6,26 +6,31 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dreamsoftware.brownie.component.BrownieCardRow
@@ -39,8 +44,9 @@ import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreenActionListener
 import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.utils.obfuscateSecret
+import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderBrush
 import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderImage
-import com.dreamsoftware.vaultkeeper.utils.generateRandomBrush
+import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
 @Composable
 fun SecureCardRow(
@@ -49,10 +55,10 @@ fun SecureCardRow(
 ) {
 
     with(MaterialTheme.colorScheme) {
+        val context = LocalContext.current
         var expanded by remember { mutableStateOf(false) }
-        val contentBrush by remember { mutableStateOf(generateRandomBrush()) }
-
-        BrownieCardRow(contentBrush = contentBrush) {
+        val cardBrush by rememberUpdatedState(card.cardProvider.toCardProviderBrush(context))
+        BrownieCardRow(contentBrush = cardBrush) {
 
             BrownieImageIcon(
                 iconRes = card.cardProvider.toCardProviderImage(),
@@ -91,15 +97,25 @@ fun SecureCardRow(
 
                 BrownieIconButton(
                     iconRes = R.drawable.icon_copy,
-                    containerColor = Color.Transparent
+                    containerColor = background,
+                    iconTintColor = primary,
+                    containerSize = 32.dp,
+                    iconSize = 28.dp,
+                    iconPadding = 4.dp
                 ) {
                     actionListener.onCopyCardNumberToClipboard(card.cardNumber)
                 }
+                
+                Spacer(modifier = Modifier.size(4.dp))
 
                 Box {
                     BrownieIconButton(
                         iconRes = R.drawable.icon_more,
-                        containerColor = Color.Transparent
+                        containerColor = background,
+                        iconTintColor = primary,
+                        containerSize = 32.dp,
+                        iconSize = 28.dp,
+                        iconPadding = 4.dp
                     ) {
                         expanded = true
                     }
@@ -165,11 +181,34 @@ fun SecureCardRow(
 fun BrownieIconButton(
     @DrawableRes iconRes: Int,
     isEnabled: Boolean = true,
+    containerSize: Dp = 52.dp,
+    iconSize: Dp = 40.dp,
+    iconPadding: Dp = 8.dp,
     iconTintColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
     containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
     onClicked: () -> Unit = {}
 ) {
-    IconButton(
+    Box(
+        modifier = Modifier
+            .size(containerSize)
+            .clip(CircleShape)
+            .shadow(10.dp)
+            .background(color = containerColor)
+            .clickWithRipple {
+                onClicked()
+            },
+    ) {
+        Icon(
+            modifier = Modifier
+                .padding(all = iconPadding)
+                .size(iconSize),
+            painter = painterResource(iconRes),
+            contentDescription = null,
+            tint = iconTintColor
+        )
+    }
+
+    /*IconButton(
         modifier = Modifier
             .size(28.dp),
         enabled = isEnabled,
@@ -180,10 +219,10 @@ fun BrownieIconButton(
     ) {
         Icon(
             modifier = Modifier
-                .size(24.dp),
+                .size(28.dp),
             painter = painterResource(iconRes),
             contentDescription = "Copy Icon",
             tint = iconTintColor
         )
-    }
+    }*/
 }

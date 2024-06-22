@@ -5,16 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,9 +26,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dreamsoftware.brownie.component.BrownieCardRow
+import com.dreamsoftware.brownie.component.BrownieText
+import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreenActionListener
@@ -41,31 +41,13 @@ fun AccountPasswordRow(
     account: AccountPasswordBO,
     actionListener: HomeScreenActionListener
 ) {
-    Card(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-
+    with(MaterialTheme.colorScheme) {
         var expanded by remember { mutableStateOf(false) }
+        BrownieCardRow {
+            val matchingImage =
+                suggestionsWithImages.firstOrNull { it.first == account.accountName }?.second
 
-        val matchingImage =
-            suggestionsWithImages.firstOrNull { it.first == account.accountName }?.second
-
-        val painter = matchingImage ?: R.drawable.icon_others
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp)
-        ) {
-
+            val painter = matchingImage ?: R.drawable.icon_others
             Image(
                 painter = painterResource(painter),
                 contentDescription = null,
@@ -80,43 +62,32 @@ fun AccountPasswordRow(
                     .weight(1f)
             ) {
 
-                Text(
-                    text = account.accountName,
-                    color = Color.Black,
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                BrownieText(
+                    type = BrownieTextTypeEnum.TITLE_MEDIUM,
+                    titleText = account.accountName,
+                    textBold = true,
+                    textColor = onPrimary
                 )
 
-                Text(
-                    text = account.displayInfo,
-                    color = Color.Gray,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Normal
-                    )
+                BrownieText(
+                    type = BrownieTextTypeEnum.BODY_LARGE,
+                    titleText = account.displayInfo,
+                    singleLine = true,
+                    textColor = onPrimary
                 )
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                IconButton(
-                    onClick = {
-                        actionListener.onCopyAccountPasswordToClipboard(account.password)
-                    },
-                    modifier = Modifier.size(32.dp)
+                BrownieIconButton(
+                    iconRes = R.drawable.icon_copy,
+                    containerColor = Color.Transparent,
+                    containerSize = 28.dp,
+                    iconSize = 24.dp,
+                    iconPadding = 4.dp
                 ) {
-                    Icon(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .padding(end = 6.dp),
-                        painter = painterResource(R.drawable.icon_copy),
-                        contentDescription = "Copy Icon"
-                    )
+                    actionListener.onCopyAccountPasswordToClipboard(account.password)
                 }
 
                 Box {

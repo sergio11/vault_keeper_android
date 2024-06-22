@@ -15,18 +15,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
+import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 import com.dreamsoftware.vaultkeeper.ui.utils.formatCardNumber
 import com.dreamsoftware.vaultkeeper.ui.utils.formatExpiryDate
-import com.dreamsoftware.vaultkeeper.utils.generateRandomBrush
+import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderBrush
 
 @Composable
 fun CardUi(
@@ -34,11 +35,13 @@ fun CardUi(
     cardNumber: String,
     cardExpiryDate: String,
     cardCVV: String,
-    cardIcon: Int
+    cardIcon: Int,
+    cardProviderEnum: CardProviderEnum
 ) {
+    val context = LocalContext.current
     val formattedCardNumber = cardNumber.formatCardNumber()
     val formattedExpiryDate = cardExpiryDate.formatExpiryDate()
-    val randomBrush by remember { mutableStateOf(generateRandomBrush()) }
+    val cardBrush by rememberUpdatedState(cardProviderEnum.toCardProviderBrush(context))
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -55,7 +58,7 @@ fun CardUi(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(randomBrush)
+                    .background(cardBrush)
             ) {
                 BrownieText(
                     modifier = Modifier
