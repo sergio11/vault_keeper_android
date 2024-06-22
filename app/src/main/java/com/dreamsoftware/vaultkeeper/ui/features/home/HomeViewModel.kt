@@ -155,6 +155,10 @@ class HomeViewModel @Inject constructor(
         launchSideEffect(HomeSideEffects.OpenSecureCardDetail(cardUid))
     }
 
+    override fun onAccountPasswordClicked(accountPasswordUid: String) {
+        launchSideEffect(HomeSideEffects.OpenAccountPasswordDetail(accountPasswordUid))
+    }
+
     override fun onEditSecureCard(cardUid: String) {
         launchSideEffect(HomeSideEffects.EditSecureCard(cardUid))
     }
@@ -270,4 +274,5 @@ sealed interface HomeSideEffects: SideEffect {
     data class EditAccountPassword(val accountUid: String): HomeSideEffects
     data class CopyTextToClipboard(val text: String): HomeSideEffects
     data class OpenSecureCardDetail(val cardUid: String): HomeSideEffects
+    data class OpenAccountPasswordDetail(val accountPasswordUid: String): HomeSideEffects
 }

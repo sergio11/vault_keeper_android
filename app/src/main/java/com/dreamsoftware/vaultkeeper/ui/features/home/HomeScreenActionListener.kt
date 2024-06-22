@@ -17,6 +17,7 @@ interface HomeScreenActionListener: IBrownieScreenActionListener {
     fun onFilterBottomSheetVisibilityUpdated(isVisible: Boolean)
     fun onFabItemClicked(fabButtonItem: BrownieFabButtonItem)
     fun onSecureCardClicked(cardUid: String)
+    fun onAccountPasswordClicked(accountPasswordUid: String)
     fun onEditSecureCard(cardUid: String)
     fun onEditAccountPassword(accountUid: String)
     fun onCopyCardNumberToClipboard(cardNumber: String)

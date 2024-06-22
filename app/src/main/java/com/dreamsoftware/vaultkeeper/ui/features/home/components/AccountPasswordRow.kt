@@ -20,6 +20,7 @@ import com.dreamsoftware.brownie.component.BrownieDropdownMenuButtonItem
 import com.dreamsoftware.brownie.component.BrownieIconButton
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
+import com.dreamsoftware.brownie.utils.clickWithRipple
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreenActionListener
@@ -34,7 +35,11 @@ fun AccountPasswordRow(
     actionListener: HomeScreenActionListener
 ) {
     with(MaterialTheme.colorScheme) {
-        BrownieCardRow {
+        BrownieCardRow(
+            modifier = Modifier.clickWithRipple {
+                actionListener.onAccountPasswordClicked(account.uid)
+            }
+        ) {
             val matchingImage =
                 suggestionsWithImages.firstOrNull { it.first == account.accountName }?.second
 

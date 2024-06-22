@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.dreamsoftware.vaultkeeper.ui.features.accountpassworddetail.AccountPasswordDetailScreen
 import com.dreamsoftware.vaultkeeper.ui.features.carddetail.SecureCardDetailScreen
 import com.dreamsoftware.vaultkeeper.ui.features.generatepassword.GeneratePasswordScreen
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreen
@@ -37,6 +38,9 @@ fun NavGraphBuilder.HomeNavigationGraph(
                     },
                     onGoToSecureCardDetail = {
                         navigate(Screens.Main.Home.SecureCardDetail.buildRoute(it))
+                    },
+                    onGoToAccountPasswordDetail = {
+                        navigate(Screens.Main.Home.AccountPasswordDetail.buildRoute(it))
                     },
                     onGoToEditAccountPassword = {
                         navigate(Screens.Main.Home.EditAccountPassword.buildRoute(it))
@@ -129,6 +133,23 @@ fun NavGraphBuilder.HomeNavigationGraph(
                 Screens.Main.Home.EditAccountPassword.parseArgs(args)?.let {
                     with(navController) {
                         SavePasswordScreen(
+                            args = it,
+                            onBackPressed = {
+                                popBackStack()
+                            }
+                        )
+                    }
+                }
+            }
+        }
+
+        composable(
+            route = Screens.Main.Home.AccountPasswordDetail.route
+        ) { navBackStackEntry ->
+            navBackStackEntry.arguments?.let { args ->
+                Screens.Main.Home.AccountPasswordDetail.parseArgs(args)?.let {
+                    with(navController) {
+                        AccountPasswordDetailScreen(
                             args = it,
                             onBackPressed = {
                                 popBackStack()
