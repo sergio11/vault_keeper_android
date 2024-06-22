@@ -83,7 +83,10 @@ class SaveCardViewModel @Inject constructor(
     }
 
     override fun onCardProviderUpdated(cardProvider: BrownieDropdownMenuItem) {
-        updateState { it.copy(cardProviderMenuItemSelected = cardProvider) }
+        updateState { it.copy(
+            cardProviderMenuItemSelected = cardProvider,
+            cardProviderEnum = CardProviderEnum.fromName(cardProvider.id)
+        ) }
     }
 
     private fun onFetchSecureCardDetailsSuccessfully(secureCard: SecureCardBO) {
@@ -95,6 +98,7 @@ class SaveCardViewModel @Inject constructor(
                 cardHolderName = secureCard.cardHolderName,
                 cardExpiryDate = secureCard.cardExpiryDate,
                 cardCVV = secureCard.cardCvv,
+                cardProviderEnum = secureCard.cardProvider,
                 cardProviderMenuItemSelected = it.cardProviderMenuItems.find { provider -> provider.id == secureCard.cardProvider.name },
             )
         }
@@ -113,7 +117,8 @@ class SaveCardViewModel @Inject constructor(
                 cardNumber = secureCard.cardNumber,
                 cardHolderName = secureCard.cardHolderName,
                 cardExpiryDate = secureCard.cardExpiryDate,
-                cardCVV = secureCard.cardCvv
+                cardCVV = secureCard.cardCvv,
+                cardProviderEnum = secureCard.cardProvider
             )
         }
     }
@@ -140,6 +145,7 @@ data class SaveCardUiState(
     val cardHolderName: String = String.EMPTY,
     val cardExpiryDate: String = String.EMPTY,
     val cardCVV: String = String.EMPTY,
+    val cardProviderEnum: CardProviderEnum = CardProviderEnum.OTHER,
     val expanded: Boolean = false,
     val cardProviderMenuItemSelected: BrownieDropdownMenuItem? = null,
     val cardProviderMenuItems: List<BrownieDropdownMenuItem> = emptyList()

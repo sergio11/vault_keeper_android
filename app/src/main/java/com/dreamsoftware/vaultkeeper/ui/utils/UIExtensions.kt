@@ -9,6 +9,8 @@ import android.net.NetworkCapabilities
 import androidx.annotation.StringRes
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.dreamsoftware.vaultkeeper.R
@@ -120,6 +122,21 @@ fun CardProviderEnum?.toCardProviderImage() = this?.let {
         CardProviderEnum.OTHER -> R.drawable.icon_card
     }
 } ?: R.drawable.icon_card
+
+
+fun CardProviderEnum.toCardProviderBrush(context: Context): Brush {
+    val (startColorRes, endColorRes) = when (this) {
+        CardProviderEnum.VISA -> R.color.visa_start to R.color.visa_end
+        CardProviderEnum.MASTERCARD -> R.color.mastercard_start to R.color.mastercard_end
+        CardProviderEnum.AMERICAN_EXPRESS -> R.color.american_express_start to R.color.american_express_end
+        CardProviderEnum.RUPAY -> R.color.rupay_start to R.color.rupay_end
+        CardProviderEnum.DINERS_CLUB -> R.color.diners_club_start to R.color.diners_club_end
+        CardProviderEnum.OTHER -> R.color.other_start to R.color.other_end
+    }
+    val startColor = ContextCompat.getColor(context, startColorRes)
+    val endColor = ContextCompat.getColor(context, endColorRes)
+    return Brush.verticalGradient(listOf(Color(startColor), Color(endColor)))
+}
 
 fun String?.toCardProviderImage() = this?.takeIf { CardProviderEnum.entries.map(CardProviderEnum::name).contains(it) }?.let {
     CardProviderEnum.valueOf(this).toCardProviderImage()
