@@ -25,7 +25,7 @@ room-version = "2.6.1"
 core-splashscreen = "1.0.1"
 firebase-bom = "33.1.0"
 desugar-jdk-libs = "2.0.4"
-brownie-ui = "0.0.39"
+brownie-ui = "0.0.40"
 material-icons-extended = "1.6.8"
 exoplayer = "2.19.1"
 appcompat = "1.7.0"
@@ -62,7 +62,6 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-security-crypto-ktx = { group = "androidx.security", name = "security-crypto-ktx", version.ref = "security-crypto-ktx" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebase-auth" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room-version" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room-version" }

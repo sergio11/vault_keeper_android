@@ -28,6 +28,14 @@ annotation class SaveSecureCardErrorMapper
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class AccountPasswordDetailErrorMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class SecureCardDetailErrorMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class SavePasswordErrorMapper
 
 @Qualifier
