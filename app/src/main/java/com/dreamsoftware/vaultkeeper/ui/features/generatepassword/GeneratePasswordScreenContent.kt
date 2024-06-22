@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
+import com.dreamsoftware.brownie.component.BrownieIconButton
 import com.dreamsoftware.brownie.component.BrownieSelectionRow
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
 import com.dreamsoftware.brownie.component.BrownieSliderRow
@@ -24,7 +25,6 @@ import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
 import com.dreamsoftware.vaultkeeper.R
-import com.dreamsoftware.vaultkeeper.ui.features.home.components.BrownieIconButton
 
 @Composable
 fun GeneratePasswordScreenContent(
