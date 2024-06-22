@@ -173,6 +173,9 @@
     <!-- Secure card detail screen -->
     <string name="secure_card_detail_screen_title">Secure card detail</string>
 
+    <!-- Account password detail screen -->
+    <string name="account_password_detail_screen_title">Account password detail</string>
+
     <!-- Delete Dialogs -->
     <string name="delete_password_dialog_title">Delete Password?</string>
     <string name="delete_password_dialog_description">Are you sure you want to delete this password?</string>

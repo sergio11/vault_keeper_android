@@ -13,6 +13,7 @@ fun HomeScreen(
     onGoToAddNewAccount: () -> Unit,
     onGoToAddNewSecureCard: () -> Unit,
     onGoToSecureCardDetail: (cardUid: String) -> Unit,
+    onGoToAccountPasswordDetail: (accountPasswordUid: String) -> Unit,
     onGoToEditSecureCard: (cardUid: String) -> Unit,
     onGoToEditAccountPassword: (accountUid: String) -> Unit
 ) {
@@ -30,6 +31,7 @@ fun HomeScreen(
                     clipboardManager.setText(AnnotatedString(it.text))
                 }
                 is HomeSideEffects.OpenSecureCardDetail -> onGoToSecureCardDetail(it.cardUid)
+                is HomeSideEffects.OpenAccountPasswordDetail -> onGoToAccountPasswordDetail(it.accountPasswordUid)
             }
         },
         onInit = { loadData() }
