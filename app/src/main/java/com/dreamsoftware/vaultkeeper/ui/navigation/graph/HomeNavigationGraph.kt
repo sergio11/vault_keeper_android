@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.dreamsoftware.vaultkeeper.ui.features.carddetail.SecureCardDetailScreen
 import com.dreamsoftware.vaultkeeper.ui.features.generatepassword.GeneratePasswordScreen
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeScreen
 import com.dreamsoftware.vaultkeeper.ui.features.savecard.SaveCardScreen
@@ -34,6 +35,9 @@ fun NavGraphBuilder.HomeNavigationGraph(
                     onGoToEditSecureCard = {
                         navigate(Screens.Main.Home.EditSecureCard.buildRoute(it))
                     },
+                    onGoToSecureCardDetail = {
+                        navigate(Screens.Main.Home.SecureCardDetail.buildRoute(it))
+                    },
                     onGoToEditAccountPassword = {
                         navigate(Screens.Main.Home.EditAccountPassword.buildRoute(it))
                     }
@@ -44,17 +48,7 @@ fun NavGraphBuilder.HomeNavigationGraph(
         composable(
             route = Screens.Main.Home.Generate.route
         ) {
-            with(navController) {
-                GeneratePasswordScreen()
-            }
-        }
-
-        composable(
-            route = Screens.Main.Home.Generate.route
-        ) {
-            with(navController) {
-                GeneratePasswordScreen()
-            }
+            GeneratePasswordScreen()
         }
 
         composable(
@@ -101,6 +95,23 @@ fun NavGraphBuilder.HomeNavigationGraph(
                 Screens.Main.Home.EditSecureCard.parseArgs(args)?.let {
                     with(navController) {
                         SaveCardScreen(
+                            args = it,
+                            onBackPressed = {
+                                popBackStack()
+                            }
+                        )
+                    }
+                }
+            }
+        }
+
+        composable(
+            route = Screens.Main.Home.SecureCardDetail.route
+        ) { navBackStackEntry ->
+            navBackStackEntry.arguments?.let { args ->
+                Screens.Main.Home.SecureCardDetail.parseArgs(args)?.let {
+                    with(navController) {
+                        SecureCardDetailScreen(
                             args = it,
                             onBackPressed = {
                                 popBackStack()

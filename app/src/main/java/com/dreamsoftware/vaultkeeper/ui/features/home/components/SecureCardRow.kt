@@ -23,6 +23,7 @@ import com.dreamsoftware.brownie.component.BrownieImageIcon
 import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieText
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
+import com.dreamsoftware.brownie.utils.clickWithRipple
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
@@ -44,7 +45,10 @@ fun SecureCardRow(
     with(MaterialTheme.colorScheme) {
         val context = LocalContext.current
         val cardBrush by rememberUpdatedState(card.cardProvider.toCardProviderBrush(context))
-        BrownieCardRow(contentBrush = cardBrush) {
+        BrownieCardRow(
+            modifier = Modifier.clickWithRipple {  actionListener.onSecureCardClicked(card.uid) },
+            contentBrush = cardBrush
+        ) {
 
             BrownieImageIcon(
                 iconRes = card.cardProvider.toCardProviderImage(),

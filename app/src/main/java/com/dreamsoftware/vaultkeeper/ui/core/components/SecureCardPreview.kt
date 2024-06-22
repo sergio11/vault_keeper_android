@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.ui.features.savecard
+package com.dreamsoftware.vaultkeeper.ui.core.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,7 +30,7 @@ import com.dreamsoftware.vaultkeeper.ui.utils.formatExpiryDate
 import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderBrush
 
 @Composable
-fun CardUi(
+fun SecureCardPreview(
     cardHolderName: String,
     cardNumber: String,
     cardExpiryDate: String,

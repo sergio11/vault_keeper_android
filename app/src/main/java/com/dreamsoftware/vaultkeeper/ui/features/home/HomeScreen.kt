@@ -12,6 +12,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onGoToAddNewAccount: () -> Unit,
     onGoToAddNewSecureCard: () -> Unit,
+    onGoToSecureCardDetail: (cardUid: String) -> Unit,
     onGoToEditSecureCard: (cardUid: String) -> Unit,
     onGoToEditAccountPassword: (accountUid: String) -> Unit
 ) {
@@ -28,6 +29,7 @@ fun HomeScreen(
                 is HomeSideEffects.CopyTextToClipboard -> {
                     clipboardManager.setText(AnnotatedString(it.text))
                 }
+                is HomeSideEffects.OpenSecureCardDetail -> onGoToSecureCardDetail(it.cardUid)
             }
         },
         onInit = { loadData() }

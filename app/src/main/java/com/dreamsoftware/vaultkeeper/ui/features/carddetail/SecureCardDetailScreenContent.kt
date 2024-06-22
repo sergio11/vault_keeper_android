@@ -1,4 +1,4 @@
-package com.dreamsoftware.vaultkeeper.ui.features.savecard
+package com.dreamsoftware.vaultkeeper.ui.features.carddetail
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,17 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.dreamsoftware.brownie.component.BrownieButton
-import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
-import com.dreamsoftware.brownie.component.BrownieFieldDropdown
 import com.dreamsoftware.brownie.component.BrownieImageIcon
 import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
@@ -37,9 +33,9 @@ import com.dreamsoftware.vaultkeeper.ui.core.components.SecureCardPreview
 import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderImage
 
 @Composable
-fun SaveCardScreenContent(
-    uiState: SaveCardUiState,
-    actionListener: SaveCardScreenActionListener
+fun SecureCardDetailScreenContent(
+    uiState: SecureCardDetailUiState,
+    actionListener: SecureCardDetailScreenActionListener
 ) {
     with(uiState) {
         with(MaterialTheme.colorScheme) {
@@ -53,7 +49,6 @@ fun SaveCardScreenContent(
                 onInfoMessageCleared = actionListener::onInfoMessageCleared,
                 onErrorMessageCleared = actionListener::onErrorMessageCleared,
             ) {
-                val keyboardController = LocalSoftwareKeyboardController.current
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -74,11 +69,7 @@ fun SaveCardScreenContent(
                             start = 16.dp, end = 16.dp
                         ),
                         type = BrownieTextTypeEnum.TITLE_LARGE,
-                        titleRes = if (isEditScreen) {
-                            R.string.edit_card_title
-                        } else {
-                            R.string.add_new_card_title
-                        },
+                        titleRes = R.string.secure_card_detail_screen_title,
                         textColor = onPrimary
                     )
                 }
@@ -98,15 +89,6 @@ fun SaveCardScreenContent(
 
                     Spacer(modifier = Modifier.height(22.dp))
 
-                    BrownieFieldDropdown(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        labelRes = R.string.card_provider,
-                        placeHolderRes = R.string.card_provider_placeholder,
-                        menuItemSelected = cardProviderMenuItemSelected,
-                        menuItems = cardProviderMenuItems,
-                        leadingIconRes = R.drawable.icon_card_number,
-                        onMenuItemClicked = actionListener::onCardProviderUpdated
-                    )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -115,11 +97,7 @@ fun SaveCardScreenContent(
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth(),
                         value = cardNumber,
-                        onValueChanged = {
-                            if (it.length <= 16) {
-                                actionListener.onCardNumberUpdated(newCardNumber = it)
-                            }
-                        },
+                        isReadOnly = true,
                         labelRes = R.string.card_number,
                         placeHolderRes = R.string.card_number_placeholder,
                         supportingText = {
@@ -138,9 +116,7 @@ fun SaveCardScreenContent(
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth(),
                         value = cardHolderName,
-                        onValueChanged = {
-                            actionListener.onCardHolderNameUpdated(newCardHolderName = it)
-                        },
+                        isReadOnly = true,
                         isSingleLine = true,
                         labelRes = R.string.card_holder_name,
                         placeHolderRes = R.string.card_holder_name_placeholder,
@@ -156,11 +132,7 @@ fun SaveCardScreenContent(
                         labelRes = R.string.card_expiry_date,
                         placeHolderRes = R.string.card_expiry_date_placeholder,
                         value = cardExpiryDate,
-                        onValueChanged = {
-                            if (it.length <= 4) {
-                                actionListener.onCardExpiryDateUpdated(it)
-                            }
-                        },
+                        isReadOnly = true,
                         supportingText = {
                             "mm/yy"
                         },
@@ -185,31 +157,10 @@ fun SaveCardScreenContent(
                         isSingleLine = true,
                         leadingIconRes = R.drawable.icon_secret,
                         keyboardType = KeyboardType.Number,
-                        onValueChanged = {
-                            if (it.length <= 3) {
-                                actionListener.onCardCvvUpdated(it)
-                            }
-                        },
-                        onDone = {
-                            keyboardController?.hide()
-                            actionListener.onSaveSecureCard()
-                        }
+                        isReadOnly = true
                     )
 
                     Spacer(modifier = Modifier.weight(1f))
-
-                    BrownieButton(
-                        modifier = Modifier
-                            .padding(all = 16.dp)
-                            .fillMaxWidth(),
-                        type = BrownieButtonTypeEnum.LARGE,
-                        onClick = actionListener::onSaveSecureCard,
-                        textRes = if (isEditScreen) {
-                            R.string.update_card_button
-                        } else {
-                            R.string.create_card_button
-                        }
-                    )
                 }
             }
         }

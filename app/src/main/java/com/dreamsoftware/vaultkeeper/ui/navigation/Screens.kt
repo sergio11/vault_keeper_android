@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.dreamsoftware.vaultkeeper.ui.features.carddetail.SecureCardDetailScreenArgs
 import com.dreamsoftware.vaultkeeper.ui.features.savecard.SaveCardScreenArgs
 import com.dreamsoftware.vaultkeeper.ui.features.savepassword.SaveAccountPasswordScreenArgs
 
@@ -46,6 +47,24 @@ sealed class Screens(val route: String, arguments: List<NamedNavArgument> = empt
                 fun parseArgs(args: Bundle): SaveCardScreenArgs? = with(args) {
                     getString("card_uid")?.let {
                         SaveCardScreenArgs(cardUid = it)
+                    }
+                }
+            }
+
+            data object SecureCardDetail : Screens("secure_card_detail/{card_uid}", arguments = listOf(
+                navArgument("card_uid") {
+                    type = NavType.StringType
+                }
+            )) {
+                fun buildRoute(cardUid: String): String =
+                    route.replace(
+                        oldValue = "{card_uid}",
+                        newValue = cardUid
+                    )
+
+                fun parseArgs(args: Bundle): SecureCardDetailScreenArgs? = with(args) {
+                    getString("card_uid")?.let {
+                        SecureCardDetailScreenArgs(cardUid = it)
                     }
                 }
             }
