@@ -5,7 +5,7 @@ import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
-import com.dreamsoftware.vaultkeeper.di.SaveSecureCardErrorMapper
+import com.dreamsoftware.vaultkeeper.di.AccountPasswordDetailErrorMapper
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
 import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountPasswordDetailViewModel @Inject constructor(
     private val getAccountByIdUseCase: GetAccountByIdUseCase,
-    @SaveSecureCardErrorMapper private val errorMapper: IBrownieErrorMapper,
+    @AccountPasswordDetailErrorMapper private val errorMapper: IBrownieErrorMapper,
     private val applicationAware: IVaultKeeperApplicationAware
 ) : BrownieViewModel<AccountPasswordDetailUiState, AccountPasswordDetailSideEffects>(), AccountPasswordDetailScreenActionListener {
 

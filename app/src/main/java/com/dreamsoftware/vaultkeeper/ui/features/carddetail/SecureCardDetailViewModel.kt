@@ -5,7 +5,7 @@ import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.brownie.core.SideEffect
 import com.dreamsoftware.brownie.core.UiState
 import com.dreamsoftware.brownie.utils.EMPTY
-import com.dreamsoftware.vaultkeeper.di.SaveSecureCardErrorMapper
+import com.dreamsoftware.vaultkeeper.di.SecureCardDetailErrorMapper
 import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecureCardDetailViewModel @Inject constructor(
     private val getCardByIdUseCase: GetCardByIdUseCase,
-    @SaveSecureCardErrorMapper private val errorMapper: IBrownieErrorMapper,
+    @SecureCardDetailErrorMapper private val errorMapper: IBrownieErrorMapper,
     private val applicationAware: IVaultKeeperApplicationAware
 ) : BrownieViewModel<SecureCardDetailUiState, SecureCardDetailSideEffects>(), SecureCardDetailScreenActionListener {
 

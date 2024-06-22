@@ -1,12 +1,13 @@
 package com.dreamsoftware.vaultkeeper.di
 
 import android.content.Context
-import androidx.biometric.BiometricManager
 import com.dreamsoftware.brownie.core.IBrownieErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.account.createmasterkey.CreateMasterKeySimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.account.signin.SignInScreenSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.account.signup.SignUpScreenSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.account.unlock.UnlockScreenSimpleErrorMapper
+import com.dreamsoftware.vaultkeeper.ui.features.accountpassworddetail.AccountPasswordDetailSimpleErrorMapper
+import com.dreamsoftware.vaultkeeper.ui.features.carddetail.SecureCardDetailSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.home.HomeSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.savecard.SaveSecureCardSimpleErrorMapper
 import com.dreamsoftware.vaultkeeper.ui.features.savepassword.SavePasswordSimpleErrorMapper
@@ -87,9 +88,20 @@ class UiModule {
     ): IBrownieErrorMapper =
         UnlockScreenSimpleErrorMapper(context = context)
 
+
     @Provides
     @ViewModelScoped
-    fun provideBiometricManager(
+    @AccountPasswordDetailErrorMapper
+    fun provideAccountPasswordDetailSimpleErrorMapper(
         @ApplicationContext context: Context
-    ): BiometricManager = BiometricManager.from(context)
+    ): IBrownieErrorMapper =
+        AccountPasswordDetailSimpleErrorMapper(context = context)
+
+    @Provides
+    @ViewModelScoped
+    @SecureCardDetailErrorMapper
+    fun provideSecureCardDetailSimpleErrorMapper(
+        @ApplicationContext context: Context
+    ): IBrownieErrorMapper =
+        SecureCardDetailSimpleErrorMapper(context = context)
 }

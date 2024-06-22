@@ -144,9 +144,7 @@ fun AccountPasswordDetailScreenContent(
                         labelRes = R.string.password_label,
                         placeHolderRes = R.string.password_placeholder,
                         value = password,
-                        onValueChanged = {
-
-                        },
+                        isReadOnly = true,
                         leadingIconRes = R.drawable.icon_lock,
                         supportingText = {
                             "${password.length}/25"
