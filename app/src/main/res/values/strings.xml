@@ -242,4 +242,9 @@
     <string name="no_cards_found">No cards found! Ready to add a new one?</string>
     <string name="copy_account_password_to_clipboard">Copy account password to clipboard</string>
     <string name="copy_secure_card_to_clipboard" formatted="false">Copy secure card: %s to clipboard</string>
+
+    <string name="edit_secure_card_dropdown_option_text">Edit</string>
+    <string name="delete_secure_card_dropdown_option_text">Delete</string>
+    <string name="edit_account_password_dropdown_option_text">Edit</string>
+    <string name="delete_account_password_dropdown_option_text">Delete</string>
 </resources>

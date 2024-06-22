@@ -29,9 +29,9 @@ import com.dreamsoftware.brownie.component.BrownieTextFieldPassword
 import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.BrownieType
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
+import com.dreamsoftware.brownie.utils.clickWithRipple
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.core.components.LoadingDialog
-import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
 @Composable
 fun SavePasswordScreenContent(

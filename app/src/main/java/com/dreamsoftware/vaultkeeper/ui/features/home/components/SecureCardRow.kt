@@ -1,39 +1,24 @@
 package com.dreamsoftware.vaultkeeper.ui.features.home.components
 
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dreamsoftware.brownie.component.BrownieCardRow
+import com.dreamsoftware.brownie.component.BrownieDropdownMenuButton
+import com.dreamsoftware.brownie.component.BrownieDropdownMenuButtonItem
+import com.dreamsoftware.brownie.component.BrownieIconButton
 import com.dreamsoftware.brownie.component.BrownieImageIcon
 import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieText
@@ -46,7 +31,9 @@ import com.dreamsoftware.vaultkeeper.ui.theme.Gray
 import com.dreamsoftware.vaultkeeper.ui.utils.obfuscateSecret
 import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderBrush
 import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderImage
-import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
+
+private const val EDIT_SECURE_CARD_ITEM_ID = "EDIT_SECURE_CARD"
+private const val DELETE_SECURE_CARD_ITEM_ID = "DELETE_SECURE_CARD"
 
 @Composable
 fun SecureCardRow(
@@ -56,7 +43,6 @@ fun SecureCardRow(
 
     with(MaterialTheme.colorScheme) {
         val context = LocalContext.current
-        var expanded by remember { mutableStateOf(false) }
         val cardBrush by rememberUpdatedState(card.cardProvider.toCardProviderBrush(context))
         BrownieCardRow(contentBrush = cardBrush) {
 
@@ -108,121 +94,33 @@ fun SecureCardRow(
                 
                 Spacer(modifier = Modifier.size(4.dp))
 
-                Box {
-                    BrownieIconButton(
-                        iconRes = R.drawable.icon_more,
-                        containerColor = background,
-                        iconTintColor = primary,
-                        containerSize = 32.dp,
-                        iconSize = 28.dp,
-                        iconPadding = 4.dp
-                    ) {
-                        expanded = true
-                    }
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                        modifier = Modifier
-                            .background(Color.White)
-                    ) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    text = "Edit",
-                                    style = TextStyle(
-                                        fontSize = 14.sp,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                )
-                            },
-                            onClick = {
-                                //add edit screen navigation
-                                expanded = false
-                                actionListener.onEditSecureCard(card.uid)
-                            },
-                            trailingIcon = {
-                                Icon(
-                                    modifier = Modifier.size(20.dp),
-                                    painter = painterResource(R.drawable.icon_edit),
-                                    contentDescription = "Edit Icon"
-                                )
-                            }
+                BrownieDropdownMenuButton(
+                    iconRes = R.drawable.icon_more,
+                    containerColor = background,
+                    iconTintColor = primary,
+                    containerSize = 32.dp,
+                    iconSize = 28.dp,
+                    iconPadding = 4.dp,
+                    dropdownMenuItems = listOf(
+                        BrownieDropdownMenuButtonItem(
+                            id = EDIT_SECURE_CARD_ITEM_ID,
+                            titleRes = R.string.edit_secure_card_dropdown_option_text,
+                            iconRes = R.drawable.icon_edit
+                        ),
+                        BrownieDropdownMenuButtonItem(
+                            id = DELETE_SECURE_CARD_ITEM_ID,
+                            titleRes = R.string.delete_secure_card_dropdown_option_text,
+                            iconRes = R.drawable.icon_delete
                         )
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    text = "Delete", style = TextStyle(
-                                        fontSize = 14.sp,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                )
-                            },
-                            onClick = {
-                                actionListener.onDeleteSecureCard(card)
-                                expanded = false
-                            },
-                            trailingIcon = {
-                                Icon(
-                                    modifier = Modifier.size(20.dp),
-                                    painter = painterResource(R.drawable.icon_delete),
-                                    contentDescription = null
-                                )
-                            }
-                        )
+                    ),
+                    onMenuItemClicked = {
+                        when(it.id) {
+                            EDIT_SECURE_CARD_ITEM_ID -> actionListener.onEditSecureCard(card.uid)
+                            DELETE_SECURE_CARD_ITEM_ID -> actionListener.onDeleteSecureCard(card)
+                        }
                     }
-                }
+                )
             }
         }
     }
-}
-
-
-@Composable
-fun BrownieIconButton(
-    @DrawableRes iconRes: Int,
-    isEnabled: Boolean = true,
-    containerSize: Dp = 52.dp,
-    iconSize: Dp = 40.dp,
-    iconPadding: Dp = 8.dp,
-    iconTintColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
-    containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
-    onClicked: () -> Unit = {}
-) {
-    Box(
-        modifier = Modifier
-            .size(containerSize)
-            .clip(CircleShape)
-            .shadow(10.dp)
-            .background(color = containerColor)
-            .clickWithRipple {
-                onClicked()
-            },
-    ) {
-        Icon(
-            modifier = Modifier
-                .padding(all = iconPadding)
-                .size(iconSize),
-            painter = painterResource(iconRes),
-            contentDescription = null,
-            tint = iconTintColor
-        )
-    }
-
-    /*IconButton(
-        modifier = Modifier
-            .size(28.dp),
-        enabled = isEnabled,
-        colors = IconButtonDefaults.iconButtonColors(
-            containerColor = containerColor
-        ),
-        onClick = onClicked
-    ) {
-        Icon(
-            modifier = Modifier
-                .size(28.dp),
-            painter = painterResource(iconRes),
-            contentDescription = "Copy Icon",
-            tint = iconTintColor
-        )
-    }*/
 }

@@ -30,10 +30,10 @@ import com.dreamsoftware.brownie.component.BrownieTextTypeEnum
 import com.dreamsoftware.brownie.component.BrownieType
 import com.dreamsoftware.brownie.component.core.BrownieMaskVisualTransformation
 import com.dreamsoftware.brownie.component.screen.BrownieScreenContent
+import com.dreamsoftware.brownie.utils.clickWithRipple
 import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.core.components.LoadingDialog
 import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderImage
-import com.dreamsoftware.vaultkeeper.utils.clickWithRipple
 
 @Composable
 fun SaveCardScreenContent(
