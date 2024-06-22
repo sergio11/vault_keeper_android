@@ -12,11 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
@@ -35,6 +31,9 @@ import com.dreamsoftware.vaultkeeper.R
 import com.dreamsoftware.vaultkeeper.ui.core.components.LoadingDialog
 import com.dreamsoftware.vaultkeeper.ui.core.components.SecureCardPreview
 import com.dreamsoftware.vaultkeeper.ui.utils.toCardProviderImage
+import com.dreamsoftware.vaultkeeper.utils.secureCardVisualTransformation
+
+private val secureCardVisualTransformation = secureCardVisualTransformation()
 
 @Composable
 fun SaveCardScreenContent(
@@ -126,7 +125,7 @@ fun SaveCardScreenContent(
                             "${cardNumber.length}/16"
                         },
                         keyboardType = KeyboardType.Number,
-                        visualTransformation = visualTransformation,
+                        visualTransformation = secureCardVisualTransformation,
                         isSingleLine = true,
                         leadingIconRes = R.drawable.icon_card_number
                     )
@@ -214,37 +213,4 @@ fun SaveCardScreenContent(
             }
         }
     }
-}
-
-val creditCardOffsetMapping = object : OffsetMapping {
-    override fun originalToTransformed(offset: Int): Int {
-        if (offset <= 3) return offset
-        if (offset <= 7) return offset + 1
-        if (offset <= 11) return offset + 2
-        if (offset <= 16) return offset + 3
-        return 19
-    }
-
-    override fun transformedToOriginal(offset: Int): Int {
-        if (offset <= 4) return offset
-        if (offset <= 9) return offset - 1
-        if (offset <= 14) return offset - 2
-        if (offset <= 19) return offset - 3
-        return 16
-    }
-}
-
-// Making XXXX-XXXX-XXXX-XXXX string.
-private val visualTransformation = VisualTransformation { text ->
-    val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
-    var out = ""
-
-    for (i in trimmed.indices) {
-        out += trimmed[i]
-        if (i % 4 == 3 && i != 15) out += " "
-    }
-    TransformedText(
-        AnnotatedString(out),
-        creditCardOffsetMapping
-    )
 }
