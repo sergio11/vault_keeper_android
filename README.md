@@ -75,7 +75,7 @@ I have focused on providing a seamless user experience by leveraging cutting-edg
 
 Security is at the heart of VaultKeeper. I implement industry best practices in cryptographic algorithms and key management to ensure your data is always protected. My use of Clean Architecture and the MVVM design pattern ensures the codebase is organized, maintainable, and easily testable, translating into a more secure and reliable application.
 
-## 🏗️ Clean Architecture
+##  🏗️ Clean Architecture
 VaultKeeper employs Clean Architecture principles to ensure the app is scalable, maintainable, and testable. Clean Architecture separates the code into distinct layers, each with clear responsibilities:
 
 * **🎨 Presentation Layer:** Built with Jetpack Compose, this layer handles the UI and user interactions. It communicates with the ViewModel to retrieve data and update the UI reactively.
@@ -96,7 +96,8 @@ To protect user data, VaultKeeper implements robust cryptographic practices:
 * **🔐 Data Encryption:** All sensitive information, including passwords and banking details, is encrypted using the master key and salt.
 * **🗝️ Application Master Key:** The master keys and salts are encrypted using the application's master key. This key is stored in a secure .so file, accessible via Java NDK, preventing extraction through decompilation.
 
-## 🔏 Key Storage
+##    🔏 Key Storage
+
 The .so file containing the application's master key ensures that the key cannot be easily extracted by attackers, enhancing the security of the encryption keys stored in Firestore.
 
 ## App Screenshots
