@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -35,7 +36,6 @@ fun GeneratePasswordScreenContent(
         with(MaterialTheme.colorScheme) {
             BrownieScreenContent(
                 hasTopBar = false,
-                enableVerticalScroll = true,
                 screenContainerColor = primary,
                 infoMessage = infoMessage,
                 errorMessage = errorMessage,
@@ -71,7 +71,8 @@ fun GeneratePasswordScreenContent(
                 }
 
                 BrownieSheetSurface(
-                    enableVerticalScroll = false,
+                    enableVerticalScroll = true,
+                    verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Spacer(modifier = Modifier.height(20.dp))
@@ -113,7 +114,7 @@ fun GeneratePasswordScreenContent(
                         checked = specialCharacters,
                         onCheckedChange = actionListener::onSpecialCharactersChanged
                     )
-                    Spacer(modifier = Modifier.height(34.dp))
+                    Spacer(modifier = Modifier.size(34.dp))
                     GeneratePasswordScreenActions(
                         actionListener = actionListener
                     )
