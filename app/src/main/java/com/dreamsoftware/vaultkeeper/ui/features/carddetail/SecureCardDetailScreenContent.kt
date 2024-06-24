@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.dreamsoftware.brownie.component.BrownieButton
+import com.dreamsoftware.brownie.component.BrownieButtonStyleTypeEnum
 import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
 import com.dreamsoftware.brownie.component.BrownieDialog
@@ -176,7 +177,7 @@ fun SecureCardDetailScreenContent(
 
                     BrownieButton(
                         modifier = Modifier
-                            .padding(all = 16.dp)
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
                             .fillMaxWidth(),
                         type = BrownieButtonTypeEnum.LARGE,
                         onClick = actionListener::onDeleteSecureCard,
@@ -185,9 +186,10 @@ fun SecureCardDetailScreenContent(
 
                     BrownieButton(
                         modifier = Modifier
-                            .padding(all = 16.dp)
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
                             .fillMaxWidth(),
                         type = BrownieButtonTypeEnum.LARGE,
+                        style = BrownieButtonStyleTypeEnum.DANGER,
                         onClick = actionListener::onDeleteSecureCard,
                         textRes = R.string.secure_card_detail_delete_button
                     )

@@ -176,6 +176,8 @@
     <string name="secure_card_detail_edit_button">Edit Card</string>
     <!-- Account password detail screen -->
     <string name="account_password_detail_screen_title">Account password detail</string>
+    <string name="account_password_detail_delete_button">Delete Account</string>
+    <string name="account_password_detail_edit_button">Edit Account</string>
 
     <!-- Delete Dialogs -->
     <string name="delete_password_dialog_title">Delete Password?</string>
