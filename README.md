@@ -19,6 +19,16 @@
   <img src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white" />
 </p>
 
+<p align="center">
+  <img width="250px" src="doc/previewed/image1.jpeg" />
+  <img width="250px" src="doc/previewed/image2.jpeg" />
+  <img width="250px" src="doc/previewed/image3.jpeg" />
+  <img width="250px" src="doc/previewed/image4.jpeg" />
+  <img width="250px" src="doc/previewed/image5.jpeg" />
+</p>
+
+Slides are built using the  template from [Previewed](https://previewed.app/template/AFC0B4CB). I extend my gratitude to them for their remarkable work and contribution.
+
 ## Key Features:
 
 * **🔐 Top-Notch Security:** VaultKeeper uses advanced encryption to ensure your passwords and financial data are always protected.
