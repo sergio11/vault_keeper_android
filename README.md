@@ -155,4 +155,17 @@ Here are some screenshots from our app to give you a glimpse of its design and f
 <img width="250px" align="left" src="doc/screenshots/picture_32.png" />
 <img width="250px" src="doc/screenshots/picture_33.png" />
 
+## Contribution
+Contributions to VaultKeeper are highly encouraged! If you're interested in adding new features, resolving bugs, or enhancing the project's functionality, please feel free to submit pull requests.
+
+## Credits
+VaultKeeper is developed and maintained by Sergio Sánchez Sánchez (Dream Software). Special thanks to the open-source community and the contributors who have made this project possible. If you have any questions, feedback, or suggestions, feel free to reach out at dreamsoftware92@gmail.com.
+
+## Acknowledgements 🙏
+
+- We express our deep appreciation to [Freepik](https://www.freepik.es/) for generously providing the resources used in this project.
+
+- <div> Icons and images takes from <a href="https://www.freepik.com" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es'</a></div>
+- Template mockup from https://previewed.app/template/AFC0B4CB
+ ## Visitors Count
 
