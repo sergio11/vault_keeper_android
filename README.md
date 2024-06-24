@@ -76,3 +76,15 @@ Summary
 VaultKeeper leverages modern Android development practices and robust security mechanisms to offer a secure, efficient, and user-friendly solution for managing passwords and banking details. By utilizing Clean Architecture, Room for local caching, Firestore for remote data storage, and advanced cryptographic techniques, VaultKeeper ensures that user data remains secure and accessible across devices. The integration of Jetpack Compose and other Jetpack components further enhances the app's performance and user experience, making it a reliable and innovative digital security companion.
 
 
+<img width="250px" align="left" src="doc/screenshots/picture_1.png" />
+<img width="250px" align="left" src="doc/screenshots/picture_2.png" />
+<img width="250px" src="doc/screenshots/picture_3.png" />
+
+<img width="250px" align="left" src="doc/screenshots/picture_4.png" />
+<img width="250px" align="left" src="doc/screenshots/picture_5.png" />
+<img width="250px" src="doc/screenshots/picture_6.png" />
+
+<img width="250px" align="left" src="doc/screenshots/picture_7.png" />
+<img width="250px" align="left" src="doc/screenshots/picture_8.png" />
+
+
