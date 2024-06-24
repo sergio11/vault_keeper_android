@@ -88,6 +88,12 @@ class AccountPasswordDetailViewModel @Inject constructor(
         }
     }
 
+    override fun onEditAccountPassword() {
+        uiState.value.accountUid?.let {
+            launchSideEffect(AccountPasswordDetailSideEffects.EditAccountPassword(it))
+        }
+    }
+
     private fun onAccountPasswordDeletedSuccessfully() {
         launchSideEffect(AccountPasswordDetailSideEffects.AccountPasswordDeleted)
     }
@@ -113,4 +119,5 @@ data class AccountPasswordDetailUiState(
 sealed interface AccountPasswordDetailSideEffects: SideEffect {
     data object Cancelled: AccountPasswordDetailSideEffects
     data object AccountPasswordDeleted: AccountPasswordDetailSideEffects
+    data class EditAccountPassword(val uid: String): AccountPasswordDetailSideEffects
 }

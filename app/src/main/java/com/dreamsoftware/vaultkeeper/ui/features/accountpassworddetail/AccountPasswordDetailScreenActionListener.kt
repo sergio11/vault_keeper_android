@@ -7,4 +7,5 @@ interface AccountPasswordDetailScreenActionListener: IBrownieScreenActionListene
     fun onDeleteAccount()
     fun onDeleteAccountConfirmed()
     fun onDeleteAccountCancelled()
+    fun onEditAccountPassword()
 }

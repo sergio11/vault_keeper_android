@@ -7,4 +7,5 @@ interface SecureCardDetailScreenActionListener: IBrownieScreenActionListener {
     fun onDeleteSecureCard()
     fun onDeleteSecureCardConfirmed()
     fun onDeleteSecureCardCancelled()
+    fun onEditSecureCard()
 }

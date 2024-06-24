@@ -180,7 +180,7 @@ fun SecureCardDetailScreenContent(
                             .padding(vertical = 8.dp, horizontal = 16.dp)
                             .fillMaxWidth(),
                         type = BrownieButtonTypeEnum.LARGE,
-                        onClick = actionListener::onDeleteSecureCard,
+                        onClick = actionListener::onEditSecureCard,
                         textRes = R.string.secure_card_detail_edit_button
                     )
 
