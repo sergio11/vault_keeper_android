@@ -38,7 +38,7 @@
     <string name="get_started">Get Started</string>
     <string name="reset_master_key">Reset Master Key</string>
     <string name="reset_key_tagline">Reset your Master Key to secure your credentials with end-to-end encryption</string>
-    <string name="share_message">Check out</string>
+    <string name="share_message">Discover the ultimate security with VaultKeeper! Protect your secrets with ease. Check it out now!</string>
 
     <!-- Generic Error Messages -->
     <string name="generic_form_invalid_data_provided">Invalid data provided, please check it and try again.</string>
