@@ -86,5 +86,11 @@ VaultKeeper leverages modern Android development practices and robust security m
 
 <img width="250px" align="left" src="doc/screenshots/picture_7.png" />
 <img width="250px" align="left" src="doc/screenshots/picture_8.png" />
+<img width="250px" src="doc/screenshots/picture_9.png" />
 
+<img width="250px" align="left" src="doc/screenshots/picture_10.png" />
+<img width="250px" align="left" src="doc/screenshots/picture_11.png" />
+<img width="250px" src="doc/screenshots/picture_12.png" />
+
+<img width="250px" align="left" src="doc/screenshots/picture_13.png" />
 
