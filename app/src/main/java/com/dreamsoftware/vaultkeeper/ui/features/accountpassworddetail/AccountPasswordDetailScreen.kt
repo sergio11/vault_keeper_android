@@ -12,6 +12,7 @@ data class AccountPasswordDetailScreenArgs(
 fun AccountPasswordDetailScreen(
     viewModel: AccountPasswordDetailViewModel = hiltViewModel(),
     onBackPressed: () -> Unit = {},
+    onGoToEditAccount: (uuid: String) -> Unit ,
     args: AccountPasswordDetailScreenArgs? = null
 ) {
     BrownieScreen(
@@ -22,6 +23,7 @@ fun AccountPasswordDetailScreen(
             when (it) {
                 AccountPasswordDetailSideEffects.Cancelled -> onBackPressed()
                 AccountPasswordDetailSideEffects.AccountPasswordDeleted -> onBackPressed()
+                is AccountPasswordDetailSideEffects.EditAccountPassword -> onGoToEditAccount(it.uid)
             }
         },
         onInit = {

@@ -88,6 +88,12 @@ class SecureCardDetailViewModel @Inject constructor(
         }
     }
 
+    override fun onEditSecureCard() {
+        uiState.value.cardUid?.let {
+            launchSideEffect(SecureCardDetailSideEffects.EditSecureCard(it))
+        }
+    }
+
     private fun onSecureCardDeletedSuccessfully() {
         launchSideEffect(SecureCardDetailSideEffects.SecureCardDeleted)
     }
@@ -113,4 +119,5 @@ data class SecureCardDetailUiState(
 sealed interface SecureCardDetailSideEffects: SideEffect {
     data object Cancelled: SecureCardDetailSideEffects
     data object SecureCardDeleted: SecureCardDetailSideEffects
+    data class EditSecureCard(val uid: String): SecureCardDetailSideEffects
 }

@@ -192,7 +192,7 @@ fun AccountPasswordDetailScreenContent(
                             .padding(vertical = 8.dp, horizontal = 16.dp)
                             .fillMaxWidth(),
                         type = BrownieButtonTypeEnum.LARGE,
-                        onClick = actionListener::onDeleteAccount,
+                        onClick = actionListener::onEditAccountPassword,
                         textRes = R.string.account_password_detail_edit_button
                     )
 

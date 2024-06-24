@@ -117,6 +117,9 @@ fun NavGraphBuilder.HomeNavigationGraph(
                     with(navController) {
                         SecureCardDetailScreen(
                             args = it,
+                            onGoToEditSecureCard = {
+                                navigate(Screens.Main.Home.EditSecureCard.buildRoute(it))
+                            },
                             onBackPressed = {
                                 popBackStack()
                             }
@@ -151,6 +154,9 @@ fun NavGraphBuilder.HomeNavigationGraph(
                     with(navController) {
                         AccountPasswordDetailScreen(
                             args = it,
+                            onGoToEditAccount = {
+                                navigate(Screens.Main.Home.EditAccountPassword.buildRoute(it))
+                            },
                             onBackPressed = {
                                 popBackStack()
                             }

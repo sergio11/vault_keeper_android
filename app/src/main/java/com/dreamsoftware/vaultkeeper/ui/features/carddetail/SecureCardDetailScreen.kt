@@ -12,6 +12,7 @@ data class SecureCardDetailScreenArgs(
 fun SecureCardDetailScreen(
     viewModel: SecureCardDetailViewModel = hiltViewModel(),
     onBackPressed: () -> Unit = {},
+    onGoToEditSecureCard: (uid: String) -> Unit,
     args: SecureCardDetailScreenArgs? = null
 ) {
     BrownieScreen(
@@ -22,6 +23,7 @@ fun SecureCardDetailScreen(
             when (it) {
                 SecureCardDetailSideEffects.Cancelled -> onBackPressed()
                 SecureCardDetailSideEffects.SecureCardDeleted -> onBackPressed()
+                is SecureCardDetailSideEffects.EditSecureCard -> onGoToEditSecureCard(it.uid)
             }
         },
         onInit = {
