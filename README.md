@@ -3,11 +3,13 @@
 
 <img width="auto" height="200px" align="left" src="doc/main_logo.png" />
 
-VaultKeeper is the ultimate solution to simplify and secure your digital life. With VaultKeeper, you can efficiently and securely manage your passwords and banking details, all within an encrypted vault. No more juggling multiple credentials; our app provides hassle-free access to both your accounts and banking cards, all within a safeguarded and encrypted environment.
+🚀 **VaultKeeper**: The ultimate solution to simplify and secure your digital life! With VaultKeeper, you can efficiently and securely manage your passwords and banking details, all within an encrypted vault. 🔐
 
-VaultKeeper is designed to be your all-in-one digital security companion. The app ensures that every password and piece of financial information you store is encrypted with the latest security protocols. This encryption is not only robust but also ensures that even if your device is lost or stolen, **your data remains inaccessible to unauthorized users.**
+🔑 No more juggling multiple credentials; our app provides hassle-free access to both your accounts and banking cards, all within a safeguarded and encrypted environment.
 
-With VaultKeeper, you can generate strong, unique passwords for every account and store them safely. The intuitive interface, powered by Jetpack Compose, makes navigation and management of your data straightforward and enjoyable. No more struggling with remembering multiple passwords or worrying about the security of your banking information.
+👨‍💻 VaultKeeper is designed to be your all-in-one digital security companion. The app ensures that every password and piece of financial information you store is encrypted with the latest security protocols. This encryption is not only robust but also ensures that even if your device is lost or stolen, your data remains inaccessible to unauthorized users. 🛡️
+
+🔒 With VaultKeeper, you can generate strong, unique passwords for every account and store them safely. The intuitive interface, powered by Jetpack Compose, makes navigation and management of your data straightforward and enjoyable. No more struggling with remembering multiple passwords or worrying about the security of your banking information.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white" />
@@ -16,7 +18,6 @@ With VaultKeeper, you can generate strong, unique passwords for every account an
   <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" />
   <img src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white" />
 </p>
-
 
 ## Key Features:
 
@@ -29,15 +30,42 @@ Best Practices and Modern Technologies:
 At VaultKeeper, we have applied the best mobile architecture practices and design patterns to ensure a robust and scalable application. Our approach includes:
 
 * **🏗️ Clean Architecture:** To ensure maintainable and testable code.
-* **📐 Design Patterns: Implementation of patterns like MVI (Model-View-Intent) for clear separation of concerns.
+* **📐 Design Patterns:** Implementation of patterns like MVI (Model-View-Intent) for clear separation of concerns.
 * **🚀 Jetpack Compose:** Utilizing the latest Android ecosystem innovations to build declarative and reactive user interfaces.
 * **🔧 Jetpack Components:** Integration with Jetpack components for more efficient development and advanced features.
+
+<img src="doc/screenshots/picture_25.png" />
 
 ## User Benefits:
 
 * **🛡️ Peace of Mind and Security:** Enjoy the peace of mind knowing your data is protected with the highest security standards.
 * **⏱️ Efficiency and Convenience:** Simplify your digital life by having all your critical information in one securely accessible place.
 * **🌟 Innovation and Modernity:** Experience an app that is not only functional but also modern and at the forefront of mobile technology.
+
+## Developed with Brownie UI Library
+
+🍫 **Brownie**: [Jetpack Compose UI Library](https://github.com/sergio11/brownie_ui_library) 🚀
+
+Brownie is a 🌟 Jetpack Compose library module that provides a set of pre-defined components to accelerate the development of Android interfaces and applications. It is designed to help developers apply best practices in screen state management and utilize the most effective design patterns in their projects.
+
+### Features 🎉
+
+- **Pre-defined Components**: Brownie offers a variety of ready-to-use components, from buttons to lists and cards, to facilitate the creation of attractive and consistent user interfaces.
+- **State Management**: Facilitates screen state management by implementing patterns such as MVI (Model-View-Intent) or MVVM (Model-View-ViewModel).
+- **Customization**: Brownie components are highly customizable and can easily adapt to the visual style of any application.
+- **Jetpack Compose Compatibility**: Fully integrated with Jetpack Compose, the modern Android UI library, to ensure optimal performance and a smooth development experience.
+
+### Model-View-Intent (MVI) Architecture 🏗️
+
+Brownie encourages the use of the Model-View-Intent (MVI) architecture pattern for effective screen state management. In this pattern:
+
+- **Model**: Represents the state of the UI. Brownie provides a `BrownieViewModel` class that extends from `ViewModel` and handles the UI state.
+- **View**: Renders the UI based on the state provided by the ViewModel. Brownie components are seamlessly integrated with Compose to create a declarative UI.
+- **Intent**: Represents user actions or events that trigger state changes. Brownie's components, like buttons and text fields, are designed to emit these intents efficiently.
+
+This setup leverages Brownie's components and ViewModel to accelerate the development of robust features while adhering to best practices in architecture and UI design.
+
+For more information, check out the [Brownie UI Library on GitHub](https://github.com/sergio11/brownie_ui_library) and give it a ⭐ star to show your support!
 
 ## Seamless User Experience:
 
@@ -75,6 +103,9 @@ The .so file containing the application's master key ensures that the key cannot
 Summary
 VaultKeeper leverages modern Android development practices and robust security mechanisms to offer a secure, efficient, and user-friendly solution for managing passwords and banking details. By utilizing Clean Architecture, Room for local caching, Firestore for remote data storage, and advanced cryptographic techniques, VaultKeeper ensures that user data remains secure and accessible across devices. The integration of Jetpack Compose and other Jetpack components further enhances the app's performance and user experience, making it a reliable and innovative digital security companion.
 
+## App Screenshots
+
+Here are some screenshots from our app to give you a glimpse of its design and functionality.
 
 <img width="250px" align="left" src="doc/screenshots/picture_1.png" />
 <img width="250px" align="left" src="doc/screenshots/picture_2.png" />
