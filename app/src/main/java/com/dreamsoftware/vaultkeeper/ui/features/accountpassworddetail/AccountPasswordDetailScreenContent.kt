@@ -13,7 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.dreamsoftware.brownie.component.BrownieButton
+import com.dreamsoftware.brownie.component.BrownieButtonStyleTypeEnum
+import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
+import com.dreamsoftware.brownie.component.BrownieDialog
 import com.dreamsoftware.brownie.component.BrownieImageIcon
 import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
@@ -34,6 +38,16 @@ fun AccountPasswordDetailScreenContent(
     with(uiState) {
         with(MaterialTheme.colorScheme) {
             LoadingDialog(isShowingDialog = isLoading)
+            BrownieDialog(
+                isVisible = showAccountDeleteDialog,
+                mainLogoRes = R.drawable.main_logo_inverse,
+                titleRes = R.string.delete_password_dialog_title,
+                descriptionRes = R.string.delete_password_dialog_description,
+                cancelRes = R.string.delete_password_dialog_cancel,
+                acceptRes = R.string.delete_password_dialog_accept,
+                onCancelClicked = actionListener::onDeleteAccountCancelled,
+                onAcceptClicked = actionListener::onDeleteAccountConfirmed
+            )
             BrownieScreenContent(
                 hasTopBar = false,
                 errorMessage = errorMessage,
@@ -172,6 +186,25 @@ fun AccountPasswordDetailScreenContent(
                     )
 
                     Spacer(modifier = Modifier.weight(1f))
+
+                    BrownieButton(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                            .fillMaxWidth(),
+                        type = BrownieButtonTypeEnum.LARGE,
+                        onClick = actionListener::onDeleteAccount,
+                        textRes = R.string.account_password_detail_edit_button
+                    )
+
+                    BrownieButton(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                            .fillMaxWidth(),
+                        type = BrownieButtonTypeEnum.LARGE,
+                        style = BrownieButtonStyleTypeEnum.DANGER,
+                        onClick = actionListener::onDeleteAccount,
+                        textRes = R.string.account_password_detail_delete_button
+                    )
                 }
             }
         }

@@ -21,6 +21,7 @@ fun AccountPasswordDetailScreen(
         onSideEffect = {
             when (it) {
                 AccountPasswordDetailSideEffects.Cancelled -> onBackPressed()
+                AccountPasswordDetailSideEffects.AccountPasswordDeleted -> onBackPressed()
             }
         },
         onInit = {

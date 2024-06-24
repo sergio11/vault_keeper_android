@@ -4,4 +4,7 @@ import com.dreamsoftware.brownie.core.IBrownieScreenActionListener
 
 interface AccountPasswordDetailScreenActionListener: IBrownieScreenActionListener {
     fun onCancel()
+    fun onDeleteAccount()
+    fun onDeleteAccountConfirmed()
+    fun onDeleteAccountCancelled()
 }

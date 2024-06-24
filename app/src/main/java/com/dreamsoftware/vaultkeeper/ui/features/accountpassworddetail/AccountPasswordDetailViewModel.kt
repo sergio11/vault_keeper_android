@@ -8,6 +8,7 @@ import com.dreamsoftware.brownie.utils.EMPTY
 import com.dreamsoftware.vaultkeeper.di.AccountPasswordDetailErrorMapper
 import com.dreamsoftware.vaultkeeper.domain.model.AccountPasswordBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetAccountByIdUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemovePasswordAccountUseCase
 import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class AccountPasswordDetailViewModel @Inject constructor(
     private val getAccountByIdUseCase: GetAccountByIdUseCase,
     @AccountPasswordDetailErrorMapper private val errorMapper: IBrownieErrorMapper,
+    private val removePasswordAccountUseCase: RemovePasswordAccountUseCase,
     private val applicationAware: IVaultKeeperApplicationAware
 ) : BrownieViewModel<AccountPasswordDetailUiState, AccountPasswordDetailSideEffects>(), AccountPasswordDetailScreenActionListener {
 
@@ -57,6 +59,38 @@ class AccountPasswordDetailViewModel @Inject constructor(
     override fun onInfoMessageCleared() {
         updateState { it.copy(infoMessage = null) }
     }
+
+    override fun onDeleteAccount() {
+        updateState {
+            it.copy(showAccountDeleteDialog = true)
+        }
+    }
+
+    override fun onDeleteAccountConfirmed() {
+        uiState.value.accountUid?.let { accountUid ->
+            executeUseCaseWithParams(
+                useCase = removePasswordAccountUseCase,
+                params = RemovePasswordAccountUseCase.Params(uid = accountUid),
+                onSuccess = {
+                    onAccountPasswordDeletedSuccessfully()
+                },
+                onMapExceptionToState = ::onMapExceptionToState
+            )
+        }
+        updateState {
+            it.copy(showAccountDeleteDialog = false)
+        }
+    }
+
+    override fun onDeleteAccountCancelled() {
+        updateState {
+            it.copy(showAccountDeleteDialog = false)
+        }
+    }
+
+    private fun onAccountPasswordDeletedSuccessfully() {
+        launchSideEffect(AccountPasswordDetailSideEffects.AccountPasswordDeleted)
+    }
 }
 
 data class AccountPasswordDetailUiState(
@@ -70,6 +104,7 @@ data class AccountPasswordDetailUiState(
     val note: String = String.EMPTY,
     val mobileNumber: String = String.EMPTY,
     val password: String = String.EMPTY,
+    val showAccountDeleteDialog: Boolean = false
 ): UiState<AccountPasswordDetailUiState>(isLoading, errorMessage) {
     override fun copyState(isLoading: Boolean, errorMessage: String?): AccountPasswordDetailUiState =
         copy(isLoading = isLoading, errorMessage = errorMessage)
@@ -77,4 +112,5 @@ data class AccountPasswordDetailUiState(
 
 sealed interface AccountPasswordDetailSideEffects: SideEffect {
     data object Cancelled: AccountPasswordDetailSideEffects
+    data object AccountPasswordDeleted: AccountPasswordDetailSideEffects
 }
