@@ -67,41 +67,37 @@ This setup leverages Brownie's components and ViewModel to accelerate the develo
 
 For more information, check out the [Brownie UI Library on GitHub](https://github.com/sergio11/brownie_ui_library) and give it a ⭐ star to show your support!
 
-## Seamless User Experience:
+## 🌟 Seamless User Experience
 
-I have focused on providing a seamless user experience by leveraging modern Android technologies. Jetpack Compose allows us to create a responsive and visually appealing interface that adapts to various screen sizes and orientations. The integration with Jetpack components ensures that your data synchronization, background tasks, and navigation flows are smooth and reliable.
+I have focused on providing a seamless user experience by leveraging cutting-edge Android technologies. Jetpack Compose enables me to create a responsive and visually appealing interface that adapts to various screen sizes and orientations. Integration with Jetpack components ensures smooth data synchronization, reliable background tasks, and efficient navigation flows, resulting in a fluid and enjoyable user experience.
 
-## Security at Its Core:
+## 🔒 Security at Its Core
 
-Security is at the heart of VaultKeeper. We implement best practices in cryptographic algorithms and key management to keep your data secure. Additionally, our use of Clean Architecture and MVVM design pattern ensures that our codebase is organized, maintainable, and easily testable, which translates into a more secure and reliable application.
+Security is at the heart of VaultKeeper. I implement industry best practices in cryptographic algorithms and key management to ensure your data is always protected. My use of Clean Architecture and the MVVM design pattern ensures the codebase is organized, maintainable, and easily testable, translating into a more secure and reliable application.
 
-## Clean Architecture
+## 🏗️ Clean Architecture
 VaultKeeper employs Clean Architecture principles to ensure the app is scalable, maintainable, and testable. Clean Architecture separates the code into distinct layers, each with clear responsibilities:
 
-* **Presentation Layer:** This layer, built with Jetpack Compose, handles the UI and user interactions. It communicates with the ViewModel to retrieve data and update the UI reactively.
-* **Domain Layer:** This is the core of the application, containing business logic and application rules. It includes use cases that orchestrate the flow of data to and from the presentation and data layers.
-* **Data Layer:** This layer is responsible for data management. It includes repositories that abstract the data sources, whether they are local (Room database) or remote (Firestore).
+* **🎨 Presentation Layer:** Built with Jetpack Compose, this layer handles the UI and user interactions. It communicates with the ViewModel to retrieve data and update the UI reactively.
+* **💡 Domain Layer:** The core of the application, containing business logic and application rules. It includes use cases that orchestrate the flow of data to and from the presentation and data layers.
+* **🗄️ Data Layer:** Responsible for data management, this layer includes repositories that abstract the data sources, whether they are local (Room database) or remote (Firestore).
 
-### Data Sources
+## 📊 Data Sources
+
 VaultKeeper ensures data persistence and security using a combination of local and remote data sources:
 
-* **Local Data Source (Room):** Room is used to cache debit card information locally. The data is encrypted using cryptographic techniques to ensure security even if the device is compromised.
-* **Remote Data Source (Firestore):** Firestore serves as the remote data repository, ensuring data is not lost even if the app is uninstalled. Firestore provides real-time data synchronization and offline support.
+* **📂 Local Data Source (Room):** Room is used to cache debit card information locally. The data is encrypted using advanced cryptographic techniques to ensure security, even if the device is compromised.
+* **☁️ Remote Data Source (Firestore):** Firestore serves as the remote data repository, ensuring data is not lost even if the app is uninstalled. Firestore provides real-time data synchronization and offline support.
 
-### Cryptographic Techniques
+## 🛡️ Cryptographic Techniques
 To protect user data, VaultKeeper implements robust cryptographic practices:
 
-### Encryption and Key Management:
+* **🔑 Master Key and Salt:** Each user's data is encrypted with a unique master key and salt, which are generated programmatically and stored securely in Firestore.
+* **🔐 Data Encryption:** All sensitive information, including passwords and banking details, is encrypted using the master key and salt.
+* **🗝️ Application Master Key:** The master keys and salts are encrypted using the application's master key. This key is stored in a secure .so file, accessible via Java NDK, preventing extraction through decompilation.
 
-Master Key and Salt: Each user's data is encrypted with a unique master key and salt, which are generated programmatically and stored securely in Firestore.
-Data Encryption: All sensitive information, including passwords and banking details, is encrypted using the master key and salt.
-Application Master Key: The master keys and salts are encrypted using the application's master key. This key is stored in a secure .so file, accessible via Java NDK, preventing extraction through decompilation.
-
-### Key Storage:
-
+## 🔏 Key Storage
 The .so file containing the application's master key ensures that the key cannot be easily extracted by attackers, enhancing the security of the encryption keys stored in Firestore.
-Summary
-VaultKeeper leverages modern Android development practices and robust security mechanisms to offer a secure, efficient, and user-friendly solution for managing passwords and banking details. By utilizing Clean Architecture, Room for local caching, Firestore for remote data storage, and advanced cryptographic techniques, VaultKeeper ensures that user data remains secure and accessible across devices. The integration of Jetpack Compose and other Jetpack components further enhances the app's performance and user experience, making it a reliable and innovative digital security companion.
 
 ## App Screenshots
 
