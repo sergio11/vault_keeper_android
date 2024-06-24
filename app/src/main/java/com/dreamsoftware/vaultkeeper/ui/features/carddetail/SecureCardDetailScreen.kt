@@ -21,6 +21,7 @@ fun SecureCardDetailScreen(
         onSideEffect = {
             when (it) {
                 SecureCardDetailSideEffects.Cancelled -> onBackPressed()
+                SecureCardDetailSideEffects.SecureCardDeleted -> onBackPressed()
             }
         },
         onInit = {

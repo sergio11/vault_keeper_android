@@ -13,7 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.dreamsoftware.brownie.component.BrownieButton
+import com.dreamsoftware.brownie.component.BrownieButtonTypeEnum
 import com.dreamsoftware.brownie.component.BrownieDefaultTextField
+import com.dreamsoftware.brownie.component.BrownieDialog
 import com.dreamsoftware.brownie.component.BrownieImageIcon
 import com.dreamsoftware.brownie.component.BrownieImageSize
 import com.dreamsoftware.brownie.component.BrownieSheetSurface
@@ -39,6 +42,16 @@ fun SecureCardDetailScreenContent(
     with(uiState) {
         with(MaterialTheme.colorScheme) {
             LoadingDialog(isShowingDialog = isLoading)
+            BrownieDialog(
+                isVisible = showCardDeleteDialog,
+                mainLogoRes = R.drawable.main_logo_inverse,
+                titleRes = R.string.delete_card_dialog_title,
+                descriptionRes = R.string.delete_card_dialog_description,
+                cancelRes = R.string.delete_card_dialog_cancel,
+                acceptRes = R.string.delete_card_dialog_accept,
+                onCancelClicked = actionListener::onDeleteSecureCardCancelled,
+                onAcceptClicked = actionListener::onDeleteSecureCardConfirmed
+            )
             BrownieScreenContent(
                 hasTopBar = false,
                 errorMessage = errorMessage,
@@ -160,6 +173,24 @@ fun SecureCardDetailScreenContent(
                     )
 
                     Spacer(modifier = Modifier.weight(1f))
+
+                    BrownieButton(
+                        modifier = Modifier
+                            .padding(all = 16.dp)
+                            .fillMaxWidth(),
+                        type = BrownieButtonTypeEnum.LARGE,
+                        onClick = actionListener::onDeleteSecureCard,
+                        textRes = R.string.secure_card_detail_edit_button
+                    )
+
+                    BrownieButton(
+                        modifier = Modifier
+                            .padding(all = 16.dp)
+                            .fillMaxWidth(),
+                        type = BrownieButtonTypeEnum.LARGE,
+                        onClick = actionListener::onDeleteSecureCard,
+                        textRes = R.string.secure_card_detail_delete_button
+                    )
                 }
             }
         }

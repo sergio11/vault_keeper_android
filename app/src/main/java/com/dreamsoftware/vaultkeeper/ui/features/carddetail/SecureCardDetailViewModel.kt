@@ -9,6 +9,7 @@ import com.dreamsoftware.vaultkeeper.di.SecureCardDetailErrorMapper
 import com.dreamsoftware.vaultkeeper.domain.model.CardProviderEnum
 import com.dreamsoftware.vaultkeeper.domain.model.SecureCardBO
 import com.dreamsoftware.vaultkeeper.domain.usecase.GetCardByIdUseCase
+import com.dreamsoftware.vaultkeeper.domain.usecase.RemoveSecureCardUseCase
 import com.dreamsoftware.vaultkeeper.utils.IVaultKeeperApplicationAware
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class SecureCardDetailViewModel @Inject constructor(
     private val getCardByIdUseCase: GetCardByIdUseCase,
     @SecureCardDetailErrorMapper private val errorMapper: IBrownieErrorMapper,
+    private val removeSecureCardUseCase: RemoveSecureCardUseCase,
     private val applicationAware: IVaultKeeperApplicationAware
 ) : BrownieViewModel<SecureCardDetailUiState, SecureCardDetailSideEffects>(), SecureCardDetailScreenActionListener {
 
@@ -57,6 +59,38 @@ class SecureCardDetailViewModel @Inject constructor(
     override fun onInfoMessageCleared() {
         updateState { it.copy(infoMessage = null) }
     }
+
+    override fun onDeleteSecureCard() {
+        updateState {
+            it.copy(showCardDeleteDialog = true)
+        }
+    }
+
+    override fun onDeleteSecureCardConfirmed() {
+        uiState.value.cardUid?.let { secureCardUid ->
+            executeUseCaseWithParams(
+                useCase = removeSecureCardUseCase,
+                params = RemoveSecureCardUseCase.Params(uid = secureCardUid),
+                onSuccess = {
+                    onSecureCardDeletedSuccessfully()
+                },
+                onMapExceptionToState = ::onMapExceptionToState
+            )
+        }
+        updateState {
+            it.copy(showCardDeleteDialog = false)
+        }
+    }
+
+    override fun onDeleteSecureCardCancelled() {
+        updateState {
+            it.copy(showCardDeleteDialog = false)
+        }
+    }
+
+    private fun onSecureCardDeletedSuccessfully() {
+        launchSideEffect(SecureCardDetailSideEffects.SecureCardDeleted)
+    }
 }
 
 data class SecureCardDetailUiState(
@@ -69,6 +103,7 @@ data class SecureCardDetailUiState(
     val cardHolderName: String = String.EMPTY,
     val cardExpiryDate: String = String.EMPTY,
     val cardCVV: String = String.EMPTY,
+    val showCardDeleteDialog: Boolean = false,
     val cardProviderEnum: CardProviderEnum = CardProviderEnum.OTHER
 ): UiState<SecureCardDetailUiState>(isLoading, errorMessage) {
     override fun copyState(isLoading: Boolean, errorMessage: String?): SecureCardDetailUiState =
@@ -77,4 +112,5 @@ data class SecureCardDetailUiState(
 
 sealed interface SecureCardDetailSideEffects: SideEffect {
     data object Cancelled: SecureCardDetailSideEffects
+    data object SecureCardDeleted: SecureCardDetailSideEffects
 }
