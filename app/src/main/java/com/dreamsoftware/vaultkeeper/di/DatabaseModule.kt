@@ -26,7 +26,7 @@ object DatabaseModule {
     fun provideRoomInstance(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
         VaultKeeperDatabase::class.java,
-        "lockbuddy_database"
+        "vault_keeper_database"
     ).build()
 
     @Singleton

@@ -1,6 +1,8 @@
 package com.dreamsoftware.vaultkeeper.data.repository.impl
 
 import com.dreamsoftware.brownie.utils.IBrownieOneSideMapper
+import com.dreamsoftware.vaultkeeper.data.database.datasource.IAccountLocalDataSource
+import com.dreamsoftware.vaultkeeper.data.database.datasource.ISecureCardsLocalDataSource
 import com.dreamsoftware.vaultkeeper.data.remote.datasource.IAuthRemoteDataSource
 import com.dreamsoftware.vaultkeeper.data.repository.impl.core.SupportRepositoryImpl
 import com.dreamsoftware.vaultkeeper.data.repository.mapper.AuthUserInfo
@@ -17,6 +19,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 internal class UserRepositoryImpl(
     private val authDataSource: IAuthRemoteDataSource,
+    private val localAccountDataSource: IAccountLocalDataSource,
+    private val localSecureDataSource: ISecureCardsLocalDataSource,
     private val secretsRepository: ISecretRepository,
     private val authUserMapper: IBrownieOneSideMapper<AuthUserInfo, AuthUserBO>,
     dispatcher: CoroutineDispatcher
@@ -81,6 +85,8 @@ internal class UserRepositoryImpl(
     override suspend fun closeSession() = safeExecute {
         try {
             authDataSource.closeSession()
+            localAccountDataSource.deleteAll()
+            localSecureDataSource.deleteAll()
         } catch (ex: Exception) {
             throw CloseSessionException("An error occurred when trying to close user session", ex)
         }
