@@ -85,12 +85,16 @@ class RepositoryModule {
     @Singleton
     fun provideUserRepository(
         authDataSource: IAuthRemoteDataSource,
+        localAccountDataSource: IAccountLocalDataSource,
+        localSecureDataSource: ISecureCardsLocalDataSource,
         secretRepository: ISecretRepository,
         authUserMapper: IBrownieOneSideMapper<AuthUserInfo, AuthUserBO>,
         @IoDispatcher dispatcher: CoroutineDispatcher
     ): IUserRepository =
         UserRepositoryImpl(
             authDataSource,
+            localAccountDataSource,
+            localSecureDataSource,
             secretRepository,
             authUserMapper,
             dispatcher
