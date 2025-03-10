@@ -13,7 +13,9 @@
 
 This app, **VaultKeeper**, includes images and resources designed by [Freepik](https://www.freepik.com). We would like to acknowledge and thank Freepik for their incredible design assets. The images used in the app are provided with attribution, as required by Freepik's licensing terms. For more information on Freepik's resources, please visit [www.freepik.com](https://www.freepik.com).
 
-Special thanks to **devprincefahad** for the Securify app, which served as a source of inspiration for this project. Visit [Securify](https://github.com/devprincefahad/Securify).
+I would like to express my sincere appreciation to [**devprincefahad**](https://github.com/devprincefahad) for their work on the **Securify** app, which served as an inspiration for **VaultKeeper**. While my app draws design inspiration from **Securify**, I have taken a different approach in terms of architecture, features, and overall implementation to better align with my vision for secure password and banking data management.  
+
+Learn more about **Securify** and its contribution to digital security on [GitHub](https://github.com/devprincefahad/Securify).  
 
 <p align="center">
   <img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white" />
