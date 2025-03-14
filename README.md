@@ -1,7 +1,7 @@
 
 # 🔒 VaultKeeper: Elevating Your Digital Security for Passwords and Banking Cards 💳
 
-<img width="auto" height="200px" align="left" src="doc/main_logo.png" />
+<img width="auto" height="300px" align="left" src="doc/vault_keeper_logo.webp" />
 
 🚀 **VaultKeeper**: The ultimate solution to simplify and secure your digital life! With VaultKeeper, you can efficiently and securely manage your passwords and banking details, all within an encrypted vault. 🔐
 
